@@ -279,12 +279,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    height    sex
-1 193.8483   Male
-2 167.3677   Male
-3 204.0349   Male
-4 160.2324 Female
-5 184.0695 Female
-6 192.0917 Female</code></pre>
+1 193.4479 Female
+2 178.7130 Female
+3 187.8584   Male
+4 195.8061   Male
+5 210.0486   Male
+6 188.1850   Male</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(dat<span class="sc">$</span>height<span class="sc">~</span>dat<span class="sc">$</span>sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -299,8 +299,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>( height <span class="sc">~</span> sex , <span class="at">FUN=</span>mean, <span class="at">data=</span>dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     sex   height
-1 Female 178.5172
-2   Male 188.0611</code></pre>
+1 Female 182.1365
+2   Male 188.3493</code></pre>
 </div>
 </div>
 <p>Alternatively we could use <code>tapply</code>:</p>
@@ -308,7 +308,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>( dat<span class="sc">$</span>height, dat<span class="sc">$</span>sex , <span class="at">FUN=</span>mean )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Female     Male 
-178.5172 188.0611 </code></pre>
+182.1365 188.3493 </code></pre>
 </div>
 </div>
 <p>While this works in this simple case it is difficult to get a more complicated table. For example, there is no obvious way to get a table of means, standard deviations and counts (the standard table 1 in any biomedical paper) without using an external package.</p>
@@ -333,8 +333,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>dat[ , <span class="fu">mean</span>(height), by<span class="ot">=</span>sex ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      sex       V1
-1:   Male 188.0611
-2: Female 178.5172</code></pre>
+1: Female 182.1365
+2:   Male 188.3493</code></pre>
 </div>
 </div>
 <p>Next, adding the counts and standard deviations:</p>
@@ -342,8 +342,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>dat[ , .(<span class="at">Count=</span>.N, <span class="at">Mean=</span><span class="fu">mean</span>(height),<span class="at">SD=</span><span class="fu">sd</span>(height)), by<span class="ot">=</span>sex]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      sex Count     Mean       SD
-1:   Male    47 188.0611 10.83668
-2: Female    53 178.5172 10.39541</code></pre>
+1: Female    49 182.1365 9.062227
+2:   Male    51 188.3493 9.923367</code></pre>
 </div>
 </div>
 <section id="breaking-down-the-data.table-syntax" class="level2">
@@ -392,7 +392,7 @@ Attaching package: 'dplyr'</code></pre>
 <pre><code># A tibble: 2 x 2
   sex    `mean(height)`
   &lt;chr&gt;           &lt;dbl&gt;
-1 Female           179.
+1 Female           182.
 2 Male             188.</code></pre>
 </div>
 </div>
@@ -403,8 +403,8 @@ Attaching package: 'dplyr'</code></pre>
 <pre><code># A tibble: 2 x 4
   sex        N `mean(height)` `sd(height)`
   &lt;chr&gt;  &lt;int&gt;          &lt;dbl&gt;        &lt;dbl&gt;
-1 Female    53           179.         10.4
-2 Male      47           188.         10.8</code></pre>
+1 Female    49           182.         9.06
+2 Male      51           188.         9.92</code></pre>
 </div>
 </div>
 <section id="the-tidyverse-dplyr-syntax" class="level2">
@@ -422,12 +422,12 @@ Attaching package: 'dplyr'</code></pre>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_summary</span>(dat, <span class="at">by=</span>sex, <span class="at">statistic=</span><span class="fu">list</span>(height<span class="sc">~</span><span class="st">"{mean} ({sd})"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="fpiaixlbdb" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="cpuzsyihvh" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-:where(#fpiaixlbdb) .gt_table {
+:where(#cpuzsyihvh) .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -452,7 +452,7 @@ Attaching package: 'dplyr'</code></pre>
   border-left-color: #D3D3D3;
 }
 
-:where(#fpiaixlbdb) .gt_heading {
+:where(#cpuzsyihvh) .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -464,7 +464,7 @@ Attaching package: 'dplyr'</code></pre>
   border-right-color: #D3D3D3;
 }
 
-:where(#fpiaixlbdb) .gt_title {
+:where(#cpuzsyihvh) .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -476,7 +476,7 @@ Attaching package: 'dplyr'</code></pre>
   border-bottom-width: 0;
 }
 
-:where(#fpiaixlbdb) .gt_subtitle {
+:where(#cpuzsyihvh) .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -488,13 +488,13 @@ Attaching package: 'dplyr'</code></pre>
   border-top-width: 0;
 }
 
-:where(#fpiaixlbdb) .gt_bottom_border {
+:where(#cpuzsyihvh) .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-:where(#fpiaixlbdb) .gt_col_headings {
+:where(#cpuzsyihvh) .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -509,7 +509,7 @@ Attaching package: 'dplyr'</code></pre>
   border-right-color: #D3D3D3;
 }
 
-:where(#fpiaixlbdb) .gt_col_heading {
+:where(#cpuzsyihvh) .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -529,7 +529,7 @@ Attaching package: 'dplyr'</code></pre>
   overflow-x: hidden;
 }
 
-:where(#fpiaixlbdb) .gt_column_spanner_outer {
+:where(#cpuzsyihvh) .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -541,15 +541,15 @@ Attaching package: 'dplyr'</code></pre>
   padding-right: 4px;
 }
 
-:where(#fpiaixlbdb) .gt_column_spanner_outer:first-child {
+:where(#cpuzsyihvh) .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-:where(#fpiaixlbdb) .gt_column_spanner_outer:last-child {
+:where(#cpuzsyihvh) .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-:where(#fpiaixlbdb) .gt_column_spanner {
+:where(#cpuzsyihvh) .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -561,7 +561,7 @@ Attaching package: 'dplyr'</code></pre>
   width: 100%;
 }
 
-:where(#fpiaixlbdb) .gt_group_heading {
+:where(#cpuzsyihvh) .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -586,7 +586,7 @@ Attaching package: 'dplyr'</code></pre>
   vertical-align: middle;
 }
 
-:where(#fpiaixlbdb) .gt_empty_group_heading {
+:where(#cpuzsyihvh) .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -601,15 +601,15 @@ Attaching package: 'dplyr'</code></pre>
   vertical-align: middle;
 }
 
-:where(#fpiaixlbdb) .gt_from_md > :first-child {
+:where(#cpuzsyihvh) .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-:where(#fpiaixlbdb) .gt_from_md > :last-child {
+:where(#cpuzsyihvh) .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-:where(#fpiaixlbdb) .gt_row {
+:where(#cpuzsyihvh) .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -628,7 +628,7 @@ Attaching package: 'dplyr'</code></pre>
   overflow-x: hidden;
 }
 
-:where(#fpiaixlbdb) .gt_stub {
+:where(#cpuzsyihvh) .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -641,7 +641,7 @@ Attaching package: 'dplyr'</code></pre>
   padding-right: 5px;
 }
 
-:where(#fpiaixlbdb) .gt_stub_row_group {
+:where(#cpuzsyihvh) .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -655,11 +655,11 @@ Attaching package: 'dplyr'</code></pre>
   vertical-align: top;
 }
 
-:where(#fpiaixlbdb) .gt_row_group_first td {
+:where(#cpuzsyihvh) .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-:where(#fpiaixlbdb) .gt_summary_row {
+:where(#cpuzsyihvh) .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -669,16 +669,16 @@ Attaching package: 'dplyr'</code></pre>
   padding-right: 5px;
 }
 
-:where(#fpiaixlbdb) .gt_first_summary_row {
+:where(#cpuzsyihvh) .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-:where(#fpiaixlbdb) .gt_first_summary_row.thick {
+:where(#cpuzsyihvh) .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-:where(#fpiaixlbdb) .gt_last_summary_row {
+:where(#cpuzsyihvh) .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -688,7 +688,7 @@ Attaching package: 'dplyr'</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-:where(#fpiaixlbdb) .gt_grand_summary_row {
+:where(#cpuzsyihvh) .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -698,7 +698,7 @@ Attaching package: 'dplyr'</code></pre>
   padding-right: 5px;
 }
 
-:where(#fpiaixlbdb) .gt_first_grand_summary_row {
+:where(#cpuzsyihvh) .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -708,11 +708,11 @@ Attaching package: 'dplyr'</code></pre>
   border-top-color: #D3D3D3;
 }
 
-:where(#fpiaixlbdb) .gt_striped {
+:where(#cpuzsyihvh) .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-:where(#fpiaixlbdb) .gt_table_body {
+:where(#cpuzsyihvh) .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -721,7 +721,7 @@ Attaching package: 'dplyr'</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-:where(#fpiaixlbdb) .gt_footnotes {
+:where(#cpuzsyihvh) .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -735,7 +735,7 @@ Attaching package: 'dplyr'</code></pre>
   border-right-color: #D3D3D3;
 }
 
-:where(#fpiaixlbdb) .gt_footnote {
+:where(#cpuzsyihvh) .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -744,7 +744,7 @@ Attaching package: 'dplyr'</code></pre>
   padding-right: 5px;
 }
 
-:where(#fpiaixlbdb) .gt_sourcenotes {
+:where(#cpuzsyihvh) .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -758,7 +758,7 @@ Attaching package: 'dplyr'</code></pre>
   border-right-color: #D3D3D3;
 }
 
-:where(#fpiaixlbdb) .gt_sourcenote {
+:where(#cpuzsyihvh) .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -766,60 +766,60 @@ Attaching package: 'dplyr'</code></pre>
   padding-right: 5px;
 }
 
-:where(#fpiaixlbdb) .gt_left {
+:where(#cpuzsyihvh) .gt_left {
   text-align: left;
 }
 
-:where(#fpiaixlbdb) .gt_center {
+:where(#cpuzsyihvh) .gt_center {
   text-align: center;
 }
 
-:where(#fpiaixlbdb) .gt_right {
+:where(#cpuzsyihvh) .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-:where(#fpiaixlbdb) .gt_font_normal {
+:where(#cpuzsyihvh) .gt_font_normal {
   font-weight: normal;
 }
 
-:where(#fpiaixlbdb) .gt_font_bold {
+:where(#cpuzsyihvh) .gt_font_bold {
   font-weight: bold;
 }
 
-:where(#fpiaixlbdb) .gt_font_italic {
+:where(#cpuzsyihvh) .gt_font_italic {
   font-style: italic;
 }
 
-:where(#fpiaixlbdb) .gt_super {
+:where(#cpuzsyihvh) .gt_super {
   font-size: 65%;
 }
 
-:where(#fpiaixlbdb) .gt_footnote_marks {
+:where(#cpuzsyihvh) .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-:where(#fpiaixlbdb) .gt_asterisk {
+:where(#cpuzsyihvh) .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-:where(#fpiaixlbdb) .gt_slash_mark {
+:where(#cpuzsyihvh) .gt_slash_mark {
   font-size: 0.7em;
   line-height: 0.7em;
   vertical-align: 0.15em;
 }
 
-:where(#fpiaixlbdb) .gt_fraction_numerator {
+:where(#cpuzsyihvh) .gt_fraction_numerator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: 0.45em;
 }
 
-:where(#fpiaixlbdb) .gt_fraction_denominator {
+:where(#cpuzsyihvh) .gt_fraction_denominator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: -0.05em;
@@ -830,14 +830,14 @@ Attaching package: 'dplyr'</code></pre>
   <thead class="gt_col_headings">
     <tr>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>Female</strong>, N = 53<sup class="gt_footnote_marks">1</sup></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>Male</strong>, N = 47<sup class="gt_footnote_marks">1</sup></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>Female</strong>, N = 49<sup class="gt_footnote_marks">1</sup></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>Male</strong>, N = 51<sup class="gt_footnote_marks">1</sup></th>
     </tr>
   </thead>
   <tbody class="gt_table_body">
     <tr><td class="gt_row gt_left">height</td>
-<td class="gt_row gt_center">179 (10)</td>
-<td class="gt_row gt_center">188 (11)</td></tr>
+<td class="gt_row gt_center">182 (9)</td>
+<td class="gt_row gt_center">188 (10)</td></tr>
   </tbody>
   
   <tfoot class="gt_footnotes">

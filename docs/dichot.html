@@ -285,13 +285,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     Pearson's product-moment correlation
 
 data:  dat$Exposure and dat$Outcome
-t = 2.6663, df = 28, p-value = 0.0126
+t = 3.3352, df = 28, p-value = 0.002413
 alternative hypothesis: true correlation is not equal to 0
 95 percent confidence interval:
- 0.1070680 0.6972201
+ 0.2140635 0.7495015
 sample estimates:
-    cor 
-0.44998 </code></pre>
+      cor 
+0.5332112 </code></pre>
 </div>
 </div>
 <p>So in our sample this correlation is clearly detectable (estimated r=0.47, p=0.0075).</p>
@@ -319,13 +319,13 @@ sample estimates:
     Welch Two Sample t-test
 
 data:  Outcome by HighExposure
-t = -2.4653, df = 27.778, p-value = 0.02014
+t = -2.5015, df = 27.225, p-value = 0.01867
 alternative hypothesis: true difference in means between group FALSE and group TRUE is not equal to 0
 95 percent confidence interval:
- -1.7769874 -0.1638149
+ -1.5337193 -0.1517702
 sample estimates:
 mean in group FALSE  mean in group TRUE 
-           9.575612           10.546014 </code></pre>
+           9.416523           10.259267 </code></pre>
 </div>
 </div>
 <p>The difference is now barely detectable (p=0.02)!</p>
