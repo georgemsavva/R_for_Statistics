@@ -285,13 +285,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     Pearson's product-moment correlation
 
 data:  dat$Exposure and dat$Outcome
-t = 3.3352, df = 28, p-value = 0.002413
+t = 2.3404, df = 28, p-value = 0.02662
 alternative hypothesis: true correlation is not equal to 0
 95 percent confidence interval:
- 0.2140635 0.7495015
+ 0.0517730 0.6674941
 sample estimates:
       cor 
-0.5332112 </code></pre>
+0.4044974 </code></pre>
 </div>
 </div>
 <p>So in our sample this correlation is clearly detectable (estimated r=0.47, p=0.0075).</p>
@@ -319,13 +319,13 @@ sample estimates:
     Welch Two Sample t-test
 
 data:  Outcome by HighExposure
-t = -2.5015, df = 27.225, p-value = 0.01867
+t = -1.3854, df = 26.823, p-value = 0.1773
 alternative hypothesis: true difference in means between group FALSE and group TRUE is not equal to 0
 95 percent confidence interval:
- -1.5337193 -0.1517702
+ -1.1579129  0.2246711
 sample estimates:
 mean in group FALSE  mean in group TRUE 
-           9.416523           10.259267 </code></pre>
+           9.671626           10.138247 </code></pre>
 </div>
 </div>
 <p>The difference is now barely detectable (p=0.02)!</p>
@@ -349,8 +349,8 @@ mean in group FALSE  mean in group TRUE
 <div class="cell-output cell-output-stdout">
 <pre><code>       
         FALSE TRUE
-  FALSE    10    5
-  TRUE      5   10</code></pre>
+  FALSE     8    7
+  TRUE      7    8</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="fu">table</span>(dat<span class="sc">$</span>HighExposure, dat<span class="sc">$</span>HighOutcome))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -358,7 +358,7 @@ mean in group FALSE  mean in group TRUE
     Pearson's Chi-squared test with Yates' continuity correction
 
 data:  table(dat$HighExposure, dat$HighOutcome)
-X-squared = 2.1333, df = 1, p-value = 0.1441</code></pre>
+X-squared = 0, df = 1, p-value = 1</code></pre>
 </div>
 </div>
 <p>The difference in ‘high outcome’ proportions between exposure groups is not statistically significant! (p=0.14). This shows that it is much more difficult to see the relationship if we throw away the exact values of the data points.</p>

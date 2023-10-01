@@ -10,7 +10,6 @@ format:
     theme: cosmo
     toc: true
     toc-depth: 2
-    self-contained: true
     smooth-scroll: true
     number-sections: true
 ---
@@ -50,9 +49,9 @@ All of the commands for the worked examples and the exercises is in the file Tut
 
 Powerpoint slides for today's session are here:
 
-* [Day 1 slides](./day1.pptx)
+* [Day 1 slides](day1.pptx)
 
-This handout was written in RStudio using the Quarto document preparation system.  The source code is here: [day1.qmd](./day1.qmd)
+This handout was written in RStudio using the Quarto document preparation system.  The source code is here: [day1.qmd](day1.qmd)
 
 `r subsection("Learning objectives")` 
 

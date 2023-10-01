@@ -1,6 +1,14 @@
 project: 
   type: website
   output-dir: docs
+  resources: 
+    day1.pptx
+    day2_tidydata.pptx
+    day3_data_lm.pptx
+    day3.pptx
+    walkingspeed.xlsx
+    walkingspeed_day2.xlsx
+    day1.qmd
   title: "R for Statistics"    
   
 website:

@@ -3,7 +3,6 @@ title: "R and RStudio for Statistics"
 format:
   html:
     theme: cosmo
-    self-contained: true
     smooth-scroll: true
 ---
 

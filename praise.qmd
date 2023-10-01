@@ -7,7 +7,6 @@ format:
     theme: cosmo
     toc: true
     toc-depth: 2
-    self-contained: true
     smooth-scroll: true
     number-sections: true
 ---
