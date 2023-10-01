@@ -1,10 +1,10 @@
 ---
 title: "R and RStudio for Statistics"
-output:
-  html_document:
-    df_print: paged
+format:
+  html:
     theme: cosmo
-    toc: no
+    self-contained: true
+    smooth-scroll: true
 ---
 
 This site hosts my course notes, presentations and data files accompanying my courses on R and RStudio.

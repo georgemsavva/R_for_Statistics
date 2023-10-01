@@ -1,8 +1,15 @@
 ---
 title: "Packages and Pipes"
 author: "George Savva (QIB)"
-format: html
-number-sections: true
+always_allow_html: true
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 2
+    self-contained: true
+    smooth-scroll: true
+    number-sections: true
 ---
 
 R is mainly for statistical computing but there are add-on packages to do many other things.  You are likely to need to use add-on packages for reading Excel files, data manipulation, running specific analyses, creating nice reports etc.
