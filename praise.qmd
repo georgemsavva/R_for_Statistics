@@ -139,8 +139,11 @@ praise() |> say()
 ```
 
 Things to talk about here!
+
 * Nesting the functions
+
 * Creating an object
+
 * Pipes
 
 # A third package
@@ -157,7 +160,7 @@ Have an animal of your choice praise you using mocking spongebob case.
 
 ```{r }
 #| code-fold: true
-#| code-summary: "Expand for solution"
+#| code-summary: "Expand for a possible solution"
 #| eval: false
 praise() |> 
   spongebob::tospongebob() |>
