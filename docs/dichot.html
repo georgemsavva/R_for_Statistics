@@ -88,6 +88,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
@@ -103,11 +104,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
-  "location": "sidebar",
+  "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
-  "panel-placement": "start",
-  "type": "textbox",
+  "panel-placement": "end",
+  "type": "overlay",
   "limit": 20,
   "language": {
     "search-no-results-text": "No results",
@@ -125,11 +126,75 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </head>
 
-<body>
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">R for Statistics</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html">Home</a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-intro-to-r-for-statistics" role="button" data-bs-toggle="dropdown" aria-expanded="false">Intro to R for Statistics</a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-intro-to-r-for-statistics">    
+        <li>
+    <a class="dropdown-item" href="./day1.html">
+ <span class="dropdown-text">NBI PhD Intro to R Day 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./day2.html">
+ <span class="dropdown-text">Day 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./day3.html">
+ <span class="dropdown-text">Day 3</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./workshopscript.qmd">
+ <span class="dropdown-text">JIC MSc Workshop (2001/2002)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./flipbook.html">
+ <span class="dropdown-text">ggplot example (2001/2002)</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-statistics-notes" role="button" data-bs-toggle="dropdown" aria-expanded="false">Statistics notes</a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-statistics-notes">    
+        <li>
+    <a class="dropdown-item" href="./dichot.html">
+ <span class="dropdown-text">Don’t group your data points</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="mailto:george.savva@quadram.ac.uk">Contact me</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/georgemsavva">GitHub</a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -220,13 +285,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     Pearson's product-moment correlation
 
 data:  dat$Exposure and dat$Outcome
-t = 4.0876, df = 28, p-value = 0.0003321
+t = 3.7415, df = 28, p-value = 0.0008367
 alternative hypothesis: true correlation is not equal to 0
 95 percent confidence interval:
- 0.3219622 0.7962295
+ 0.2740644 0.7761619
 sample estimates:
       cor 
-0.6113223 </code></pre>
+0.5773298 </code></pre>
 </div>
 </div>
 <p>So in our sample this correlation is clearly detectable (estimated r=0.47, p=0.0075).</p>
@@ -254,13 +319,13 @@ sample estimates:
     Welch Two Sample t-test
 
 data:  Outcome by HighExposure
-t = -2.7576, df = 26.78, p-value = 0.01036
+t = -3.3666, df = 27.439, p-value = 0.002265
 alternative hypothesis: true difference in means between group FALSE and group TRUE is not equal to 0
 95 percent confidence interval:
- -1.5196026 -0.2227244
+ -1.8251645 -0.4435216
 sample estimates:
 mean in group FALSE  mean in group TRUE 
-           9.592117           10.463280 </code></pre>
+           9.666624           10.800967 </code></pre>
 </div>
 </div>
 <p>The difference is now barely detectable (p=0.02)!</p>
@@ -284,8 +349,8 @@ mean in group FALSE  mean in group TRUE
 <div class="cell-output cell-output-stdout">
 <pre><code>       
         FALSE TRUE
-  FALSE    11    4
-  TRUE      4   11</code></pre>
+  FALSE    12    3
+  TRUE      3   12</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="fu">table</span>(dat<span class="sc">$</span>HighExposure, dat<span class="sc">$</span>HighOutcome))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -293,7 +358,7 @@ mean in group FALSE  mean in group TRUE
     Pearson's Chi-squared test with Yates' continuity correction
 
 data:  table(dat$HighExposure, dat$HighOutcome)
-X-squared = 4.8, df = 1, p-value = 0.02846</code></pre>
+X-squared = 8.5333, df = 1, p-value = 0.003487</code></pre>
 </div>
 </div>
 <p>The difference in ‘high outcome’ proportions between exposure groups is not statistically significant! (p=0.14). This shows that it is much more difficult to see the relationship if we throw away the exact values of the data points.</p>

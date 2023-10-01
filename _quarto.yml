@@ -3,36 +3,37 @@ project:
   output-dir: docs
   title: "R for Statistics"    
   
-navbar:
-  title: "R for Statistics"  
-  left:
-    - text: "Home"
-      icon: fa-home
-      href: index.html
-    - text: Intro to R for Statistics
-      menu:
-        - text: NBI PhD Intro to R Day 1
-          href: day1.qmd
-        - text: Day 2
-          href: day2.qmd
-        - text: Day 3
-          href: day3.qmd
-        - text: JIC MSc Workshop (2001/2002)
-          href: workshopscript.qmd
-        - text: ggplot example (2001/2002)
-          href: flipbook.qmd
-    - text: Statistics notes
-      menu:
-        - text: Don't group your data points
-          href: dichot.qmd
-  right:
-    - text: "Contact me"
-      icon: fa-envelope-o
-      href: mailto:george.savva@quadram.ac.uk       
-    - text: "GitHub"
-      icon: fa-github
-      href: https://github.com/georgemsavva       
-      
+website:
+  navbar: 
+    title: "R for Statistics"  
+    left:
+      - text: "Home"
+        icon: fa-home
+        href: index.html
+      - text: Intro to R for Statistics
+        menu:
+          - text: NBI PhD Intro to R Day 1
+            href: day1.qmd
+          - text: Day 2
+            href: day2.qmd
+          - text: Day 3
+            href: day3.qmd
+          - text: JIC MSc Workshop (2001/2002)
+            href: workshopscript.qmd
+          - text: ggplot example (2001/2002)
+            href: flipbook.qmd
+      - text: Statistics notes
+        menu:
+          - text: Don't group your data points
+            href: dichot.qmd
+    right:
+      - text: "Contact me"
+        icon: fa-envelope-o
+        href: mailto:george.savva@quadram.ac.uk       
+      - text: "GitHub"
+        icon: fa-github
+        href: https://github.com/georgemsavva       
+        
 format:
   html:
     theme: cosmo

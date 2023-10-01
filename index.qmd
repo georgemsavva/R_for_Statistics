@@ -22,7 +22,7 @@ This site hosts my course notes, presentations and data files accompanying my co
 
 Older stuff
 
-* JIC MSc Workshop
+* JIC MSc Workshop (2021/2022)
     * [Tutorial](workshopscript.html)
     
     
