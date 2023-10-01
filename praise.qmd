@@ -1,0 +1,162 @@
+---
+title: "Packages and Pipes"
+author: "George Savva (QIB)"
+format: html
+number-sections: true
+---
+
+R is mainly for statistical computing but there are add-on packages to do many other things.  You are likely to need to use add-on packages for reading Excel files, data manipulation, running specific analyses, creating nice reports etc.
+
+In this tutorial we will get used to using R packages, objects, functions, pipes and how to use the R help system by making ascii animals say nice things to us.
+
+# Installing packages
+
+We will use three packages:
+
+* `praise`
+
+* `spongebob`
+
+* `cowsay`
+
+R does not come with these installed, so first we'll need to 'install' the packages into our local R setup.
+
+To get these packages from CRAN (the Comprehensive R Archive Network) use:
+
+```{r eval=FALSE}
+install.packages( c("praise", "spongebob", "cowsay") )
+```
+
+# Using functions from installed packages
+
+First we'll use the function called `praise` from the `praise` package to generate a nice message:
+
+First try
+
+```{r eval=FALSE}
+praise()
+```
+
+This won't work because although the package is installed on your computer, R does not know to look for functions there.
+
+Use instead:
+
+```{r eval=FALSE}
+praise::praise()
+```
+
+If we don't want to specify the package each time we want to use the function we can add it to the search path:
+
+```{r warning=FALSE}
+library(praise)
+```
+
+Now, for the rest of our `R` session we can use:
+
+```{r}
+praise()
+```
+If we restart our R we'll need to run `library` again.
+
+Now lets try to use our second package, `cowsay`, to have a message spoken by a text mode animal.
+
+```{r}
+cowsay::say(what="Hi George", by="cat")
+```
+
+If we didn't want to type `cowsay` everytime to use this function, how could we have done it?
+
+```{r }
+#| code-fold: true
+#| warning: false
+#| code-summary: "Expand for solution"
+library(cowsay)
+say(what="'library()' adds a package to the search path!", by="hypnotoad")
+```
+# Help and arguments
+
+Suppose we want our message printed a different colour.
+
+Is this possible?  How could we do it?
+
+When we first use a new R function we should check the documentation.  Try:
+
+```{r eval=FALSE}
+?say
+```
+
+Things to consider here:
+
+* Structure of a help file
+
+* Arguments
+
+* Defaults
+
+* Splitting function calls over lines
+
+* RStudio helping us out with code completion
+
+Using the information in the help file can you make the message print in blue?
+
+```{r }
+#| code-fold: true
+#| code-summary: "Expand for solution"
+#| warning: false
+#| eval: false
+# A function call split over lines can be easier to read
+say(what="Use what_color='blue' to get the text in blue.", 
+    by="cat", 
+    what_color="blue")
+```
+
+# Combining functions
+
+R is unusual for a statistics package in that different functions and different packages all work together.  So the output from one function can be used as the input for another package.  This is extremely useful when we want to (for example) load data, manipulate data, estimate a statistical model and report on the model each with different packages.  This is part of what makes R so powerful.
+
+So how can we pass the output from one function into another?
+
+Try each of these code chunks, and try to understand how they work:
+
+```{r }
+say( praise() )
+```
+
+```{r }
+mymessage <- praise()  # look in the 'environment' tab in the right hand pane. what does <- do?
+say(mymessage)
+```
+
+```{r }
+praise() |> say()
+```
+
+Things to talk about here!
+* Nesting the functions
+* Creating an object
+* Pipes
+
+# A third package
+
+The `spongebob` package includes a function called `tospongebob` that turns text into 'mocking spongebob case'.  That is:
+
+```{r }
+spongebob::tospongebob("We should do all our statistics using SPSS")
+```
+
+Your task:
+
+Have an animal of your choice praise you using mocking spongebob case.
+
+```{r }
+#| code-fold: true
+#| code-summary: "Expand for solution"
+#| eval: false
+praise() |> 
+  spongebob::tospongebob() |>
+  say(by="duck", by_color="purple")
+```
+
+## OK that's enough fun.
+
+OK now back to the real work.

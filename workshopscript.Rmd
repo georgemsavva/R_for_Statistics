@@ -4,7 +4,12 @@
 title: 'JIC MSc Workshop: Analysis Walkthrough'
 author: "George Savva"
 date: "March 2022"
-output: word_document
+output:
+  html_document:
+    df_print: paged
+    theme: cosmo
+    toc: yes
+    toc_depth: 2
 ---
 
 

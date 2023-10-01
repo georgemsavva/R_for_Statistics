@@ -1,0 +1,27 @@
+---
+title: "R and RStudio for Statistics"
+output:
+  html_document:
+    df_print: paged
+    theme: cosmo
+    toc: no
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This site hosts my various course notes, presentations and data files accompanying my courses on R and RStudio.
+
+* NBI Introduction to R
+    * [Day 1](./day1.html)
+    * [Day 2](./day2.html)
+    * [Day 3](./day3.html)
+* JIC MSc Workshop
+    * [Tutorial](./workshopscript.html)
+* Statistics notes
+    * [Don't dichotomise your data](./dichot.html)
+* Notes on using R
+    * [Tidyverse, data.table and others for making descriptive tables](./datatabletidyverse.Rmd)
+    
+    

@@ -1,612 +1,449 @@
 <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
-<html>
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
 
-<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta charset="utf-8" />
-<meta name="generator" content="pandoc" />
-<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
-
-
-<meta name="author" content="George Savva, (QIB)" />
-
+<meta name="author" content="George Savva, (QIB)">
 
 <title>Why is ‘grouping’ your samples bad for analysis?</title>
-
-<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
-<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
-<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<style>h1 {font-size: 34px;}
-       h1.title {font-size: 38px;}
-       h2 {font-size: 30px;}
-       h3 {font-size: 24px;}
-       h4 {font-size: 18px;}
-       h5 {font-size: 16px;}
-       h6 {font-size: 12px;}
-       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
-       pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
-<script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
-
-<style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
-
-<style type="text/css">code{white-space: pre;}</style>
-<script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
-  }
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
 }
-</script>
-
-
-
-
-
-
-
-
-
-<style type = "text/css">
-.main-container {
-  max-width: 940px;
-  margin-left: auto;
-  margin-right: auto;
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
-img {
-  max-width:100%;
-}
-.tabbed-pane {
-  padding-top: 12px;
-}
-.html-widget {
-  margin-bottom: 20px;
-}
-button.code-folding-btn:focus {
-  outline: none;
-}
-summary {
-  display: list-item;
-}
-details > summary > p:only-child {
-  display: inline;
-}
-pre code {
-  padding: 0;
-}
-</style>
-
-
-<style type="text/css">
-.dropdown-submenu {
-  position: relative;
-}
-.dropdown-submenu>.dropdown-menu {
-  top: 0;
-  left: 100%;
-  margin-top: -6px;
-  margin-left: -1px;
-  border-radius: 0 6px 6px 6px;
-}
-.dropdown-submenu:hover>.dropdown-menu {
-  display: block;
-}
-.dropdown-submenu>a:after {
-  display: block;
-  content: " ";
-  float: right;
-  width: 0;
-  height: 0;
-  border-color: transparent;
-  border-style: solid;
-  border-width: 5px 0 5px 5px;
-  border-left-color: #cccccc;
-  margin-top: 5px;
-  margin-right: -10px;
-}
-.dropdown-submenu:hover>a:after {
-  border-left-color: #adb5bd;
-}
-.dropdown-submenu.pull-left {
-  float: none;
-}
-.dropdown-submenu.pull-left>.dropdown-menu {
-  left: -100%;
-  margin-left: 10px;
-  border-radius: 6px 0 6px 6px;
-}
-</style>
-
-<script type="text/javascript">
-// manage active state of menu based on current page
-$(document).ready(function () {
-  // active menu anchor
-  href = window.location.pathname
-  href = href.substr(href.lastIndexOf('/') + 1)
-  if (href === "")
-    href = "index.html";
-  var menuAnchor = $('a[href="' + href + '"]');
-
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
-
-  // Navbar adjustments
-  var navHeight = $(".navbar").first().height() + 15;
-  var style = document.createElement('style');
-  var pt = "padding-top: " + navHeight + "px; ";
-  var mt = "margin-top: -" + navHeight + "px; ";
-  var css = "";
-  // offset scroll position for anchor links (for fixed navbar)
-  for (var i = 1; i <= 6; i++) {
-    css += ".section h" + i + "{ " + pt + mt + "}\n";
-  }
-  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
-  document.head.appendChild(style);
-});
-</script>
-
-<!-- tabsets -->
-
-<style type="text/css">
-.tabset-dropdown > .nav-tabs {
-  display: inline-table;
-  max-height: 500px;
-  min-height: 44px;
-  overflow-y: auto;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
-  font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
-  font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
-}
-
-.tabset-dropdown > .nav-tabs > li.active {
-  display: block;
-}
-
-.tabset-dropdown > .nav-tabs > li > a,
-.tabset-dropdown > .nav-tabs > li > a:focus,
-.tabset-dropdown > .nav-tabs > li > a:hover {
-  border: none;
-  display: inline-block;
-  border-radius: 4px;
-  background-color: transparent;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
-  display: block;
-  float: none;
-}
-
-.tabset-dropdown > .nav-tabs > li {
-  display: none;
-}
-</style>
-
-<!-- code folding -->
-
-
-
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
 @media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-}
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
   }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
 
 
 </head>
 
 <body>
 
-
-<div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
-
-
-
-
-<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="index.html">R for Statistics</a>
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#summary" id="toc-summary" class="nav-link active" data-scroll-target="#summary">Summary</a></li>
+  <li><a href="#motivation" id="toc-motivation" class="nav-link" data-scroll-target="#motivation">Motivation</a></li>
+  <li><a href="#packages" id="toc-packages" class="nav-link" data-scroll-target="#packages">Packages</a></li>
+  <li><a href="#dataset" id="toc-dataset" class="nav-link" data-scroll-target="#dataset">Dataset</a></li>
+  <li><a href="#dichotomising-variables" id="toc-dichotomising-variables" class="nav-link" data-scroll-target="#dichotomising-variables">Dichotomising variables</a></li>
+  <li><a href="#implications-for-power-and-sample-size" id="toc-implications-for-power-and-sample-size" class="nav-link" data-scroll-target="#implications-for-power-and-sample-size">Implications for power and sample size</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
     </div>
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <li>
-  <a href="index.html">
-    <span class="fa fa-home"></span>
-     
-    Home
-  </a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Intro to R for Statistics
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="day1.html">NBI PhD Intro to R Day 1</a>
-    </li>
-    <li>
-      <a href="day2.html">Day 2</a>
-    </li>
-    <li>
-      <a href="day3.html">Day 3</a>
-    </li>
-    <li>
-      <a href="workshopscript.html">JIC MSc Workshop</a>
-    </li>
-    <li>
-      <a href="flipbook.html">ggplot example</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Statistics notes
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="dichot.html">Don't group your data points</a>
-    </li>
-  </ul>
-</li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="mailto:george.savva@quadram.ac.uk">
-    <span class="fa fa-envelope-o"></span>
-     
-    Contact me
-  </a>
-</li>
-<li>
-  <a href="https://github.com/georgemsavva">
-    <span class="fa fa-github"></span>
-     
-    GitHub
-  </a>
-</li>
-      </ul>
-    </div><!--/.nav-collapse -->
-  </div><!--/.container -->
-</div><!--/.navbar -->
+<!-- main -->
+<main class="content" id="quarto-document-content">
 
-<div id="header">
-
-
-
-<h1 class="title toc-ignore">Why is ‘grouping’ your samples bad for analysis?</h1>
-<h4 class="author">George Savva, (QIB)</h4>
-
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Why is ‘grouping’ your samples bad for analysis?</h1>
 </div>
 
 
-<div id="summary" class="section level1" number="1">
-<h1 number="1"><span class="header-section-number">1</span> Summary</h1>
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>George Savva, (QIB) </p>
+          </div>
+  </div>
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="summary" class="level1">
+<h1>Summary</h1>
 <p>If we have continuous data then we should keep it continuous in analysis. Grouping samples into (say) ‘high’ vs ‘low’ or ‘recovered’ vs ‘not recovered’ throws away information and makes it more difficult to detect associations. The power of your study is reduced and the sample size needed goes up.</p>
+<div class="cell">
+
 </div>
-<div id="motivation" class="section level1" number="2">
-<h1 number="2"><span class="header-section-number">2</span> Motivation</h1>
+</section>
+<section id="motivation" class="level1">
+<h1>Motivation</h1>
 <p>Suppose we are interested in the effect of an exposure on an outcome, and we have measured both in a sample. Both our exposure and our outcome are measured as continuous variables, for example we might be interested in the effect of fibre intake on gut microbial diversity.</p>
 <p>There are a couple of possible approaches to the analysis. First, we could estimate or test for a <em>correlation</em> between the exposure and the outcome.</p>
 <p>Alternatively we could dichotomise the exposure, splitting the samples into a “high fibre” and a “low fibre” group, before comparing the microbial diversity in each group. Or we could dichotomise the outcome into “high diversity” and “low diversity”.</p>
 <p>Which should we choose? Intuitively we might prefer the dichotomised version for ease of interpretation, but how does it affect our ability to detect any association?</p>
-</div>
-<div id="packages" class="section level1" number="3">
-<h1 number="3"><span class="header-section-number">3</span> Packages</h1>
+</section>
+<section id="packages" class="level1">
+<h1>Packages</h1>
 <p>We’ll need the following R packages for this simulation:</p>
-<pre class="r"><code>library(pwr)
-library(rmarkdown)
-library(knitr)
-library(ggplot2)
-library(patchwork)
-library(MASS)
-library(data.table)</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pwr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rmarkdown)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="dataset" class="section level1" number="4">
-<h1 number="4"><span class="header-section-number">4</span> Dataset</h1>
+</section>
+<section id="dataset" class="level1">
+<h1>Dataset</h1>
 <p>Suppose our exposure and outcome are both normally distributed with a correlation of 0.5.</p>
 <p>We can sample 50 points as follows:</p>
-<pre class="r"><code>dat = data.frame(mvrnorm(n=30, mu=c(10,10), Sigma = matrix(c(1,0.5,0.5,1),nrow=2)))
-names(dat) &lt;- c(&quot;Exposure&quot;, &quot;Outcome&quot;)
-ggplot(dat, aes(x=Exposure, y=Outcome)) + geom_point() + theme_bw()</code></pre>
-<p><img src="dichot_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="fu">mvrnorm</span>(<span class="at">n=</span><span class="dv">30</span>, <span class="at">mu=</span><span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">10</span>), <span class="at">Sigma =</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="fl">0.5</span>,<span class="fl">0.5</span>,<span class="dv">1</span>),<span class="at">nrow=</span><span class="dv">2</span>)))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(dat) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Exposure"</span>, <span class="st">"Outcome"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="at">x=</span>Exposure, <span class="at">y=</span>Outcome)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="dichot_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 <p>How can we estimate or test this correlation by statistical analysis?</p>
 <p>The simplest way would be to test</p>
-<pre class="r"><code>cor.test(dat$Exposure, dat$Outcome)</code></pre>
-<pre><code>## 
-##  Pearson&#39;s product-moment correlation
-## 
-## data:  dat$Exposure and dat$Outcome
-## t = 2.3043, df = 28, p-value = 0.02884
-## alternative hypothesis: true correlation is not equal to 0
-## 95 percent confidence interval:
-##  0.04554063 0.66401588
-## sample estimates:
-##       cor 
-## 0.3992593</code></pre>
-<p>So in our sample this correlation is clearly detectable (estimated r=0.47, p=0.0075).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(dat<span class="sc">$</span>Exposure, dat<span class="sc">$</span>Outcome)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  dat$Exposure and dat$Outcome
+t = 4.0876, df = 28, p-value = 0.0003321
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.3219622 0.7962295
+sample estimates:
+      cor 
+0.6113223 </code></pre>
 </div>
-<div id="dichotomising-variables" class="section level1" number="5">
-<h1 number="5"><span class="header-section-number">5</span> Dichotomising variables</h1>
+</div>
+<p>So in our sample this correlation is clearly detectable (estimated r=0.47, p=0.0075).</p>
+</section>
+<section id="dichotomising-variables" class="level1">
+<h1>Dichotomising variables</h1>
 <p>Dichotomising means splitting variables into two groups. In our example we might decide to compare those with a <code>high</code> vs a <code>low</code> exposure. Lets make a variable corresponding to whether the exposure for each participant is above observed median. This will split the data into two groups, and we can describe how the outcome differs between the high and low exposure groups:</p>
-<pre class="r"><code>dat$HighExposure &lt;- dat$Exposure &gt; median(dat$Exposure)
-(ggplot(dat, aes(Exposure, Outcome, color=HighExposure)) + 
-  geom_point() + theme_bw() + 
-  scale_color_manual(values=c(&quot;black&quot;, &quot;red&quot;)))+
-(ggplot(dat, aes(HighExposure, Outcome)) + 
-  geom_boxplot() + geom_point(aes(color=HighExposure)) + theme_bw()+ 
-  scale_color_manual(values=c(&quot;black&quot;, &quot;red&quot;)))</code></pre>
-<p><img src="dichot_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>HighExposure <span class="ot">&lt;-</span> dat<span class="sc">$</span>Exposure <span class="sc">&gt;</span> <span class="fu">median</span>(dat<span class="sc">$</span>Exposure)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>(<span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(Exposure, Outcome, <span class="at">color=</span>HighExposure)) <span class="sc">+</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"red"</span>)))<span class="sc">+</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>(<span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(HighExposure, Outcome)) <span class="sc">+</span> </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>HighExposure)) <span class="sc">+</span> <span class="fu">theme_bw</span>()<span class="sc">+</span> </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"red"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="dichot_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 <p>Now we can use (for example) a t-test to for difference in outcome between “high” and “low” exposure groups:</p>
-<pre class="r"><code>t.test(data=dat, Outcome ~ HighExposure)</code></pre>
-<pre><code>## 
-##  Welch Two Sample t-test
-## 
-## data:  Outcome by HighExposure
-## t = -1.3704, df = 27.897, p-value = 0.1815
-## alternative hypothesis: true difference in means between group FALSE and group TRUE is not equal to 0
-## 95 percent confidence interval:
-##  -1.3942983  0.2766186
-## sample estimates:
-## mean in group FALSE  mean in group TRUE 
-##            10.09329            10.65213</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">data=</span>dat, Outcome <span class="sc">~</span> HighExposure)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  Outcome by HighExposure
+t = -2.7576, df = 26.78, p-value = 0.01036
+alternative hypothesis: true difference in means between group FALSE and group TRUE is not equal to 0
+95 percent confidence interval:
+ -1.5196026 -0.2227244
+sample estimates:
+mean in group FALSE  mean in group TRUE 
+           9.592117           10.463280 </code></pre>
+</div>
+</div>
 <p>The difference is now barely detectable (p=0.02)!</p>
 <p>We could go further, and dichotomise both the outcome and the exposure.</p>
-<pre class="r"><code>dat$HighOutcome &lt;- dat$Outcome &gt; median(dat$Outcome)
-(ggplot(dat, aes(Exposure, Outcome, color=HighExposure, shape=HighOutcome)) + 
-  geom_point() + theme_bw() + geom_hline(yintercept=median(dat$Outcome),lty=2)+
-  scale_color_manual(values=c(&quot;black&quot;, &quot;red&quot;)))+
-(ggplot(dat, aes(HighExposure, as.numeric(HighOutcome))) + 
-  geom_bar(stat=&quot;summary&quot;, fun.y=mean, col=&quot;black&quot;, aes(fill=HighExposure)) + theme_bw()+
-   labs(y=&quot;Proportion with high outcome&quot;)+
-  scale_fill_manual(values=c(&quot;black&quot;, &quot;red&quot;)))</code></pre>
-<p><img src="dichot_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>HighOutcome <span class="ot">&lt;-</span> dat<span class="sc">$</span>Outcome <span class="sc">&gt;</span> <span class="fu">median</span>(dat<span class="sc">$</span>Outcome)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>(<span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(Exposure, Outcome, <span class="at">color=</span>HighExposure, <span class="at">shape=</span>HighOutcome)) <span class="sc">+</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="fu">median</span>(dat<span class="sc">$</span>Outcome),<span class="at">lty=</span><span class="dv">2</span>)<span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"red"</span>)))<span class="sc">+</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>(<span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(HighExposure, <span class="fu">as.numeric</span>(HighOutcome))) <span class="sc">+</span> </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"summary"</span>, <span class="at">fun.y=</span>mean, <span class="at">col=</span><span class="st">"black"</span>, <span class="fu">aes</span>(<span class="at">fill=</span>HighExposure)) <span class="sc">+</span> <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>   <span class="fu">labs</span>(<span class="at">y=</span><span class="st">"Proportion with high outcome"</span>)<span class="sc">+</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"red"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="dichot_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 <p>Now our relationship seems obscured. Our analysis consists of analysing a 2x2 contingency table:</p>
-<pre class="r"><code>table(dat$HighExposure, dat$HighOutcome)</code></pre>
-<pre><code>##        
-##         FALSE TRUE
-##   FALSE    10    5
-##   TRUE      5   10</code></pre>
-<pre class="r"><code>chisq.test(table(dat$HighExposure, dat$HighOutcome))</code></pre>
-<pre><code>## 
-##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
-## 
-## data:  table(dat$HighExposure, dat$HighOutcome)
-## X-squared = 2.1333, df = 1, p-value = 0.1441</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dat<span class="sc">$</span>HighExposure, dat<span class="sc">$</span>HighOutcome)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       
+        FALSE TRUE
+  FALSE    11    4
+  TRUE      4   11</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="fu">table</span>(dat<span class="sc">$</span>HighExposure, dat<span class="sc">$</span>HighOutcome))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's Chi-squared test with Yates' continuity correction
+
+data:  table(dat$HighExposure, dat$HighOutcome)
+X-squared = 4.8, df = 1, p-value = 0.02846</code></pre>
+</div>
+</div>
 <p>The difference in ‘high outcome’ proportions between exposure groups is not statistically significant! (p=0.14). This shows that it is much more difficult to see the relationship if we throw away the exact values of the data points.</p>
 <p>So although there is a real relationship between exposure and outcome that we have been able to detect by correlating the values in our sample, it was harder to detect when we dichotomised the exposure, and we could not detect it at all in the grouped data.</p>
-</div>
-<div id="implications-for-power-and-sample-size" class="section level1" number="6">
-<h1 number="6"><span class="header-section-number">6</span> Implications for power and sample size</h1>
+</section>
+<section id="implications-for-power-and-sample-size" class="level1">
+<h1>Implications for power and sample size</h1>
 <p>Our single example illustrated that dichotomising data made analysis difficult or impossible by discarding data.</p>
 <p>We can quantify this loss of information by power calculations, and consider how much our sample size would need to increase to overcome this.</p>
 <p>The graph below shows the power to detect a correlation of 0.5 as the sample size changes using each of the methods described above.</p>
 <p>If we analyse the continuous data then we need a sample size of about 28 for a power of 80%. If we dichotomise the exposure only we would need 43 samples, if we dichotomise both and analyse the 2x2 table we would need 69, more than twice the original sample.</p>
-<pre class="r"><code>sampleSizes &lt;- seq(10,100,5)
-
-powers &lt;- data.table(t(sapply(sampleSizes, function(n){c(
-  sampleSizes=n,
-  continuous=100*pwr.r.test(r=0.5, n = n)$power,
-  dichotone=100*pwr.t.test(d=.8 / 0.91, n = n/2)$power,
-  dichotboth=100*pwr.2p.test(h=ES.h(1/3, 2/3), n = n/2)$power
-  )
-  })))
-
-ggplot(melt(powers,id.vars = &quot;sampleSizes&quot;, variable.name = &quot;Analysis&quot;, value.name = &quot;Power&quot;), 
-       aes(sampleSizes, Power, color=Analysis)) + 
-  geom_line() + 
-  geom_point() + 
-  theme_bw() + 
-  scale_x_continuous(limits=c(0,100)) + 
-  labs(x=&quot;Sample Size (total)&quot;, y=&quot;Power (%)&quot;) + 
-  scale_color_manual(labels=c(dichotboth=&quot;Dichotomise both&quot;, 
-                              dichotone=&quot;Dichtomise outcome only&quot;, 
-                              continuous=&quot;Correlate continuous measures&quot;), 
-                     values=c(&quot;black&quot;, &quot;red&quot;, &quot;blue&quot;)) + 
-  theme(legend.position = c(0.7,0.3), legend.background = element_rect(linetype = 1, size = .5, colour = &quot;black&quot;)) + 
-  geom_hline(yintercept=80, lty=2)</code></pre>
-<p><img src="dichot_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>sampleSizes <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">10</span>,<span class="dv">100</span>,<span class="dv">5</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>powers <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="fu">t</span>(<span class="fu">sapply</span>(sampleSizes, <span class="cf">function</span>(n){<span class="fu">c</span>(</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">sampleSizes=</span>n,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">continuous=</span><span class="dv">100</span><span class="sc">*</span><span class="fu">pwr.r.test</span>(<span class="at">r=</span><span class="fl">0.5</span>, <span class="at">n =</span> n)<span class="sc">$</span>power,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">dichotone=</span><span class="dv">100</span><span class="sc">*</span><span class="fu">pwr.t.test</span>(<span class="at">d=</span>.<span class="dv">8</span> <span class="sc">/</span> <span class="fl">0.91</span>, <span class="at">n =</span> n<span class="sc">/</span><span class="dv">2</span>)<span class="sc">$</span>power,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">dichotboth=</span><span class="dv">100</span><span class="sc">*</span><span class="fu">pwr.2p.test</span>(<span class="at">h=</span><span class="fu">ES.h</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>), <span class="at">n =</span> n<span class="sc">/</span><span class="dv">2</span>)<span class="sc">$</span>power</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  })))</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">melt</span>(powers,<span class="at">id.vars =</span> <span class="st">"sampleSizes"</span>, <span class="at">variable.name =</span> <span class="st">"Analysis"</span>, <span class="at">value.name =</span> <span class="st">"Power"</span>), </span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(sampleSizes, Power, <span class="at">color=</span>Analysis)) <span class="sc">+</span> </span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">100</span>)) <span class="sc">+</span> </span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Sample Size (total)"</span>, <span class="at">y=</span><span class="st">"Power (%)"</span>) <span class="sc">+</span> </span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">labels=</span><span class="fu">c</span>(<span class="at">dichotboth=</span><span class="st">"Dichotomise both"</span>, </span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>                              <span class="at">dichotone=</span><span class="st">"Dichtomise outcome only"</span>, </span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>                              <span class="at">continuous=</span><span class="st">"Correlate continuous measures"</span>), </span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>                     <span class="at">values=</span><span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"red"</span>, <span class="st">"blue"</span>)) <span class="sc">+</span> </span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.7</span>,<span class="fl">0.3</span>), <span class="at">legend.background =</span> <span class="fu">element_rect</span>(<span class="at">linetype =</span> <span class="dv">1</span>, <span class="at">size =</span> .<span class="dv">5</span>, <span class="at">colour =</span> <span class="st">"black"</span>)) <span class="sc">+</span> </span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="dv">80</span>, <span class="at">lty=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="dichot_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
-<div id="conclusion" class="section level1" number="7">
-<h1 number="7"><span class="header-section-number">7</span> Conclusion</h1>
+</div>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
 <p>Grouping up our continuous variables for analysis throws away information. It makes associations more difficult to detect, and increases the number of samples we need to analyse.</p>
 <p>There are other harmful consequences to dichotomising data. Sometimes a defense of the practice is that by collapsing quantiative findings into yes/no outcomes makes results easier to interpret, but Stephen Senn makes a good case that this is wrong and can even be misleading.</p>
 <p>So in general, if the phenomenon you are interested in can be measured continuously then you should do so, and be sure to use all of this quantitative information in the analysis.</p>
-</div>
 
 
+</section>
 
-</div>
-</div>
-
-</div>
-
-<script>
-
-// add bootstrap table styles to pandoc tables
-function bootstrapStylePandocTables() {
-  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
-}
-$(document).ready(function () {
-  bootstrapStylePandocTables();
-});
-
-
-</script>
-
-<!-- tabsets -->
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open');
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
   });
-});
-</script>
-
-<!-- code folding -->
-
-<script>
-$(document).ready(function ()  {
-
-    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
-    $('.unlisted.unnumbered').addClass('toc-ignore')
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
       },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
     };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
 });
 </script>
+</div> <!-- /content -->
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 
-</body>
-</html>
+
+</body></html>

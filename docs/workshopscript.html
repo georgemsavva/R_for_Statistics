@@ -1,408 +1,194 @@
 <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
-<html>
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
 
-<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta charset="utf-8" />
-<meta name="generator" content="pandoc" />
-<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
-
-
-<meta name="author" content="George Savva" />
-
+<meta name="author" content="George Savva">
+<meta name="dcterms.date" content="2022-03-01">
 
 <title>JIC MSc Workshop: Analysis Walkthrough</title>
-
-<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
-<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
-<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<style>h1 {font-size: 34px;}
-       h1.title {font-size: 38px;}
-       h2 {font-size: 30px;}
-       h3 {font-size: 24px;}
-       h4 {font-size: 18px;}
-       h5 {font-size: 16px;}
-       h6 {font-size: 12px;}
-       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
-       pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
-<script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
-<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
-<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
-
-<style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
-
-<style type="text/css">code{white-space: pre;}</style>
-<script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
-  }
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
 }
-</script>
-
-
-
-
-
-
-
-
-
-<style type = "text/css">
-.main-container {
-  max-width: 940px;
-  margin-left: auto;
-  margin-right: auto;
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
-img {
-  max-width:100%;
-}
-.tabbed-pane {
-  padding-top: 12px;
-}
-.html-widget {
-  margin-bottom: 20px;
-}
-button.code-folding-btn:focus {
-  outline: none;
-}
-summary {
-  display: list-item;
-}
-details > summary > p:only-child {
-  display: inline;
-}
-pre code {
-  padding: 0;
-}
-</style>
-
-
-<style type="text/css">
-.dropdown-submenu {
-  position: relative;
-}
-.dropdown-submenu>.dropdown-menu {
-  top: 0;
-  left: 100%;
-  margin-top: -6px;
-  margin-left: -1px;
-  border-radius: 0 6px 6px 6px;
-}
-.dropdown-submenu:hover>.dropdown-menu {
-  display: block;
-}
-.dropdown-submenu>a:after {
-  display: block;
-  content: " ";
-  float: right;
-  width: 0;
-  height: 0;
-  border-color: transparent;
-  border-style: solid;
-  border-width: 5px 0 5px 5px;
-  border-left-color: #cccccc;
-  margin-top: 5px;
-  margin-right: -10px;
-}
-.dropdown-submenu:hover>a:after {
-  border-left-color: #adb5bd;
-}
-.dropdown-submenu.pull-left {
-  float: none;
-}
-.dropdown-submenu.pull-left>.dropdown-menu {
-  left: -100%;
-  margin-left: 10px;
-  border-radius: 6px 0 6px 6px;
-}
-</style>
-
-<script type="text/javascript">
-// manage active state of menu based on current page
-$(document).ready(function () {
-  // active menu anchor
-  href = window.location.pathname
-  href = href.substr(href.lastIndexOf('/') + 1)
-  if (href === "")
-    href = "index.html";
-  var menuAnchor = $('a[href="' + href + '"]');
-
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
-
-  // Navbar adjustments
-  var navHeight = $(".navbar").first().height() + 15;
-  var style = document.createElement('style');
-  var pt = "padding-top: " + navHeight + "px; ";
-  var mt = "margin-top: -" + navHeight + "px; ";
-  var css = "";
-  // offset scroll position for anchor links (for fixed navbar)
-  for (var i = 1; i <= 6; i++) {
-    css += ".section h" + i + "{ " + pt + mt + "}\n";
-  }
-  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
-  document.head.appendChild(style);
-});
-</script>
-
-<!-- tabsets -->
-
-<style type="text/css">
-.tabset-dropdown > .nav-tabs {
-  display: inline-table;
-  max-height: 500px;
-  min-height: 44px;
-  overflow-y: auto;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
-  font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
-  font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
-}
-
-.tabset-dropdown > .nav-tabs > li.active {
-  display: block;
-}
-
-.tabset-dropdown > .nav-tabs > li > a,
-.tabset-dropdown > .nav-tabs > li > a:focus,
-.tabset-dropdown > .nav-tabs > li > a:hover {
-  border: none;
-  display: inline-block;
-  border-radius: 4px;
-  background-color: transparent;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
-  display: block;
-  float: none;
-}
-
-.tabset-dropdown > .nav-tabs > li {
-  display: none;
-}
-</style>
-
-<!-- code folding -->
-
-
-
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
 @media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-}
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
   }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
 
 
 </head>
 
 <body>
 
-
-<div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
-
-
-
-
-<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="index.html">R for Statistics</a>
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#background-to-the-dataset" id="toc-background-to-the-dataset" class="nav-link" data-scroll-target="#background-to-the-dataset">Background to the dataset</a></li>
+  <li><a href="#set-up" id="toc-set-up" class="nav-link" data-scroll-target="#set-up">Set up</a></li>
+  <li><a href="#load-data" id="toc-load-data" class="nav-link" data-scroll-target="#load-data">Load data</a></li>
+  <li><a href="#explore-data" id="toc-explore-data" class="nav-link" data-scroll-target="#explore-data">Explore data</a></li>
+  <li><a href="#access-elements-from-the-dataframe" id="toc-access-elements-from-the-dataframe" class="nav-link" data-scroll-target="#access-elements-from-the-dataframe">Access elements from the dataframe</a></li>
+  <li><a href="#wrangle" id="toc-wrangle" class="nav-link" data-scroll-target="#wrangle">Wrangle</a></li>
+  <li><a href="#describe" id="toc-describe" class="nav-link" data-scroll-target="#describe">Describe</a></li>
+  <li><a href="#visualise" id="toc-visualise" class="nav-link" data-scroll-target="#visualise">Visualise</a></li>
+  <li><a href="#clean-data" id="toc-clean-data" class="nav-link" data-scroll-target="#clean-data">Clean data</a></li>
+  <li><a href="#simple-tests" id="toc-simple-tests" class="nav-link" data-scroll-target="#simple-tests">Simple tests</a></li>
+  <li><a href="#model" id="toc-model" class="nav-link" data-scroll-target="#model">Model</a></li>
+  <li><a href="#diagnose" id="toc-diagnose" class="nav-link" data-scroll-target="#diagnose">Diagnose</a></li>
+  <li><a href="#augment-model" id="toc-augment-model" class="nav-link" data-scroll-target="#augment-model">Augment model</a></li>
+  <li><a href="#interactions" id="toc-interactions" class="nav-link" data-scroll-target="#interactions">Interactions</a></li>
+  </ul>
+</nav>
     </div>
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <li>
-  <a href="index.html">
-    <span class="fa fa-home"></span>
-     
-    Home
-  </a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Intro to R for Statistics
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="day1.html">NBI PhD Intro to R Day 1</a>
-    </li>
-    <li>
-      <a href="day2.html">Day 2</a>
-    </li>
-    <li>
-      <a href="day3.html">Day 3</a>
-    </li>
-    <li>
-      <a href="workshopscript.html">JIC MSc Workshop</a>
-    </li>
-    <li>
-      <a href="flipbook.html">ggplot example</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Statistics notes
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="dichot.html">Don't group your data points</a>
-    </li>
-  </ul>
-</li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="mailto:george.savva@quadram.ac.uk">
-    <span class="fa fa-envelope-o"></span>
-     
-    Contact me
-  </a>
-</li>
-<li>
-  <a href="https://github.com/georgemsavva">
-    <span class="fa fa-github"></span>
-     
-    GitHub
-  </a>
-</li>
-      </ul>
-    </div><!--/.nav-collapse -->
-  </div><!--/.container -->
-</div><!--/.navbar -->
+<!-- main -->
+<main class="content" id="quarto-document-content">
 
-<div id="header">
-
-
-
-<h1 class="title toc-ignore">JIC MSc Workshop: Analysis Walkthrough</h1>
-<h4 class="author">George Savva</h4>
-<h4 class="date">March 2022</h4>
-
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">JIC MSc Workshop: Analysis Walkthrough</h1>
 </div>
 
 
-<div id="introduction" class="section level1" number="1">
-<h1 number="1"><span class="header-section-number">1</span> Introduction</h1>
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>George Savva </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 1, 2022</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
 <p>This page supports a short workshop in R and RStudio for Statistics. It is not intended as a comprehensive tutorial but as a vehicle for demonstrating and discussing some aspects of a typical analysis using R, with signposting in the lecture notes for further self-directed learning.</p>
 <p>A simple dataset is introduced along with some research questions and I demonstrate a typical process of loading, visualising, cleaning, analysing and reporting the analysis. The workshop will very briefly introduce:</p>
 <ul>
@@ -421,9 +207,9 @@ div.tocify {
 </ul>
 <p>Supporting material (presentation slides, dataset) is linked.</p>
 <p>A more detailed R tutorial is also available on this site.</p>
-</div>
-<div id="background-to-the-dataset" class="section level1" number="2">
-<h1 number="2"><span class="header-section-number">2</span> Background to the dataset</h1>
+</section>
+<section id="background-to-the-dataset" class="level1">
+<h1>Background to the dataset</h1>
 <p>We have an Excel spreadsheet with data corresponding to a rehabilitation intervention for stroke patients.</p>
 <p>Hospital patients were recruited from five hospital departments and were randomised to either standard care or an experimental treatment. The time they took to complete a walking speed task was recorded as the outcome. A lower time corresponds to a better outcome.</p>
 <p>The dataset is here <a href="./walkingspeed.xlsx">walkingspeed.xlsx</a>: A R script including only the R command needed for the analysis is here: <a href="./workshopscript.R">workshopscript.R</a>:</p>
@@ -443,22 +229,61 @@ div.tocify {
 <li>Test and model</li>
 <li>Report</li>
 </ul>
-</div>
-<div id="set-up" class="section level1" number="3">
-<h1 number="3"><span class="header-section-number">3</span> Set up</h1>
+</section>
+<section id="set-up" class="level1">
+<h1>Set up</h1>
 <p>We will need to install the libraries below if we don’t already have them. We should also start a new project in the project directory, and download the data and the code if necessary.</p>
-<pre class="r"><code>library(ggplot2)
-library(dplyr)
-library(data.table)
-library(readxl)</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggplot2' was built under R version 4.1.3</code></pre>
 </div>
-<div id="load-data" class="section level1" number="4">
-<h1 number="4"><span class="header-section-number">4</span> Load data</h1>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'dplyr' was built under R version 4.1.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'data.table' was built under R version 4.1.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'data.table'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:dplyr':
+
+    between, first, last</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'readxl' was built under R version 4.1.3</code></pre>
+</div>
+</div>
+</section>
+<section id="load-data" class="level1">
+<h1>Load data</h1>
 <p>We should inspect the data in Excel. Note there are three sheets that we need to combine to do our analysis.</p>
 <p>Review the “tidy data” powerpoint presentation here: <a href="./day2_tidydata.pptx">day2_tidydata.pptx</a>.</p>
-<pre class="r"><code>treated &lt;- read_excel(path=&quot;walkingspeed.xlsx&quot;, 
-                      sheet = &quot;treated&quot;,
-                      range = &quot;A1:B68&quot;)</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>treated <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="at">path=</span><span class="st">"walkingspeed.xlsx"</span>, </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">sheet =</span> <span class="st">"treated"</span>,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">range =</span> <span class="st">"A1:B68"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>Notes:</p>
 <ul>
 <li>The library readxl for reading Excel sheets. There are alternatives but I find this works well.</li>
@@ -468,329 +293,463 @@ library(readxl)</code></pre>
 <li>Help file, how did we know how this function worked.</li>
 </ul>
 <p>We need to load all three sheets as separate data frames.</p>
-<pre class="r"><code>control &lt;- read_excel(path=&quot;walkingspeed.xlsx&quot;, 
-                      sheet = &quot;control&quot;,
-                      range = &quot;A1:B70&quot;)
-
-metadata &lt;- read_excel(path=&quot;walkingspeed.xlsx&quot;, 
-                      sheet = &quot;meta&quot;,
-                      range = &quot;A1:D139&quot;)</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>control <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="at">path=</span><span class="st">"walkingspeed.xlsx"</span>, </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">sheet =</span> <span class="st">"control"</span>,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">range =</span> <span class="st">"A1:B70"</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="at">path=</span><span class="st">"walkingspeed.xlsx"</span>, </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">sheet =</span> <span class="st">"meta"</span>,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">range =</span> <span class="st">"A1:D139"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="explore-data" class="section level1" number="5">
-<h1 number="5"><span class="header-section-number">5</span> Explore data</h1>
+</section>
+<section id="explore-data" class="level1">
+<h1>Explore data</h1>
 <p>R includes several functions to inspect data</p>
-<pre class="r"><code>class(treated)</code></pre>
-<pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
-<pre class="r"><code>str(treated)</code></pre>
-<pre><code>## tibble [67 x 2] (S3: tbl_df/tbl/data.frame)
-##  $ patid: num [1:67] 1 3 5 7 9 11 13 15 17 19 ...
-##  $ time : chr [1:67] &quot;1.8975120000000001&quot; &quot;2.927432&quot; &quot;2.2042579999999998&quot; &quot;2.1441910000000002&quot; ...</code></pre>
-<pre class="r"><code>summary(treated)</code></pre>
-<pre><code>##      patid         time          
-##  Min.   :  1   Length:67         
-##  1st Qu.: 34   Class :character  
-##  Median : 67   Mode  :character  
-##  Mean   : 67                     
-##  3rd Qu.:100                     
-##  Max.   :133</code></pre>
-<pre class="r"><code>head(treated)</code></pre>
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["patid"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["time"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"1.8975120000000001"},{"1":"3","2":"2.927432"},{"1":"5","2":"2.2042579999999998"},{"1":"7","2":"2.1441910000000002"},{"1":"9","2":"1.7203250000000001"},{"1":"11","2":"2.1476410000000001"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(treated)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "tbl_df"     "tbl"        "data.frame"</code></pre>
 </div>
-<pre class="r"><code># View(treated)
-str(control)</code></pre>
-<pre><code>## tibble [69 x 2] (S3: tbl_df/tbl/data.frame)
-##  $ patid   : num [1:69] 2 4 6 8 10 12 14 16 18 20 ...
-##  $ walktime: num [1:69] 3.54 1.82 3.04 2.47 2.48 ...</code></pre>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(treated)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [67 x 2] (S3: tbl_df/tbl/data.frame)
+ $ patid: num [1:67] 1 3 5 7 9 11 13 15 17 19 ...
+ $ time : chr [1:67] "1.8975120000000001" "2.927432" "2.2042579999999998" "2.1441910000000002" ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(treated)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     patid         time          
+ Min.   :  1   Length:67         
+ 1st Qu.: 34   Class :character  
+ Median : 67   Mode  :character  
+ Mean   : 67                     
+ 3rd Qu.:100                     
+ Max.   :133                     </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(treated)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 2
+  patid time              
+  &lt;dbl&gt; &lt;chr&gt;             
+1     1 1.8975120000000001
+2     3 2.927432          
+3     5 2.2042579999999998
+4     7 2.1441910000000002
+5     9 1.7203250000000001
+6    11 2.1476410000000001</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View(treated)</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(control)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [69 x 2] (S3: tbl_df/tbl/data.frame)
+ $ patid   : num [1:69] 2 4 6 8 10 12 14 16 18 20 ...
+ $ walktime: num [1:69] 3.54 1.82 3.04 2.47 2.48 ...</code></pre>
+</div>
+</div>
 <p>Notes:</p>
 <ul>
 <li>Data can be numeric, character strings, (factors or logical)</li>
 <li>Do we know what each of these types is for?</li>
 </ul>
+</section>
+<section id="access-elements-from-the-dataframe" class="level1">
+<h1>Access elements from the dataframe</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>control<span class="sc">$</span>walktime</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]   3.537158   1.819787   3.038065   2.469580   2.483921   2.440482
+ [7]   2.779616   3.739146   1.956132   5.415308   3.067604 185.362000
+[13]   2.690378   0.015400   2.716427   1.952741   2.707647   5.056214
+[19]   3.319593   1.493927   2.654815   2.856972   2.401613   1.714169
+[25]   3.183433   2.897221  10.590513   2.572139   2.380559   3.528461
+[31]  12.168967   2.274398   2.631071   2.524958   2.191847   3.943916
+[37]   3.390101   5.146895   2.426002   3.340182   2.392610   2.375177
+[43]   2.210679   3.344224   2.233431   2.749903   3.361010   2.803598
+[49]   4.499523   3.642821   2.225054   2.318357   2.241562   2.498969
+[55]   2.378422   2.370767   2.169139   2.373494   2.959015   3.881843
+[61]   2.296210   3.075860   5.033359   2.870730   3.980520   2.290122
+[67]   1.843314   2.083927   2.778637</code></pre>
 </div>
-<div id="access-elements-from-the-dataframe" class="section level1" number="6">
-<h1 number="6"><span class="header-section-number">6</span> Access elements from the dataframe</h1>
-<pre class="r"><code>control$walktime</code></pre>
-<pre><code>##  [1]   3.537158   1.819787   3.038065   2.469580   2.483921   2.440482
-##  [7]   2.779616   3.739146   1.956132   5.415308   3.067604 185.362000
-## [13]   2.690378   0.015400   2.716427   1.952741   2.707647   5.056214
-## [19]   3.319593   1.493927   2.654815   2.856972   2.401613   1.714169
-## [25]   3.183433   2.897221  10.590513   2.572139   2.380559   3.528461
-## [31]  12.168967   2.274398   2.631071   2.524958   2.191847   3.943916
-## [37]   3.390101   5.146895   2.426002   3.340182   2.392610   2.375177
-## [43]   2.210679   3.344224   2.233431   2.749903   3.361010   2.803598
-## [49]   4.499523   3.642821   2.225054   2.318357   2.241562   2.498969
-## [55]   2.378422   2.370767   2.169139   2.373494   2.959015   3.881843
-## [61]   2.296210   3.075860   5.033359   2.870730   3.980520   2.290122
-## [67]   1.843314   2.083927   2.778637</code></pre>
-<pre class="r"><code>control$walktime[1]</code></pre>
-<pre><code>## [1] 3.537158</code></pre>
-<pre class="r"><code>control$walktime[1:10]</code></pre>
-<pre><code>##  [1] 3.537158 1.819787 3.038065 2.469580 2.483921 2.440482 2.779616 3.739146
-##  [9] 1.956132 5.415308</code></pre>
-<pre class="r"><code>mean(control$walktime)</code></pre>
-<pre><code>## [1] 5.712487</code></pre>
-<pre class="r"><code>mean(control$walktime[1:5])</code></pre>
-<pre><code>## [1] 2.669702</code></pre>
-<pre class="r"><code>log(control$walktime)</code></pre>
-<pre><code>##  [1]  1.2633236  0.5987195  1.1112208  0.9040481  0.9098384  0.8921956
-##  [7]  1.0223128  1.3188572  0.6709691  1.6892298  1.1208968  5.2223107
-## [13]  0.9896817 -4.1733878  0.9993174  0.6692340  0.9960800  1.6206180
-## [19]  1.1998422  0.4014082  0.9763750  1.0497623  0.8761406  0.5389284
-## [25]  1.1579602  1.0637520  2.3599586  0.9447378  0.8673353  1.2608618
-## [31]  2.4988890  0.8217154  0.9673910  0.9262244  0.7847446  1.3721741
-## [37]  1.2208597  1.6383936  0.8862446  1.2060253  0.8723848  0.8650720
-## [43]  0.7932997  1.2072347  0.8035390  1.0115656  1.2122415  1.0309036
-## [49]  1.5039714  1.2927584  0.7997812  0.8408587  0.8071729  0.9158782
-## [55]  0.8664372  0.8632135  0.7743303  0.8643631  1.0848564  1.3563100
-## [61]  0.8312599  1.1235845  1.6160876  1.0545664  1.3814125  0.8286051
-## [67]  0.6115650  0.7342541  1.0219605</code></pre>
-<pre class="r"><code>log(control$walktime[1:5])</code></pre>
-<pre><code>## [1] 1.2633236 0.5987195 1.1112208 0.9040481 0.9098384</code></pre>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>control<span class="sc">$</span>walktime[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.537158</code></pre>
 </div>
-<div id="wrangle" class="section level1" number="7">
-<h1 number="7"><span class="header-section-number">7</span> Wrangle</h1>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>control<span class="sc">$</span>walktime[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 3.537158 1.819787 3.038065 2.469580 2.483921 2.440482 2.779616 3.739146
+ [9] 1.956132 5.415308</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(control<span class="sc">$</span>walktime)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5.712487</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(control<span class="sc">$</span>walktime[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.669702</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span>(control<span class="sc">$</span>walktime)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]  1.2633236  0.5987195  1.1112208  0.9040481  0.9098384  0.8921956
+ [7]  1.0223128  1.3188572  0.6709691  1.6892298  1.1208968  5.2223107
+[13]  0.9896817 -4.1733878  0.9993174  0.6692340  0.9960800  1.6206180
+[19]  1.1998422  0.4014082  0.9763750  1.0497623  0.8761406  0.5389284
+[25]  1.1579602  1.0637520  2.3599586  0.9447378  0.8673353  1.2608618
+[31]  2.4988890  0.8217154  0.9673910  0.9262244  0.7847446  1.3721741
+[37]  1.2208597  1.6383936  0.8862446  1.2060253  0.8723848  0.8650720
+[43]  0.7932997  1.2072347  0.8035390  1.0115656  1.2122415  1.0309036
+[49]  1.5039714  1.2927584  0.7997812  0.8408587  0.8071729  0.9158782
+[55]  0.8664372  0.8632135  0.7743303  0.8643631  1.0848564  1.3563100
+[61]  0.8312599  1.1235845  1.6160876  1.0545664  1.3814125  0.8286051
+[67]  0.6115650  0.7342541  1.0219605</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span>(control<span class="sc">$</span>walktime[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.2633236 0.5987195 1.1112208 0.9040481 0.9098384</code></pre>
+</div>
+</div>
+</section>
+<section id="wrangle" class="level1">
+<h1>Wrangle</h1>
 <p>For analysis we will need all the data into one data frame. We need to append (row bind) the treatment and control results, then merge (join) the meta data.</p>
-<pre class="r"><code># Remind ourselves of the structure of the dataset
-str(treated)</code></pre>
-<pre><code>## tibble [67 x 2] (S3: tbl_df/tbl/data.frame)
-##  $ patid: num [1:67] 1 3 5 7 9 11 13 15 17 19 ...
-##  $ time : chr [1:67] &quot;1.8975120000000001&quot; &quot;2.927432&quot; &quot;2.2042579999999998&quot; &quot;2.1441910000000002&quot; ...</code></pre>
-<pre class="r"><code>str(control)</code></pre>
-<pre><code>## tibble [69 x 2] (S3: tbl_df/tbl/data.frame)
-##  $ patid   : num [1:69] 2 4 6 8 10 12 14 16 18 20 ...
-##  $ walktime: num [1:69] 3.54 1.82 3.04 2.47 2.48 ...</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remind ourselves of the structure of the dataset</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(treated)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [67 x 2] (S3: tbl_df/tbl/data.frame)
+ $ patid: num [1:67] 1 3 5 7 9 11 13 15 17 19 ...
+ $ time : chr [1:67] "1.8975120000000001" "2.927432" "2.2042579999999998" "2.1441910000000002" ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(control)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [69 x 2] (S3: tbl_df/tbl/data.frame)
+ $ patid   : num [1:69] 2 4 6 8 10 12 14 16 18 20 ...
+ $ walktime: num [1:69] 3.54 1.82 3.04 2.47 2.48 ...</code></pre>
+</div>
+</div>
 <p>We need to make sure the vectors we are merging have the same type and name!</p>
 <p>There are a lot of ways to do the same thing. Here I am illustrating the ‘base’ R way, the ‘tidyverse’ way and the ‘data.table’ way to convert a new numeric variable from a character variable.</p>
-<pre class="r"><code># Base R
-treated$walktime &lt;- as.numeric(treated$time)</code></pre>
-<pre><code>## Warning: NAs introduced by coercion</code></pre>
-<pre class="r"><code># data.table
-setDT(treated)
-treated[ , walktime := as.numeric(time)  ]</code></pre>
-<pre><code>## Warning in eval(jsub, SDenv, parent.frame()): NAs introduced by coercion</code></pre>
-<pre class="r"><code># tidyverse
-treated &lt;- treated %&gt;% mutate(walktime = as.numeric(time))</code></pre>
-<pre><code>## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Base R</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>treated<span class="sc">$</span>walktime <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(treated<span class="sc">$</span>time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: NAs introduced by coercion</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data.table</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setDT</span>(treated)</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>treated[ , walktime <span class="sc">:</span><span class="er">=</span> <span class="fu">as.numeric</span>(time)  ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in eval(jsub, SDenv, parent.frame()): NAs introduced by coercion</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tidyverse</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>treated <span class="ot">&lt;-</span> treated <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">walktime =</span> <span class="fu">as.numeric</span>(time))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in mask$eval_all_mutate(quo): NAs introduced by coercion</code></pre>
+</div>
+</div>
 <p>Now we can append the rows and merge them with the metadata. Again there is a <code>tidyverse</code> function for this, and a <code>data.table</code> function for this.</p>
-<pre class="r"><code># data.table
-combined &lt;- rbind(treated, control, fill=TRUE)
-combined &lt;- rbind(treated=treated, 
-                  control=control, 
-                  fill=TRUE, idcol=&quot;group&quot;)
-# tidyverse
-combined &lt;- bind_rows(treated, control)
-combined &lt;- bind_rows(treated = treated, 
-                      control = control, 
-                      .id = &quot;group&quot;)
-
-str(metadata)</code></pre>
-<pre><code>## tibble [138 x 4] (S3: tbl_df/tbl/data.frame)
-##  $ patient   : num [1:138] 1 2 3 4 5 6 7 8 9 10 ...
-##  $ sex       : chr [1:138] &quot;M&quot; &quot;M&quot; &quot;M&quot; &quot;M&quot; ...
-##  $ age       : num [1:138] 53 61 65 48 62 62 57 57 57 55 ...
-##  $ department: num [1:138] 3 3 1 2 2 4 2 4 3 2 ...</code></pre>
-<pre class="r"><code>str(combined)</code></pre>
-<pre><code>## Classes &#39;data.table&#39; and &#39;data.frame&#39;:   136 obs. of  4 variables:
-##  $ group   : chr  &quot;treated&quot; &quot;treated&quot; &quot;treated&quot; &quot;treated&quot; ...
-##  $ patid   : num  1 3 5 7 9 11 13 15 17 19 ...
-##  $ time    : chr  &quot;1.8975120000000001&quot; &quot;2.927432&quot; &quot;2.2042579999999998&quot; &quot;2.1441910000000002&quot; ...
-##  $ walktime: num  1.9 2.93 2.2 2.14 1.72 ...
-##  - attr(*, &quot;.internal.selfref&quot;)=&lt;externalptr&gt;</code></pre>
-<pre class="r"><code>walkingdata &lt;- merge(combined, metadata, 
-                by.x = &quot;patid&quot;, by.y = &quot;patient&quot;)
-
-head(walkingdata)</code></pre>
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["patid"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["group"],"name":[2],"type":["chr"],"align":["left"]},{"label":["time"],"name":[3],"type":["chr"],"align":["left"]},{"label":["walktime"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["sex"],"name":[5],"type":["chr"],"align":["left"]},{"label":["age"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["department"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"treated","3":"1.8975120000000001","4":"1.897512","5":"M","6":"53","7":"3"},{"1":"2","2":"control","3":"NA","4":"3.537158","5":"M","6":"61","7":"3"},{"1":"3","2":"treated","3":"2.927432","4":"2.927432","5":"M","6":"65","7":"1"},{"1":"4","2":"control","3":"NA","4":"1.819787","5":"M","6":"48","7":"2"},{"1":"5","2":"treated","3":"2.2042579999999998","4":"2.204258","5":"M","6":"62","7":"2"},{"1":"6","2":"control","3":"NA","4":"3.038065","5":"M","6":"62","7":"4"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data.table</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>combined <span class="ot">&lt;-</span> <span class="fu">rbind</span>(treated, control, <span class="at">fill=</span><span class="cn">TRUE</span>)</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>combined <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="at">treated=</span>treated, </span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">control=</span>control, </span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fill=</span><span class="cn">TRUE</span>, <span class="at">idcol=</span><span class="st">"group"</span>)</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a><span class="co"># tidyverse</span></span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>combined <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(treated, control)</span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>combined <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(<span class="at">treated =</span> treated, </span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>                      <span class="at">control =</span> control, </span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>                      <span class="at">.id =</span> <span class="st">"group"</span>)</span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(metadata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [138 x 4] (S3: tbl_df/tbl/data.frame)
+ $ patient   : num [1:138] 1 2 3 4 5 6 7 8 9 10 ...
+ $ sex       : chr [1:138] "M" "M" "M" "M" ...
+ $ age       : num [1:138] 53 61 65 48 62 62 57 57 57 55 ...
+ $ department: num [1:138] 3 3 1 2 2 4 2 4 3 2 ...</code></pre>
 </div>
-<pre class="r"><code>str(walkingdata)</code></pre>
-<pre><code>## Classes &#39;data.table&#39; and &#39;data.frame&#39;:   136 obs. of  7 variables:
-##  $ patid     : num  1 2 3 4 5 6 7 8 9 10 ...
-##  $ group     : chr  &quot;treated&quot; &quot;control&quot; &quot;treated&quot; &quot;control&quot; ...
-##  $ time      : chr  &quot;1.8975120000000001&quot; NA &quot;2.927432&quot; NA ...
-##  $ walktime  : num  1.9 3.54 2.93 1.82 2.2 ...
-##  $ sex       : chr  &quot;M&quot; &quot;M&quot; &quot;M&quot; &quot;M&quot; ...
-##  $ age       : num  53 61 65 48 62 62 57 57 57 55 ...
-##  $ department: num  3 3 1 2 2 4 2 4 3 2 ...
-##  - attr(*, &quot;.internal.selfref&quot;)=&lt;externalptr&gt; 
-##  - attr(*, &quot;sorted&quot;)= chr &quot;patid&quot;</code></pre>
-<pre class="r"><code>summary(walkingdata)</code></pre>
-<pre><code>##      patid           group               time              walktime       
-##  Min.   :  1.00   Length:136         Length:136         Min.   :  0.0154  
-##  1st Qu.: 34.75   Class :character   Class :character   1st Qu.:  2.1688  
-##  Median : 68.50   Mode  :character   Mode  :character   Median :  2.4287  
-##  Mean   : 68.52                                         Mean   :  4.1956  
-##  3rd Qu.:102.25                                         3rd Qu.:  2.9491  
-##  Max.   :138.00                                         Max.   :185.3620  
-##                                                         NA&#39;s   :1         
-##      sex                 age          department   
-##  Length:136         Min.   :45.00   Min.   :1.000  
-##  Class :character   1st Qu.:54.00   1st Qu.:2.000  
-##  Mode  :character   Median :57.00   Median :3.000  
-##                     Mean   :57.55   Mean   :2.596  
-##                     3rd Qu.:60.25   3rd Qu.:3.250  
-##                     Max.   :72.00   Max.   :4.000  
-## </code></pre>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(combined)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Classes 'data.table' and 'data.frame':  136 obs. of  4 variables:
+ $ group   : chr  "treated" "treated" "treated" "treated" ...
+ $ patid   : num  1 3 5 7 9 11 13 15 17 19 ...
+ $ time    : chr  "1.8975120000000001" "2.927432" "2.2042579999999998" "2.1441910000000002" ...
+ $ walktime: num  1.9 2.93 2.2 2.14 1.72 ...
+ - attr(*, ".internal.selfref")=&lt;externalptr&gt; </code></pre>
 </div>
-<div id="describe" class="section level1" number="8">
-<h1 number="8"><span class="header-section-number">8</span> Describe</h1>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>walkingdata <span class="ot">&lt;-</span> <span class="fu">merge</span>(combined, metadata, </span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">by.x =</span> <span class="st">"patid"</span>, <span class="at">by.y =</span> <span class="st">"patient"</span>)</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(walkingdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   patid   group               time walktime sex age department
+1:     1 treated 1.8975120000000001 1.897512   M  53          3
+2:     2 control               &lt;NA&gt; 3.537158   M  61          3
+3:     3 treated           2.927432 2.927432   M  65          1
+4:     4 control               &lt;NA&gt; 1.819787   M  48          2
+5:     5 treated 2.2042579999999998 2.204258   M  62          2
+6:     6 control               &lt;NA&gt; 3.038065   M  62          4</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(walkingdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Classes 'data.table' and 'data.frame':  136 obs. of  7 variables:
+ $ patid     : num  1 2 3 4 5 6 7 8 9 10 ...
+ $ group     : chr  "treated" "control" "treated" "control" ...
+ $ time      : chr  "1.8975120000000001" NA "2.927432" NA ...
+ $ walktime  : num  1.9 3.54 2.93 1.82 2.2 ...
+ $ sex       : chr  "M" "M" "M" "M" ...
+ $ age       : num  53 61 65 48 62 62 57 57 57 55 ...
+ $ department: num  3 3 1 2 2 4 2 4 3 2 ...
+ - attr(*, ".internal.selfref")=&lt;externalptr&gt; 
+ - attr(*, "sorted")= chr "patid"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(walkingdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     patid           group               time              walktime       
+ Min.   :  1.00   Length:136         Length:136         Min.   :  0.0154  
+ 1st Qu.: 34.75   Class :character   Class :character   1st Qu.:  2.1688  
+ Median : 68.50   Mode  :character   Mode  :character   Median :  2.4287  
+ Mean   : 68.52                                         Mean   :  4.1956  
+ 3rd Qu.:102.25                                         3rd Qu.:  2.9491  
+ Max.   :138.00                                         Max.   :185.3620  
+                                                        NA's   :1         
+     sex                 age          department   
+ Length:136         Min.   :45.00   Min.   :1.000  
+ Class :character   1st Qu.:54.00   1st Qu.:2.000  
+ Mode  :character   Median :57.00   Median :3.000  
+                    Mean   :57.55   Mean   :2.596  
+                    3rd Qu.:60.25   3rd Qu.:3.250  
+                    Max.   :72.00   Max.   :4.000  
+                                                   </code></pre>
+</div>
+</div>
+</section>
+<section id="describe" class="level1">
+<h1>Describe</h1>
 <p>Our first task was to describe the mean and standard deviation of walking time by group. There is no simple way to do this with base R. Possible <code>tidyverse</code> and <code>data.table</code> approaches are shown below.</p>
-<pre class="r"><code># Tidyverse
-walkingdata %&gt;% 
-  filter(!is.na(walktime)) %&gt;% 
-  group_by(group) %&gt;% 
-  summarise(Mean=mean(walktime), SD=sd(walktime))</code></pre>
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["group"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Mean"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["SD"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"control","2":"5.712487","3":"22.011155"},{"1":"treated","2":"2.609674","3":"1.999246"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tidyverse</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>walkingdata <span class="sc">%&gt;%</span> </span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(walktime)) <span class="sc">%&gt;%</span> </span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group) <span class="sc">%&gt;%</span> </span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Mean=</span><span class="fu">mean</span>(walktime), <span class="at">SD=</span><span class="fu">sd</span>(walktime))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 x 3
+  group    Mean    SD
+  &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;
+1 control  5.71 22.0 
+2 treated  2.61  2.00</code></pre>
 </div>
-<pre class="r"><code># data.table
-walkingdata[!is.na(walktime) ,  
-            .(Mean=mean(walktime), SD=sd(walktime)),
-            group]</code></pre>
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["group"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Mean"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["SD"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"treated","2":"2.609674","3":"1.999246"},{"1":"control","2":"5.712487","3":"22.011155"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data.table</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>walkingdata[<span class="sc">!</span><span class="fu">is.na</span>(walktime) ,  </span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>            .(<span class="at">Mean=</span><span class="fu">mean</span>(walktime), <span class="at">SD=</span><span class="fu">sd</span>(walktime)),</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>            group]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     group     Mean        SD
+1: treated 2.609674  1.999246
+2: control 5.712487 22.011155</code></pre>
 </div>
 </div>
-<div id="visualise" class="section level1" number="9">
-<h1 number="9"><span class="header-section-number">9</span> Visualise</h1>
+</section>
+<section id="visualise" class="level1">
+<h1>Visualise</h1>
 <p>Base R graphics are difficult to work with. <code>ggplot2</code> provides an excellent system for graphing scientific data using R. See the associated slides and flipbook.</p>
-<pre class="r"><code># A very bad graph
-plot(walkingdata$age , walkingdata$walktime)</code></pre>
-<p><img src="workshopscript_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
-<pre class="r"><code># A better graph
-ggplot(walkingdata) + 
-  aes(x=age, y=walktime) + 
-  geom_point()</code></pre>
-<pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
-<p><img src="workshopscript_files/figure-html/unnamed-chunk-10-2.png" width="672" /></p>
-<pre class="r"><code># Adorn the graph
-ggplot(walkingdata) + 
-  aes(x=age, y=walktime) + 
-  geom_point() + 
-  labs(x=&quot;Age (years)&quot;, y=&quot;Time (seconds)&quot;) + 
-  scale_y_log10() + 
-  facet_wrap(~sex) +
-  theme_bw()</code></pre>
-<pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
-<p><img src="workshopscript_files/figure-html/unnamed-chunk-10-3.png" width="672" /></p>
-<pre class="r"><code>ggplot(walkingdata) + 
-  aes(x=group, y=walktime) + 
-  geom_boxplot() + 
-  labs(x=&quot;Treatment group&quot;, y=&quot;Time (seconds)&quot;) + 
-  scale_y_log10() + 
-  facet_wrap(~sex) +
-  theme_bw()</code></pre>
-<pre><code>## Warning: Removed 1 rows containing non-finite values (stat_boxplot).</code></pre>
-<p><img src="workshopscript_files/figure-html/unnamed-chunk-10-4.png" width="672" /></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A very bad graph</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(walkingdata<span class="sc">$</span>age , walkingdata<span class="sc">$</span>walktime)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="workshopscript_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
-<div id="clean-data" class="section level1" number="10">
-<h1 number="10"><span class="header-section-number">10</span> Clean data</h1>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A better graph</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(walkingdata) <span class="sc">+</span> </span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x=</span>age, <span class="at">y=</span>walktime) <span class="sc">+</span> </span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 1 rows containing missing values (`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="workshopscript_files/figure-html/unnamed-chunk-10-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Adorn the graph</span></span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(walkingdata) <span class="sc">+</span> </span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x=</span>age, <span class="at">y=</span>walktime) <span class="sc">+</span> </span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Age (years)"</span>, <span class="at">y=</span><span class="st">"Time (seconds)"</span>) <span class="sc">+</span> </span>
+<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span> </span>
+<span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>sex) <span class="sc">+</span></span>
+<span id="cb67-8"><a href="#cb67-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 1 rows containing missing values (`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="workshopscript_files/figure-html/unnamed-chunk-10-3.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(walkingdata) <span class="sc">+</span> </span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x=</span>group, <span class="at">y=</span>walktime) <span class="sc">+</span> </span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Treatment group"</span>, <span class="at">y=</span><span class="st">"Time (seconds)"</span>) <span class="sc">+</span> </span>
+<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span> </span>
+<span id="cb69-6"><a href="#cb69-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>sex) <span class="sc">+</span></span>
+<span id="cb69-7"><a href="#cb69-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 1 rows containing non-finite values (`stat_boxplot()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="workshopscript_files/figure-html/unnamed-chunk-10-4.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="clean-data" class="level1">
+<h1>Clean data</h1>
 <p>Our graphics suggest that there are some data points that are probably technical failures. We should remove these.</p>
-<pre class="r"><code># base
-walkingdata$walktime[ walkingdata$walktime &gt; 100 ] &lt;- NA
-walkingdata$walktime[ walkingdata$walktime &lt; 0.1 ] &lt;- NA
-# data.table
-walkingdata[ walktime&gt;100 , walktime := NA]
-walkingdata[ walktime&lt;0.1 , walktime := NA]</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co"># base</span></span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>walkingdata<span class="sc">$</span>walktime[ walkingdata<span class="sc">$</span>walktime <span class="sc">&gt;</span> <span class="dv">100</span> ] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>walkingdata<span class="sc">$</span>walktime[ walkingdata<span class="sc">$</span>walktime <span class="sc">&lt;</span> <span class="fl">0.1</span> ] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a><span class="co"># data.table</span></span>
+<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a>walkingdata[ walktime<span class="sc">&gt;</span><span class="dv">100</span> , walktime <span class="sc">:</span><span class="er">=</span> <span class="cn">NA</span>]</span>
+<span id="cb71-6"><a href="#cb71-6" aria-hidden="true" tabindex="-1"></a>walkingdata[ walktime<span class="sc">&lt;</span><span class="fl">0.1</span> , walktime <span class="sc">:</span><span class="er">=</span> <span class="cn">NA</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="simple-tests" class="section level1" number="11">
-<h1 number="11"><span class="header-section-number">11</span> Simple tests</h1>
+</section>
+<section id="simple-tests" class="level1">
+<h1>Simple tests</h1>
 <p>Now we can conduct a simple statistical test of the walking speed across groups. Note the ‘formula’ interface:</p>
-<pre class="r"><code>t.test( data = walkingdata , walktime ~ group)</code></pre>
-<pre><code>## 
-##  Welch Two Sample t-test
-## 
-## data:  walktime by group
-## t = 1.5788, df = 126.69, p-value = 0.1169
-## alternative hypothesis: true difference in means between group control and group treated is not equal to 0
-## 95 percent confidence interval:
-##  -0.1283567  1.1413738
-## sample estimates:
-## mean in group control mean in group treated 
-##              3.116183              2.609674</code></pre>
-<pre class="r"><code>ttest1 &lt;- t.test( data = walkingdata , walktime ~ group)
-ttest1$p.value</code></pre>
-<pre><code>## [1] 0.1168802</code></pre>
-<p>What does this suggest about the treatment effectiveness?</p>
-</div>
-<div id="model" class="section level1" number="12">
-<h1 number="12"><span class="header-section-number">12</span> Model</h1>
-<p>This test ignores much of what we know about these participants, and may not be suitable. A linear model is a better paradiagm for statistical analysis. It allows us to build more complex analyses, and easily test our assumptions.</p>
-<pre class="r"><code>lm1 &lt;- lm( data = walkingdata , walktime ~ group)
-summary(lm1)</code></pre>
-<pre><code>## 
-## Call:
-## lm(formula = walktime ~ group, data = walkingdata)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -1.6223 -0.7297 -0.3963  0.0604 15.0317 
-## 
-## Coefficients:
-##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)    3.1162     0.2257  13.806   &lt;2e-16 ***
-## grouptreated  -0.5065     0.3204  -1.581    0.116    
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 1.848 on 131 degrees of freedom
-##   (3 observations deleted due to missingness)
-## Multiple R-squared:  0.01872,    Adjusted R-squared:  0.01123 
-## F-statistic: 2.499 on 1 and 131 DF,  p-value: 0.1163</code></pre>
-<pre class="r"><code>confint(lm1)</code></pre>
-<pre><code>##                  2.5 %    97.5 %
-## (Intercept)   2.669671 3.5626939
-## grouptreated -1.140358 0.1273411</code></pre>
-</div>
-<div id="diagnose" class="section level1" number="13">
-<h1 number="13"><span class="header-section-number">13</span> Diagnose</h1>
-<p>The diagnostics suggest something is wrong. We can transform the data so that the assumptions of the model are met.</p>
-<pre class="r"><code>plot(lm1)</code></pre>
-<p><img src="workshopscript_files/figure-html/unnamed-chunk-14-1.png" width="672" /><img src="workshopscript_files/figure-html/unnamed-chunk-14-2.png" width="672" /><img src="workshopscript_files/figure-html/unnamed-chunk-14-3.png" width="672" /><img src="workshopscript_files/figure-html/unnamed-chunk-14-4.png" width="672" /></p>
-<pre class="r"><code>walkingdata[ , speed := 1/walktime]
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>( <span class="at">data =</span> walkingdata , walktime <span class="sc">~</span> group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
 
-lm2 &lt;- lm( data = walkingdata , log(walktime) ~ group)
-lm3 &lt;- lm( data = walkingdata , 1/walktime ~ group)
-plot(lm2)</code></pre>
-<p><img src="workshopscript_files/figure-html/unnamed-chunk-14-5.png" width="672" /><img src="workshopscript_files/figure-html/unnamed-chunk-14-6.png" width="672" /><img src="workshopscript_files/figure-html/unnamed-chunk-14-7.png" width="672" /><img src="workshopscript_files/figure-html/unnamed-chunk-14-8.png" width="672" /></p>
-<pre class="r"><code>plot(lm3)</code></pre>
-<p><img src="workshopscript_files/figure-html/unnamed-chunk-14-9.png" width="672" /><img src="workshopscript_files/figure-html/unnamed-chunk-14-10.png" width="672" /><img src="workshopscript_files/figure-html/unnamed-chunk-14-11.png" width="672" /><img src="workshopscript_files/figure-html/unnamed-chunk-14-12.png" width="672" /></p>
-<pre class="r"><code>summary(lm3)</code></pre>
-<pre><code>## 
-## Call:
-## lm(formula = 1/walktime ~ group, data = walkingdata)
-## 
-## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -0.38121 -0.06170  0.00132  0.06453  0.30257 
-## 
-## Coefficients:
-##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)   0.36681    0.01287  28.500  &lt; 2e-16 ***
-## grouptreated  0.07108    0.01827   3.891 0.000158 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 0.1053 on 131 degrees of freedom
-##   (3 observations deleted due to missingness)
-## Multiple R-squared:  0.1036, Adjusted R-squared:  0.09674 
-## F-statistic: 15.14 on 1 and 131 DF,  p-value: 0.0001583</code></pre>
-<pre class="r"><code>gtsummary::tbl_regression(lm3)</code></pre>
-<div id="rchypyldhn" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+data:  walktime by group
+t = 1.5788, df = 126.69, p-value = 0.1169
+alternative hypothesis: true difference in means between group control and group treated is not equal to 0
+95 percent confidence interval:
+ -0.1283567  1.1413738
+sample estimates:
+mean in group control mean in group treated 
+             3.116183              2.609674 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>ttest1 <span class="ot">&lt;-</span> <span class="fu">t.test</span>( <span class="at">data =</span> walkingdata , walktime <span class="sc">~</span> group)</span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>ttest1<span class="sc">$</span>p.value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1168802</code></pre>
+</div>
+</div>
+<p>What does this suggest about the treatment effectiveness?</p>
+</section>
+<section id="model" class="level1">
+<h1>Model</h1>
+<p>This test ignores much of what we know about these participants, and may not be suitable. A linear model is a better paradiagm for statistical analysis. It allows us to build more complex analyses, and easily test our assumptions.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>lm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>( <span class="at">data =</span> walkingdata , walktime <span class="sc">~</span> group)</span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = walktime ~ group, data = walkingdata)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.6223 -0.7297 -0.3963  0.0604 15.0317 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)    3.1162     0.2257  13.806   &lt;2e-16 ***
+grouptreated  -0.5065     0.3204  -1.581    0.116    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.848 on 131 degrees of freedom
+  (3 observations deleted due to missingness)
+Multiple R-squared:  0.01872,   Adjusted R-squared:  0.01123 
+F-statistic: 2.499 on 1 and 131 DF,  p-value: 0.1163</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(lm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 2.5 %    97.5 %
+(Intercept)   2.669671 3.5626939
+grouptreated -1.140358 0.1273411</code></pre>
+</div>
+</div>
+</section>
+<section id="diagnose" class="level1">
+<h1>Diagnose</h1>
+<p>The diagnostics suggest something is wrong. We can transform the data so that the assumptions of the model are met.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="workshopscript_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="workshopscript_files/figure-html/unnamed-chunk-14-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="workshopscript_files/figure-html/unnamed-chunk-14-3.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="workshopscript_files/figure-html/unnamed-chunk-14-4.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>walkingdata[ , speed <span class="sc">:</span><span class="er">=</span> <span class="dv">1</span><span class="sc">/</span>walktime]</span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>lm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>( <span class="at">data =</span> walkingdata , <span class="fu">log</span>(walktime) <span class="sc">~</span> group)</span>
+<span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a>lm3 <span class="ot">&lt;-</span> <span class="fu">lm</span>( <span class="at">data =</span> walkingdata , <span class="dv">1</span><span class="sc">/</span>walktime <span class="sc">~</span> group)</span>
+<span id="cb81-5"><a href="#cb81-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lm2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="workshopscript_files/figure-html/unnamed-chunk-14-5.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="workshopscript_files/figure-html/unnamed-chunk-14-6.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="workshopscript_files/figure-html/unnamed-chunk-14-7.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="workshopscript_files/figure-html/unnamed-chunk-14-8.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lm3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="workshopscript_files/figure-html/unnamed-chunk-14-9.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="workshopscript_files/figure-html/unnamed-chunk-14-10.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="workshopscript_files/figure-html/unnamed-chunk-14-11.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="workshopscript_files/figure-html/unnamed-chunk-14-12.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = 1/walktime ~ group, data = walkingdata)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.38121 -0.06170  0.00132  0.06453  0.30257 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   0.36681    0.01287  28.500  &lt; 2e-16 ***
+grouptreated  0.07108    0.01827   3.891 0.000158 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.1053 on 131 degrees of freedom
+  (3 observations deleted due to missingness)
+Multiple R-squared:  0.1036,    Adjusted R-squared:  0.09674 
+F-statistic: 15.14 on 1 and 131 DF,  p-value: 0.0001583</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>gtsummary<span class="sc">::</span><span class="fu">tbl_regression</span>(lm3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div id="lxorxqmadj" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#rchypyldhn .gt_table {
+:where(#lxorxqmadj) .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -815,7 +774,7 @@ plot(lm2)</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#rchypyldhn .gt_heading {
+:where(#lxorxqmadj) .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -827,7 +786,7 @@ plot(lm2)</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#rchypyldhn .gt_title {
+:where(#lxorxqmadj) .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -839,7 +798,7 @@ plot(lm2)</code></pre>
   border-bottom-width: 0;
 }
 
-#rchypyldhn .gt_subtitle {
+:where(#lxorxqmadj) .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -851,13 +810,13 @@ plot(lm2)</code></pre>
   border-top-width: 0;
 }
 
-#rchypyldhn .gt_bottom_border {
+:where(#lxorxqmadj) .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#rchypyldhn .gt_col_headings {
+:where(#lxorxqmadj) .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -872,7 +831,7 @@ plot(lm2)</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#rchypyldhn .gt_col_heading {
+:where(#lxorxqmadj) .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -892,7 +851,7 @@ plot(lm2)</code></pre>
   overflow-x: hidden;
 }
 
-#rchypyldhn .gt_column_spanner_outer {
+:where(#lxorxqmadj) .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -904,15 +863,15 @@ plot(lm2)</code></pre>
   padding-right: 4px;
 }
 
-#rchypyldhn .gt_column_spanner_outer:first-child {
+:where(#lxorxqmadj) .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#rchypyldhn .gt_column_spanner_outer:last-child {
+:where(#lxorxqmadj) .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#rchypyldhn .gt_column_spanner {
+:where(#lxorxqmadj) .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -924,7 +883,7 @@ plot(lm2)</code></pre>
   width: 100%;
 }
 
-#rchypyldhn .gt_group_heading {
+:where(#lxorxqmadj) .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -949,7 +908,7 @@ plot(lm2)</code></pre>
   vertical-align: middle;
 }
 
-#rchypyldhn .gt_empty_group_heading {
+:where(#lxorxqmadj) .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -964,15 +923,15 @@ plot(lm2)</code></pre>
   vertical-align: middle;
 }
 
-#rchypyldhn .gt_from_md > :first-child {
+:where(#lxorxqmadj) .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#rchypyldhn .gt_from_md > :last-child {
+:where(#lxorxqmadj) .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#rchypyldhn .gt_row {
+:where(#lxorxqmadj) .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -991,7 +950,7 @@ plot(lm2)</code></pre>
   overflow-x: hidden;
 }
 
-#rchypyldhn .gt_stub {
+:where(#lxorxqmadj) .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1004,7 +963,7 @@ plot(lm2)</code></pre>
   padding-right: 5px;
 }
 
-#rchypyldhn .gt_stub_row_group {
+:where(#lxorxqmadj) .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1018,11 +977,11 @@ plot(lm2)</code></pre>
   vertical-align: top;
 }
 
-#rchypyldhn .gt_row_group_first td {
+:where(#lxorxqmadj) .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#rchypyldhn .gt_summary_row {
+:where(#lxorxqmadj) .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1032,16 +991,16 @@ plot(lm2)</code></pre>
   padding-right: 5px;
 }
 
-#rchypyldhn .gt_first_summary_row {
+:where(#lxorxqmadj) .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#rchypyldhn .gt_first_summary_row.thick {
+:where(#lxorxqmadj) .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#rchypyldhn .gt_last_summary_row {
+:where(#lxorxqmadj) .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1051,7 +1010,7 @@ plot(lm2)</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#rchypyldhn .gt_grand_summary_row {
+:where(#lxorxqmadj) .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1061,7 +1020,7 @@ plot(lm2)</code></pre>
   padding-right: 5px;
 }
 
-#rchypyldhn .gt_first_grand_summary_row {
+:where(#lxorxqmadj) .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1071,11 +1030,11 @@ plot(lm2)</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#rchypyldhn .gt_striped {
+:where(#lxorxqmadj) .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#rchypyldhn .gt_table_body {
+:where(#lxorxqmadj) .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1084,7 +1043,7 @@ plot(lm2)</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#rchypyldhn .gt_footnotes {
+:where(#lxorxqmadj) .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1098,7 +1057,7 @@ plot(lm2)</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#rchypyldhn .gt_footnote {
+:where(#lxorxqmadj) .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -1107,7 +1066,7 @@ plot(lm2)</code></pre>
   padding-right: 5px;
 }
 
-#rchypyldhn .gt_sourcenotes {
+:where(#lxorxqmadj) .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1121,7 +1080,7 @@ plot(lm2)</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#rchypyldhn .gt_sourcenote {
+:where(#lxorxqmadj) .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1129,60 +1088,60 @@ plot(lm2)</code></pre>
   padding-right: 5px;
 }
 
-#rchypyldhn .gt_left {
+:where(#lxorxqmadj) .gt_left {
   text-align: left;
 }
 
-#rchypyldhn .gt_center {
+:where(#lxorxqmadj) .gt_center {
   text-align: center;
 }
 
-#rchypyldhn .gt_right {
+:where(#lxorxqmadj) .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#rchypyldhn .gt_font_normal {
+:where(#lxorxqmadj) .gt_font_normal {
   font-weight: normal;
 }
 
-#rchypyldhn .gt_font_bold {
+:where(#lxorxqmadj) .gt_font_bold {
   font-weight: bold;
 }
 
-#rchypyldhn .gt_font_italic {
+:where(#lxorxqmadj) .gt_font_italic {
   font-style: italic;
 }
 
-#rchypyldhn .gt_super {
+:where(#lxorxqmadj) .gt_super {
   font-size: 65%;
 }
 
-#rchypyldhn .gt_footnote_marks {
+:where(#lxorxqmadj) .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#rchypyldhn .gt_asterisk {
+:where(#lxorxqmadj) .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#rchypyldhn .gt_slash_mark {
+:where(#lxorxqmadj) .gt_slash_mark {
   font-size: 0.7em;
   line-height: 0.7em;
   vertical-align: 0.15em;
 }
 
-#rchypyldhn .gt_fraction_numerator {
+:where(#lxorxqmadj) .gt_fraction_numerator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: 0.45em;
 }
 
-#rchypyldhn .gt_fraction_denominator {
+:where(#lxorxqmadj) .gt_fraction_denominator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: -0.05em;
@@ -1210,7 +1169,7 @@ plot(lm2)</code></pre>
     <tr><td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">treated</td>
 <td class="gt_row gt_center">0.07</td>
 <td class="gt_row gt_center">0.03, 0.11</td>
-<td class="gt_row gt_center"><0.001</td></tr>
+<td class="gt_row gt_center">&lt;0.001</td></tr>
   </tbody>
   
   <tfoot class="gt_footnotes">
@@ -1220,19 +1179,24 @@ plot(lm2)</code></pre>
   </tfoot>
 </table>
 </div>
-<p>Is the interpretation different now?</p>
 </div>
-<div id="augment-model" class="section level1" number="14">
-<h1 number="14"><span class="header-section-number">14</span> Augment model</h1>
+</div>
+<p>Is the interpretation different now?</p>
+</section>
+<section id="augment-model" class="level1">
+<h1>Augment model</h1>
 <p>We can develop the model by adding terms for age and department. We should always include these because they explain variance in the outcome measure.</p>
-<pre class="r"><code>lm4 &lt;- lm( data = walkingdata , 1/walktime ~ group + age + sex + department)
-gtsummary::tbl_regression(lm4)</code></pre>
-<div id="rtuuomxksg" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>lm4 <span class="ot">&lt;-</span> <span class="fu">lm</span>( <span class="at">data =</span> walkingdata , <span class="dv">1</span><span class="sc">/</span>walktime <span class="sc">~</span> group <span class="sc">+</span> age <span class="sc">+</span> sex <span class="sc">+</span> department)</span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>gtsummary<span class="sc">::</span><span class="fu">tbl_regression</span>(lm4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div id="lwjfoeolvt" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#rtuuomxksg .gt_table {
+:where(#lwjfoeolvt) .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1257,7 +1221,7 @@ gtsummary::tbl_regression(lm4)</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#rtuuomxksg .gt_heading {
+:where(#lwjfoeolvt) .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1269,7 +1233,7 @@ gtsummary::tbl_regression(lm4)</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#rtuuomxksg .gt_title {
+:where(#lwjfoeolvt) .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1281,7 +1245,7 @@ gtsummary::tbl_regression(lm4)</code></pre>
   border-bottom-width: 0;
 }
 
-#rtuuomxksg .gt_subtitle {
+:where(#lwjfoeolvt) .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1293,13 +1257,13 @@ gtsummary::tbl_regression(lm4)</code></pre>
   border-top-width: 0;
 }
 
-#rtuuomxksg .gt_bottom_border {
+:where(#lwjfoeolvt) .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#rtuuomxksg .gt_col_headings {
+:where(#lwjfoeolvt) .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1314,7 +1278,7 @@ gtsummary::tbl_regression(lm4)</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#rtuuomxksg .gt_col_heading {
+:where(#lwjfoeolvt) .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1334,7 +1298,7 @@ gtsummary::tbl_regression(lm4)</code></pre>
   overflow-x: hidden;
 }
 
-#rtuuomxksg .gt_column_spanner_outer {
+:where(#lwjfoeolvt) .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1346,15 +1310,15 @@ gtsummary::tbl_regression(lm4)</code></pre>
   padding-right: 4px;
 }
 
-#rtuuomxksg .gt_column_spanner_outer:first-child {
+:where(#lwjfoeolvt) .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#rtuuomxksg .gt_column_spanner_outer:last-child {
+:where(#lwjfoeolvt) .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#rtuuomxksg .gt_column_spanner {
+:where(#lwjfoeolvt) .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1366,7 +1330,7 @@ gtsummary::tbl_regression(lm4)</code></pre>
   width: 100%;
 }
 
-#rtuuomxksg .gt_group_heading {
+:where(#lwjfoeolvt) .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1391,7 +1355,7 @@ gtsummary::tbl_regression(lm4)</code></pre>
   vertical-align: middle;
 }
 
-#rtuuomxksg .gt_empty_group_heading {
+:where(#lwjfoeolvt) .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1406,15 +1370,15 @@ gtsummary::tbl_regression(lm4)</code></pre>
   vertical-align: middle;
 }
 
-#rtuuomxksg .gt_from_md > :first-child {
+:where(#lwjfoeolvt) .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#rtuuomxksg .gt_from_md > :last-child {
+:where(#lwjfoeolvt) .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#rtuuomxksg .gt_row {
+:where(#lwjfoeolvt) .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1433,7 +1397,7 @@ gtsummary::tbl_regression(lm4)</code></pre>
   overflow-x: hidden;
 }
 
-#rtuuomxksg .gt_stub {
+:where(#lwjfoeolvt) .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1446,7 +1410,7 @@ gtsummary::tbl_regression(lm4)</code></pre>
   padding-right: 5px;
 }
 
-#rtuuomxksg .gt_stub_row_group {
+:where(#lwjfoeolvt) .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1460,11 +1424,11 @@ gtsummary::tbl_regression(lm4)</code></pre>
   vertical-align: top;
 }
 
-#rtuuomxksg .gt_row_group_first td {
+:where(#lwjfoeolvt) .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#rtuuomxksg .gt_summary_row {
+:where(#lwjfoeolvt) .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1474,16 +1438,16 @@ gtsummary::tbl_regression(lm4)</code></pre>
   padding-right: 5px;
 }
 
-#rtuuomxksg .gt_first_summary_row {
+:where(#lwjfoeolvt) .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#rtuuomxksg .gt_first_summary_row.thick {
+:where(#lwjfoeolvt) .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#rtuuomxksg .gt_last_summary_row {
+:where(#lwjfoeolvt) .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1493,7 +1457,7 @@ gtsummary::tbl_regression(lm4)</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#rtuuomxksg .gt_grand_summary_row {
+:where(#lwjfoeolvt) .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1503,7 +1467,7 @@ gtsummary::tbl_regression(lm4)</code></pre>
   padding-right: 5px;
 }
 
-#rtuuomxksg .gt_first_grand_summary_row {
+:where(#lwjfoeolvt) .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1513,11 +1477,11 @@ gtsummary::tbl_regression(lm4)</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#rtuuomxksg .gt_striped {
+:where(#lwjfoeolvt) .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#rtuuomxksg .gt_table_body {
+:where(#lwjfoeolvt) .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1526,7 +1490,7 @@ gtsummary::tbl_regression(lm4)</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#rtuuomxksg .gt_footnotes {
+:where(#lwjfoeolvt) .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1540,7 +1504,7 @@ gtsummary::tbl_regression(lm4)</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#rtuuomxksg .gt_footnote {
+:where(#lwjfoeolvt) .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -1549,7 +1513,7 @@ gtsummary::tbl_regression(lm4)</code></pre>
   padding-right: 5px;
 }
 
-#rtuuomxksg .gt_sourcenotes {
+:where(#lwjfoeolvt) .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1563,7 +1527,7 @@ gtsummary::tbl_regression(lm4)</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#rtuuomxksg .gt_sourcenote {
+:where(#lwjfoeolvt) .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1571,60 +1535,60 @@ gtsummary::tbl_regression(lm4)</code></pre>
   padding-right: 5px;
 }
 
-#rtuuomxksg .gt_left {
+:where(#lwjfoeolvt) .gt_left {
   text-align: left;
 }
 
-#rtuuomxksg .gt_center {
+:where(#lwjfoeolvt) .gt_center {
   text-align: center;
 }
 
-#rtuuomxksg .gt_right {
+:where(#lwjfoeolvt) .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#rtuuomxksg .gt_font_normal {
+:where(#lwjfoeolvt) .gt_font_normal {
   font-weight: normal;
 }
 
-#rtuuomxksg .gt_font_bold {
+:where(#lwjfoeolvt) .gt_font_bold {
   font-weight: bold;
 }
 
-#rtuuomxksg .gt_font_italic {
+:where(#lwjfoeolvt) .gt_font_italic {
   font-style: italic;
 }
 
-#rtuuomxksg .gt_super {
+:where(#lwjfoeolvt) .gt_super {
   font-size: 65%;
 }
 
-#rtuuomxksg .gt_footnote_marks {
+:where(#lwjfoeolvt) .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#rtuuomxksg .gt_asterisk {
+:where(#lwjfoeolvt) .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#rtuuomxksg .gt_slash_mark {
+:where(#lwjfoeolvt) .gt_slash_mark {
   font-size: 0.7em;
   line-height: 0.7em;
   vertical-align: 0.15em;
 }
 
-#rtuuomxksg .gt_fraction_numerator {
+:where(#lwjfoeolvt) .gt_fraction_numerator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: 0.45em;
 }
 
-#rtuuomxksg .gt_fraction_denominator {
+:where(#lwjfoeolvt) .gt_fraction_denominator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: -0.05em;
@@ -1652,7 +1616,7 @@ gtsummary::tbl_regression(lm4)</code></pre>
     <tr><td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">treated</td>
 <td class="gt_row gt_center">0.07</td>
 <td class="gt_row gt_center">0.04, 0.11</td>
-<td class="gt_row gt_center"><0.001</td></tr>
+<td class="gt_row gt_center">&lt;0.001</td></tr>
     <tr><td class="gt_row gt_left">age</td>
 <td class="gt_row gt_center">0.00</td>
 <td class="gt_row gt_center">-0.01, 0.00</td>
@@ -1682,14 +1646,17 @@ gtsummary::tbl_regression(lm4)</code></pre>
   </tfoot>
 </table>
 </div>
-<pre class="r"><code>lm5 &lt;- lm( data = walkingdata , 1/walktime ~ group + age + sex + factor(department))
-gtsummary::tbl_regression(lm5)</code></pre>
-<div id="lxetinhxte" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+</div>
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>lm5 <span class="ot">&lt;-</span> <span class="fu">lm</span>( <span class="at">data =</span> walkingdata , <span class="dv">1</span><span class="sc">/</span>walktime <span class="sc">~</span> group <span class="sc">+</span> age <span class="sc">+</span> sex <span class="sc">+</span> <span class="fu">factor</span>(department))</span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>gtsummary<span class="sc">::</span><span class="fu">tbl_regression</span>(lm5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div id="uoihheowzu" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#lxetinhxte .gt_table {
+:where(#uoihheowzu) .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1714,7 +1681,7 @@ gtsummary::tbl_regression(lm5)</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#lxetinhxte .gt_heading {
+:where(#uoihheowzu) .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1726,7 +1693,7 @@ gtsummary::tbl_regression(lm5)</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#lxetinhxte .gt_title {
+:where(#uoihheowzu) .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1738,7 +1705,7 @@ gtsummary::tbl_regression(lm5)</code></pre>
   border-bottom-width: 0;
 }
 
-#lxetinhxte .gt_subtitle {
+:where(#uoihheowzu) .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1750,13 +1717,13 @@ gtsummary::tbl_regression(lm5)</code></pre>
   border-top-width: 0;
 }
 
-#lxetinhxte .gt_bottom_border {
+:where(#uoihheowzu) .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#lxetinhxte .gt_col_headings {
+:where(#uoihheowzu) .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1771,7 +1738,7 @@ gtsummary::tbl_regression(lm5)</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#lxetinhxte .gt_col_heading {
+:where(#uoihheowzu) .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1791,7 +1758,7 @@ gtsummary::tbl_regression(lm5)</code></pre>
   overflow-x: hidden;
 }
 
-#lxetinhxte .gt_column_spanner_outer {
+:where(#uoihheowzu) .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1803,15 +1770,15 @@ gtsummary::tbl_regression(lm5)</code></pre>
   padding-right: 4px;
 }
 
-#lxetinhxte .gt_column_spanner_outer:first-child {
+:where(#uoihheowzu) .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#lxetinhxte .gt_column_spanner_outer:last-child {
+:where(#uoihheowzu) .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#lxetinhxte .gt_column_spanner {
+:where(#uoihheowzu) .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1823,7 +1790,7 @@ gtsummary::tbl_regression(lm5)</code></pre>
   width: 100%;
 }
 
-#lxetinhxte .gt_group_heading {
+:where(#uoihheowzu) .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1848,7 +1815,7 @@ gtsummary::tbl_regression(lm5)</code></pre>
   vertical-align: middle;
 }
 
-#lxetinhxte .gt_empty_group_heading {
+:where(#uoihheowzu) .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1863,15 +1830,15 @@ gtsummary::tbl_regression(lm5)</code></pre>
   vertical-align: middle;
 }
 
-#lxetinhxte .gt_from_md > :first-child {
+:where(#uoihheowzu) .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#lxetinhxte .gt_from_md > :last-child {
+:where(#uoihheowzu) .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#lxetinhxte .gt_row {
+:where(#uoihheowzu) .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1890,7 +1857,7 @@ gtsummary::tbl_regression(lm5)</code></pre>
   overflow-x: hidden;
 }
 
-#lxetinhxte .gt_stub {
+:where(#uoihheowzu) .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1903,7 +1870,7 @@ gtsummary::tbl_regression(lm5)</code></pre>
   padding-right: 5px;
 }
 
-#lxetinhxte .gt_stub_row_group {
+:where(#uoihheowzu) .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1917,11 +1884,11 @@ gtsummary::tbl_regression(lm5)</code></pre>
   vertical-align: top;
 }
 
-#lxetinhxte .gt_row_group_first td {
+:where(#uoihheowzu) .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#lxetinhxte .gt_summary_row {
+:where(#uoihheowzu) .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1931,16 +1898,16 @@ gtsummary::tbl_regression(lm5)</code></pre>
   padding-right: 5px;
 }
 
-#lxetinhxte .gt_first_summary_row {
+:where(#uoihheowzu) .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#lxetinhxte .gt_first_summary_row.thick {
+:where(#uoihheowzu) .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#lxetinhxte .gt_last_summary_row {
+:where(#uoihheowzu) .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1950,7 +1917,7 @@ gtsummary::tbl_regression(lm5)</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#lxetinhxte .gt_grand_summary_row {
+:where(#uoihheowzu) .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1960,7 +1927,7 @@ gtsummary::tbl_regression(lm5)</code></pre>
   padding-right: 5px;
 }
 
-#lxetinhxte .gt_first_grand_summary_row {
+:where(#uoihheowzu) .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1970,11 +1937,11 @@ gtsummary::tbl_regression(lm5)</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#lxetinhxte .gt_striped {
+:where(#uoihheowzu) .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#lxetinhxte .gt_table_body {
+:where(#uoihheowzu) .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1983,7 +1950,7 @@ gtsummary::tbl_regression(lm5)</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#lxetinhxte .gt_footnotes {
+:where(#uoihheowzu) .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1997,7 +1964,7 @@ gtsummary::tbl_regression(lm5)</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#lxetinhxte .gt_footnote {
+:where(#uoihheowzu) .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -2006,7 +1973,7 @@ gtsummary::tbl_regression(lm5)</code></pre>
   padding-right: 5px;
 }
 
-#lxetinhxte .gt_sourcenotes {
+:where(#uoihheowzu) .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2020,7 +1987,7 @@ gtsummary::tbl_regression(lm5)</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#lxetinhxte .gt_sourcenote {
+:where(#uoihheowzu) .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2028,60 +1995,60 @@ gtsummary::tbl_regression(lm5)</code></pre>
   padding-right: 5px;
 }
 
-#lxetinhxte .gt_left {
+:where(#uoihheowzu) .gt_left {
   text-align: left;
 }
 
-#lxetinhxte .gt_center {
+:where(#uoihheowzu) .gt_center {
   text-align: center;
 }
 
-#lxetinhxte .gt_right {
+:where(#uoihheowzu) .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#lxetinhxte .gt_font_normal {
+:where(#uoihheowzu) .gt_font_normal {
   font-weight: normal;
 }
 
-#lxetinhxte .gt_font_bold {
+:where(#uoihheowzu) .gt_font_bold {
   font-weight: bold;
 }
 
-#lxetinhxte .gt_font_italic {
+:where(#uoihheowzu) .gt_font_italic {
   font-style: italic;
 }
 
-#lxetinhxte .gt_super {
+:where(#uoihheowzu) .gt_super {
   font-size: 65%;
 }
 
-#lxetinhxte .gt_footnote_marks {
+:where(#uoihheowzu) .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#lxetinhxte .gt_asterisk {
+:where(#uoihheowzu) .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#lxetinhxte .gt_slash_mark {
+:where(#uoihheowzu) .gt_slash_mark {
   font-size: 0.7em;
   line-height: 0.7em;
   vertical-align: 0.15em;
 }
 
-#lxetinhxte .gt_fraction_numerator {
+:where(#uoihheowzu) .gt_fraction_numerator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: 0.45em;
 }
 
-#lxetinhxte .gt_fraction_denominator {
+:where(#uoihheowzu) .gt_fraction_denominator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: -0.05em;
@@ -2109,7 +2076,7 @@ gtsummary::tbl_regression(lm5)</code></pre>
     <tr><td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">treated</td>
 <td class="gt_row gt_center">0.07</td>
 <td class="gt_row gt_center">0.03, 0.11</td>
-<td class="gt_row gt_center"><0.001</td></tr>
+<td class="gt_row gt_center">&lt;0.001</td></tr>
     <tr><td class="gt_row gt_left">age</td>
 <td class="gt_row gt_center">0.00</td>
 <td class="gt_row gt_center">-0.01, 0.00</td>
@@ -2155,25 +2122,36 @@ gtsummary::tbl_regression(lm5)</code></pre>
   </tfoot>
 </table>
 </div>
-<pre class="r"><code>anova(lm5 , update(lm5, . ~ . -age))</code></pre>
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Res.Df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["RSS"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Df"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Sum of Sq"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["F"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Pr(>F)"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"126","2":"1.319038","3":"NA","4":"NA","5":"NA","6":"NA","_rn_":"1"},{"1":"127","2":"1.370934","3":"-1","4":"-0.05189681","5":"4.957401","6":"0.02775586","_rn_":"2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
 </div>
-</div>
-<div id="interactions" class="section level1" number="15">
-<h1 number="15"><span class="header-section-number">15</span> Interactions</h1>
-<p>To test whether the treatment effect varies by sex we should test the <code>group*sex</code> interaction.</p>
-<pre class="r"><code>lm6 &lt;- lm( data = walkingdata , 1/walktime ~ group*sex + age +  factor(department))
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lm5 , <span class="fu">update</span>(lm5, . <span class="sc">~</span> . <span class="sc">-</span>age))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
 
-gtsummary::tbl_regression(lm6)</code></pre>
-<div id="kuidjgzmbr" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+Model 1: 1/walktime ~ group + age + sex + factor(department)
+Model 2: 1/walktime ~ group + sex + factor(department)
+  Res.Df    RSS Df Sum of Sq      F  Pr(&gt;F)  
+1    126 1.3190                              
+2    127 1.3709 -1 -0.051897 4.9574 0.02776 *
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+<section id="interactions" class="level1">
+<h1>Interactions</h1>
+<p>To test whether the treatment effect varies by sex we should test the <code>group*sex</code> interaction.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>lm6 <span class="ot">&lt;-</span> <span class="fu">lm</span>( <span class="at">data =</span> walkingdata , <span class="dv">1</span><span class="sc">/</span>walktime <span class="sc">~</span> group<span class="sc">*</span>sex <span class="sc">+</span> age <span class="sc">+</span>  <span class="fu">factor</span>(department))</span>
+<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a>gtsummary<span class="sc">::</span><span class="fu">tbl_regression</span>(lm6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div id="bfsbkrezwi" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#kuidjgzmbr .gt_table {
+:where(#bfsbkrezwi) .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -2198,7 +2176,7 @@ gtsummary::tbl_regression(lm6)</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#kuidjgzmbr .gt_heading {
+:where(#bfsbkrezwi) .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2210,7 +2188,7 @@ gtsummary::tbl_regression(lm6)</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#kuidjgzmbr .gt_title {
+:where(#bfsbkrezwi) .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2222,7 +2200,7 @@ gtsummary::tbl_regression(lm6)</code></pre>
   border-bottom-width: 0;
 }
 
-#kuidjgzmbr .gt_subtitle {
+:where(#bfsbkrezwi) .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2234,13 +2212,13 @@ gtsummary::tbl_regression(lm6)</code></pre>
   border-top-width: 0;
 }
 
-#kuidjgzmbr .gt_bottom_border {
+:where(#bfsbkrezwi) .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#kuidjgzmbr .gt_col_headings {
+:where(#bfsbkrezwi) .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2255,7 +2233,7 @@ gtsummary::tbl_regression(lm6)</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#kuidjgzmbr .gt_col_heading {
+:where(#bfsbkrezwi) .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2275,7 +2253,7 @@ gtsummary::tbl_regression(lm6)</code></pre>
   overflow-x: hidden;
 }
 
-#kuidjgzmbr .gt_column_spanner_outer {
+:where(#bfsbkrezwi) .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2287,15 +2265,15 @@ gtsummary::tbl_regression(lm6)</code></pre>
   padding-right: 4px;
 }
 
-#kuidjgzmbr .gt_column_spanner_outer:first-child {
+:where(#bfsbkrezwi) .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#kuidjgzmbr .gt_column_spanner_outer:last-child {
+:where(#bfsbkrezwi) .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#kuidjgzmbr .gt_column_spanner {
+:where(#bfsbkrezwi) .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2307,7 +2285,7 @@ gtsummary::tbl_regression(lm6)</code></pre>
   width: 100%;
 }
 
-#kuidjgzmbr .gt_group_heading {
+:where(#bfsbkrezwi) .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2332,7 +2310,7 @@ gtsummary::tbl_regression(lm6)</code></pre>
   vertical-align: middle;
 }
 
-#kuidjgzmbr .gt_empty_group_heading {
+:where(#bfsbkrezwi) .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2347,15 +2325,15 @@ gtsummary::tbl_regression(lm6)</code></pre>
   vertical-align: middle;
 }
 
-#kuidjgzmbr .gt_from_md > :first-child {
+:where(#bfsbkrezwi) .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#kuidjgzmbr .gt_from_md > :last-child {
+:where(#bfsbkrezwi) .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#kuidjgzmbr .gt_row {
+:where(#bfsbkrezwi) .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2374,7 +2352,7 @@ gtsummary::tbl_regression(lm6)</code></pre>
   overflow-x: hidden;
 }
 
-#kuidjgzmbr .gt_stub {
+:where(#bfsbkrezwi) .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2387,7 +2365,7 @@ gtsummary::tbl_regression(lm6)</code></pre>
   padding-right: 5px;
 }
 
-#kuidjgzmbr .gt_stub_row_group {
+:where(#bfsbkrezwi) .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2401,11 +2379,11 @@ gtsummary::tbl_regression(lm6)</code></pre>
   vertical-align: top;
 }
 
-#kuidjgzmbr .gt_row_group_first td {
+:where(#bfsbkrezwi) .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#kuidjgzmbr .gt_summary_row {
+:where(#bfsbkrezwi) .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2415,16 +2393,16 @@ gtsummary::tbl_regression(lm6)</code></pre>
   padding-right: 5px;
 }
 
-#kuidjgzmbr .gt_first_summary_row {
+:where(#bfsbkrezwi) .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#kuidjgzmbr .gt_first_summary_row.thick {
+:where(#bfsbkrezwi) .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#kuidjgzmbr .gt_last_summary_row {
+:where(#bfsbkrezwi) .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2434,7 +2412,7 @@ gtsummary::tbl_regression(lm6)</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#kuidjgzmbr .gt_grand_summary_row {
+:where(#bfsbkrezwi) .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2444,7 +2422,7 @@ gtsummary::tbl_regression(lm6)</code></pre>
   padding-right: 5px;
 }
 
-#kuidjgzmbr .gt_first_grand_summary_row {
+:where(#bfsbkrezwi) .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2454,11 +2432,11 @@ gtsummary::tbl_regression(lm6)</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#kuidjgzmbr .gt_striped {
+:where(#bfsbkrezwi) .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#kuidjgzmbr .gt_table_body {
+:where(#bfsbkrezwi) .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2467,7 +2445,7 @@ gtsummary::tbl_regression(lm6)</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#kuidjgzmbr .gt_footnotes {
+:where(#bfsbkrezwi) .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2481,7 +2459,7 @@ gtsummary::tbl_regression(lm6)</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#kuidjgzmbr .gt_footnote {
+:where(#bfsbkrezwi) .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -2490,7 +2468,7 @@ gtsummary::tbl_regression(lm6)</code></pre>
   padding-right: 5px;
 }
 
-#kuidjgzmbr .gt_sourcenotes {
+:where(#bfsbkrezwi) .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2504,7 +2482,7 @@ gtsummary::tbl_regression(lm6)</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#kuidjgzmbr .gt_sourcenote {
+:where(#bfsbkrezwi) .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2512,60 +2490,60 @@ gtsummary::tbl_regression(lm6)</code></pre>
   padding-right: 5px;
 }
 
-#kuidjgzmbr .gt_left {
+:where(#bfsbkrezwi) .gt_left {
   text-align: left;
 }
 
-#kuidjgzmbr .gt_center {
+:where(#bfsbkrezwi) .gt_center {
   text-align: center;
 }
 
-#kuidjgzmbr .gt_right {
+:where(#bfsbkrezwi) .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#kuidjgzmbr .gt_font_normal {
+:where(#bfsbkrezwi) .gt_font_normal {
   font-weight: normal;
 }
 
-#kuidjgzmbr .gt_font_bold {
+:where(#bfsbkrezwi) .gt_font_bold {
   font-weight: bold;
 }
 
-#kuidjgzmbr .gt_font_italic {
+:where(#bfsbkrezwi) .gt_font_italic {
   font-style: italic;
 }
 
-#kuidjgzmbr .gt_super {
+:where(#bfsbkrezwi) .gt_super {
   font-size: 65%;
 }
 
-#kuidjgzmbr .gt_footnote_marks {
+:where(#bfsbkrezwi) .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#kuidjgzmbr .gt_asterisk {
+:where(#bfsbkrezwi) .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#kuidjgzmbr .gt_slash_mark {
+:where(#bfsbkrezwi) .gt_slash_mark {
   font-size: 0.7em;
   line-height: 0.7em;
   vertical-align: 0.15em;
 }
 
-#kuidjgzmbr .gt_fraction_numerator {
+:where(#bfsbkrezwi) .gt_fraction_numerator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: 0.45em;
 }
 
-#kuidjgzmbr .gt_fraction_denominator {
+:where(#bfsbkrezwi) .gt_fraction_denominator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: -0.05em;
@@ -2647,128 +2625,173 @@ gtsummary::tbl_regression(lm6)</code></pre>
   </tfoot>
 </table>
 </div>
-<pre class="r"><code>anova( lm5 , lm6 )</code></pre>
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Res.Df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["RSS"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Df"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Sum of Sq"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["F"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Pr(>F)"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"126","2":"1.319038","3":"NA","4":"NA","5":"NA","6":"NA","_rn_":"1"},{"1":"125","2":"1.314761","3":"1","4":"0.00427635","5":"0.406571","6":"0.5248813","_rn_":"2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
 </div>
-<pre class="r"><code>library(emmeans)
-emmeans(lm6, pairwise ~ group | sex)</code></pre>
-<pre><code>## $emmeans
-## sex = F:
-##  group   emmean     SE  df lower.CL upper.CL
-##  control  0.379 0.0246 125    0.330    0.428
-##  treated  0.430 0.0260 125    0.379    0.482
-## 
-## sex = M:
-##  group   emmean     SE  df lower.CL upper.CL
-##  control  0.359 0.0151 125    0.330    0.389
-##  treated  0.436 0.0150 125    0.407    0.466
-## 
-## Results are averaged over the levels of: department 
-## Confidence level used: 0.95 
-## 
-## $contrasts
-## sex = F:
-##  contrast          estimate     SE  df t.ratio p.value
-##  control - treated  -0.0513 0.0346 125  -1.481  0.1411
-## 
-## sex = M:
-##  contrast          estimate     SE  df t.ratio p.value
-##  control - treated  -0.0771 0.0211 125  -3.654  0.0004
-## 
-## Results are averaged over the levels of: department</code></pre>
-<pre class="r"><code>treatmentestimates &lt;- as.data.frame(confint(emmeans(lm6, pairwise ~ group | sex)$contrast))</code></pre>
-<pre class="r"><code>g1 &lt;- ggplot(treatmentestimates) + aes(x=sex, y=estimate, ymin=lower.CL, ymax=upper.CL) + 
-  geom_point() + 
-  geom_errorbar(width=0.2) + 
-  geom_hline(yintercept = 0) + 
-  theme_bw() + 
-  labs(x=&quot;Sex&quot;, y=&quot;Treatment effect&quot;) 
-  
-g1 </code></pre>
-<p><img src="workshopscript_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
-<pre class="r"><code>g1 + coord_flip()</code></pre>
-<p><img src="workshopscript_files/figure-html/unnamed-chunk-17-2.png" width="672" /></p>
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>( lm5 , lm6 )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: 1/walktime ~ group + age + sex + factor(department)
+Model 2: 1/walktime ~ group * sex + age + factor(department)
+  Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
+1    126 1.3190                           
+2    125 1.3148  1 0.0042764 0.4066 0.5249</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'emmeans' was built under R version 4.1.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(lm6, pairwise <span class="sc">~</span> group <span class="sc">|</span> sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$emmeans
+sex = F:
+ group   emmean     SE  df lower.CL upper.CL
+ control  0.379 0.0246 125    0.330    0.428
+ treated  0.430 0.0260 125    0.379    0.482
+
+sex = M:
+ group   emmean     SE  df lower.CL upper.CL
+ control  0.359 0.0151 125    0.330    0.389
+ treated  0.436 0.0150 125    0.407    0.466
+
+Results are averaged over the levels of: department 
+Confidence level used: 0.95 
+
+$contrasts
+sex = F:
+ contrast          estimate     SE  df t.ratio p.value
+ control - treated  -0.0513 0.0346 125  -1.481  0.1411
+
+sex = M:
+ contrast          estimate     SE  df t.ratio p.value
+ control - treated  -0.0771 0.0211 125  -3.654  0.0004
+
+Results are averaged over the levels of: department </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a>treatmentestimates <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">confint</span>(<span class="fu">emmeans</span>(lm6, pairwise <span class="sc">~</span> group <span class="sc">|</span> sex)<span class="sc">$</span>contrast))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>g1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(treatmentestimates) <span class="sc">+</span> <span class="fu">aes</span>(<span class="at">x=</span>sex, <span class="at">y=</span>estimate, <span class="at">ymin=</span>lower.CL, <span class="at">ymax=</span>upper.CL) <span class="sc">+</span> </span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="at">width=</span><span class="fl">0.2</span>) <span class="sc">+</span> </span>
+<span id="cb98-4"><a href="#cb98-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span> </span>
+<span id="cb98-5"><a href="#cb98-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb98-6"><a href="#cb98-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Sex"</span>, <span class="at">y=</span><span class="st">"Treatment effect"</span>) </span>
+<span id="cb98-7"><a href="#cb98-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb98-8"><a href="#cb98-8" aria-hidden="true" tabindex="-1"></a>g1 </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="workshopscript_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>g1 <span class="sc">+</span> <span class="fu">coord_flip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="workshopscript_files/figure-html/unnamed-chunk-17-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 <p>What does this suggest. Does the treatment work in men and women?</p>
-</div>
 
 
+</section>
 
-</div>
-</div>
-
-</div>
-
-<script>
-
-// add bootstrap table styles to pandoc tables
-function bootstrapStylePandocTables() {
-  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
-}
-$(document).ready(function () {
-  bootstrapStylePandocTables();
-});
-
-
-</script>
-
-<!-- tabsets -->
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open');
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
   });
-});
-</script>
-
-<!-- code folding -->
-
-<script>
-$(document).ready(function ()  {
-
-    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
-    $('.unlisted.unnumbered').addClass('toc-ignore')
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
       },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
     };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
 });
 </script>
+</div> <!-- /content -->
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 
-</body>
-</html>
+
+</body></html>

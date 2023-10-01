@@ -1,0 +1,28 @@
+---
+title: "R and RStudio for Statistics"
+output:
+  html_document:
+    df_print: paged
+    theme: cosmo
+    toc: no
+---
+
+This site hosts my course notes, presentations and data files accompanying my courses on R and RStudio.
+
+* NBI/JIC MSc Introduction to R
+    * [Day 1](day1.qmd)
+    * [Day 2](day2.qmd)
+    * [Day 3](day3.qmd)
+* Statistics notes
+    * [Don't dichotomise your data](dichot.qmd)
+* Notes on using R
+    * [Tidyverse, data.table and others for making descriptive tables](datatabletidyverse.qmd)
+    * [Using packages, functions and pipes](praise.qmd)
+    * [Using ggplot2](flipbook.html)
+
+Older stuff
+
+* JIC MSc Workshop
+    * [Tutorial](workshopscript.html)
+    
+    

@@ -1,0 +1,731 @@
+---
+title: "Introduction to ‘R’ statistical software for statistical analysis"
+author: "George Savva, (QIB)"
+always_allow_html: true
+output:
+  html_document:
+    df_print: paged
+    theme: cosmo
+    toc: yes
+    toc_depth: 2
+---
+
+
+
+```{r echo=FALSE}
+exerciseNumber=0;
+exercise <- function(x="") {
+  exerciseNumber <<- exerciseNumber+1; return(sprintf("## Exercise %d. %s", exerciseNumber, x))
+  }
+sectionNumber=0;
+section <- function(x="") {
+  sectionNumber <<- sectionNumber+1; return(sprintf("# %s", x))
+  }
+
+subsection <- function(x="") {
+  return(sprintf("## %s", x))
+  }
+
+
+exampleNumber=0;
+example <- function(x="") {
+  exampleNumber <<- exampleNumber+1; return(sprintf("## Worked Example %d. %s", exampleNumber, x))
+  }
+
+```
+
+`r section("Introduction")` 
+
+This course will introduce 
+
+* R and RStudio statistical software
+* examples of performing common tasks in scientific data analysis
+* where to go for further support
+
+The aim is to become familiar with the R/RStudio environment and some common functions and workflows.  This will enable you to learn the specific functions that you need on your own or with further training.
+
+All of the commands for the worked examples and the exercises is in the file TutorialScript.R.  The commands for the worked examples are also typed out here.
+
+Powerpoint slides for each day's lectures are here:
+
+* [Day 1 slides](./rStatsMar22.pptx)
+* [Day 2 slides](./day2_tidydata.pptx)
+
+`r subsection("Learning objectives")` 
+
+We will focus on the tasks used in a typical analysis of a single scientific dataset, mirroring the tasks usually conducted in other statistical software.
+
+### Specific tasks:
+
+Day 1:  R and RStudio basics
+
+* Basics of the R language
+*	Making an Rstudio project
+*	Loading packages
+*	Loading a dataset into R from an Excel file
+*	Exploring your data and calculating descriptive statistics
+*	Simple hypothesis tests
+
+Day 2: (Self-directed learning) Loading data from Excel; revision of day 1 tasks
+
+* Using the help system to learn the `readxl` package
+* Make plots, descriptive statistics and hypothesis tests
+
+Day 3:  Real data!
+
+* Revision of days 1 and 2
+* Merging datasets
+* Estimating and diagnosing linear models
+
+
+### How to use R
+
+* Using R and RStudio
+* RStudio ‘projects’ and a good workflow
+* The command line interface
+* Using scripts for reproducibility
+* Getting help
+* Using packages
+
+### How R works
+
+* Objects and functions
+* Data frames and vectors
+* Types of data: numerics, factors, and strings
+* Representing and handling ‘missing’ values
+* The importance of ‘tidy’ data
+
+`r section("Getting R and RStudio")` {#intro}
+
+## What are R and RStudio?
+
+R is a free and open source statistics package, initially developed during the 1990s, and that has now become the world’s most widely used and comprehensive statistical software.  R calls itself a ‘programming language *and* environment for statistic computing’.  
+
+That is, 'R' refers both to the software itself and the programming language that you use to interact with it.
+
+RStudio is a free open source integrated development environment (IDE) for R that makes working R much easier.  Most R users use RStudio and we recommend using RStudio for new users.
+
+The great strength of R is in its contributed packages, these are community written add-ons that provide functions to help you perform almost any statistical, programming, or data-related task.  We will introduce some commonly used packages for data management, analysis and graphing during this course.
+
+`r exercise("Getting started")`
+
+### Getting R and RStudio
+
+If you are using a PC in the IT training suite it will already have an up-to-date version of R and RStudio.  For other NBI managed devices you can install R and RStudio from the NBI software catalogue.
+
+If you want to install R and RStudio on your own device:
+
+1. Download and install the latest version of R from https://cran.r-project.org/ 
+
+2. Then download and install RStudio from https://www.rstudio.com/ 
+
+### Starting RStudio
+
+Start RStudio.  It will detect your installation of R, and you should see a screen like this:
+
+![Figure:  RStudio Window](./rstudio.png)
+
+On the left is the console window, where you type commands and see output.  The windows on the right hold various useful tabs, here the top pane is showing the data I happen to currently have loaded in my environment (yours will initially be empty) and a viewer showing part of my filesystem at the bottom.  These right-hand windows can also show graphs, help files, and your command history.
+
+### Check R and RStudio are working, run your first command
+
+4. Click in the console window and type:
+
+```{r eval=FALSE, echo=TRUE}
+1+2
+```
+
+Press return on your keyboard.  You should see: 
+
+```{r echo=FALSE, eval=TRUE}
+1+2
+```
+
+This is the basic way in which R works.  We enter commands at the command prompt, and we get the output in the console window.
+
+5. Try a few other mathematical functions at the R console.
+
+`r section("Using projects and scripts")`
+
+Before we go any further, we are going to start an RStudio ‘project’ to organise our work during this course. Using projects helps us to keep all of the data and analysis for a particular piece of work in the same place.
+
+Click on ‘New &rarr; New project’ in the main toolbar.  Click ‘Start a new project in a brand new working directory’.  Then click ‘new project’ on the next screen.
+
+Now you can choose where to create the new directory for your R project, and what to call it.  Make a project called ‘Rtraining’ or something like that, somewhere in your personal filestore.
+
+Now, when you return to the main RStudio window you are working within your project.  Notice that the 'working directory' has automatically switched to the new directory that you created, and the 'files' tab on the bottom left of the window is now showing the root of the project directory you created.
+
+## Making a script
+
+We could do everything by typing commands into the console window as we have already seen, but this is not good if we want to remember or repeat something we have done, or share it with others.
+
+So instead we will type our commands into files called R scripts and run the commands from there.  With a script you can run and re-run bigger analyses that chain together all the functions you need for data loading, cleaning, analysing, reporting etc.
+
+Using scripts mean we can develop complex analyses, and that when we come back to them later, eg if something changes in our data that means we need to redo everything, or we want to tweak something in our analysis because of a reviewer's comment, we can easily do this without having to remember or reconstruct what we did.  
+
+It is good to keep a separate R script for each analysis that you do, such that each starts with the functions to load the required data, do any cleaning or coding that is necessary, then to perform and report the data analysis.
+
+I have made an example of such a script, annotated with comments, in the files that accompany this handout.
+
+`r example("Make a script")`
+
+1. Make a new script.  Click on File &rarr; New File &rarr; R Script in the main RStudio window.  An empty file will appear in the top-left pane.
+
+2. Save your script with a sensible filename (even though it is empty).  Having unsaved scripts is a bad idea, RStudio is sometimes unstable and while it will try to recover unsaved work it is not always guaranteed to.  Get into the habit of saving your scripts regularly.
+
+3. Put some of the mathematical functions that you have already tried into your script, with one on each line.
+
+You can now run code from scripts in several ways.
+
+1. If you press 'run' or type Ctrl+Enter on the keyboard, RStudio will send the line that the cursor is on to the R console and will run it.  (Rstudio will try to identify if that line is a part of a multiline command - which may or may not work).
+2. If you highlight an area of the script and then hit 'run' (or press Ctrl+Enter) then RStudio will send all the highlighted code to the R console.
+3. If you save the file, then press 'source', R will load the file from disk and run all the commands from that file in sequence. Doing this you won't see any output unless you specifically ask for it (or press 'source with echo').
+
+There are some subtle differences between what happens with run and source, but in general you can use either.  I typically use 'run' while developing scripts and 'source' when they are finished to get the final answers.
+
+If you have your raw data saved, and you keep your scripts, then you don’t need to save your results or any of the variables that you generated or modified during your analysis.  So long as the orginal data doesn’t change, running the script will reproduce all of your analysis and output.  This is a better way of working than trying to save your environment with all of your results and tables in.
+
+I have created a script including all the analyses from this tutorial, in TutorialScript.R.  Load this and have a look around.  Notice my comments to remind myself why I did things, this might be helpful when I next come to revise the analysis!
+
+**Important:** Keep the R scripts and the data associated with this training course in the project directory, so that you can access them easily.
+
+See:
+
+* https://r4ds.had.co.nz/workflow-projects.html
+* https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects
+* https://rstats.wtf
+
+for more information on using projects and scripts
+
+`r example("Object assigments")`
+
+So far we have used R as a calculator.  Next we'll learn about how R stores data and applies data management or analysis functions to data.  First some terminology:
+
+### Functions
+
+Everything in R is done by executing ‘functions’.  When you typed `1+2` at the console above you were calling the `+` function, with `1` and `2` as its arguments, and the result was printed in the console window.
+
+Simple mathematical functions can be written using standard notation in this way (eg `1+2` or `3/4`) but functions are more commonly called by their *name*, with their *arguments* in brackets, separated by commas.  For example, to get say the logarithm (base 10) of 100, we would type
+
+```{r }
+### Try this directly in the console, and by running it from your new script.
+log(x=100, base=10)
+```
+
+Here, `log` is the name of the function, with `x` and `base` its arguments.  The result (2) is the *value* of the function (the value is what is returned).
+
+Try each of the following commands.  Do you understand what they do any why?
+
+```{r eval=FALSE }
+### From now on, keep everything you try in a script file.
+
+log(x=100, base=10)
+log(x=100)
+log(base=10, x=100)
+
+log(100,10)
+log(10,100)
+
+1000 |> log()
+100 |> log(base=10)
+
+log()
+log
+
+```
+
+`r exercise("Get help!")`
+
+Type: 
+```{r eval=FALSE}
+?log
+```
+
+to read the help file for the `log` function.  All R help files are structred in this way.  Look at the `Usage`,  `Arguments` and `Value` sections.  These will be invaluable when you come to use R and use functions that you do not already know.
+
+### Objects
+
+Instead of directly displaying the value of the function (‘value’ is what R calls the result of a function), you can give it a name and store it for later use:
+
+```{r } 
+x = 1+2
+```
+
+The `=` in this context represents ‘assignment’.  The line above says:
+
+‘evaluate 1+2, and store the result in an object called x’  or more simply  ‘assign the value of 1+2 to x’.
+
+You might find it easier to understand:
+
+```{r }
+x <- 1+2
+```
+
+This does exactly the same thing; some R users use the arrow `<-` instead of `=` for assignment, so both forms will come up when you’re looking at help or other people’s code.  I (annoyingly!) tend to use either interchangeably.
+
+So now you have an object called `x` in your *environment* that holds the number 3.  You can ask R to display the value of ‘x’ by just entering x (just entering the name of an object *prints* that object):
+
+```{r }
+x
+```
+
+Or you could do something else with `x`
+
+```{r }
+x*2
+log(x)
+x |> log()
+```
+
+Note your new object and its value should now have appeared in the 'Environment' pane in RStudio.
+
+To see the *class* of an object (what kind of thing is stored in the object), use the `class()` function.
+
+```{r }
+class(x)
+```
+
+Objects of different classes store different kinds of information.  We will come across objects of many different classes later.
+
+`r exercise("More functions, and assigning values to variables")`
+
+1.  Make a new object called y which has the value of x+3.  Then display y.
+2.	Now change the value of x (eg using  x <- 6 ).  Does the value of y change?
+3.	Objects can hold text strings instead of numbers.  Try:
+
+```{r eval=FALSE}
+myname <- "George"  #(or whatever your name is).
+myname
+```
+
+What is the class of the ‘myname’ object?
+
+4.	(Difficult!)  Look up the function to turn a text string into upper case (an internet search will help you).  Use this function to make a new object which has the same text as ‘myname’ but in upper case.
+
+
+`r section("Datasets")`
+
+We can R as a calculator like this but we'll most often be using R to analyse datasets.
+
+Later we'll look into getting real data into R, but for now we'll work on a built-in dataset to understand how to run basic analyses.  Type:
+
+```{r }
+data(iris)
+```
+
+Check your 'environment' tab for a new object.  Click on the object name to see it in the Viewer, or click on the small blue button next to it to expand the view in the environment window.
+
+What is the class of the `iris` object that you have created?
+
+There are a few different functions you can use to look at a dataset.  Test each to see what they do.
+
+```{r eval=FALSE}
+str(iris)
+head(iris)
+summary(iris)
+dim(iris)
+nrow(iris)
+View(iris)
+```
+
+This is an example of a dataset in `tidy` form.  We'll learn more about this in the next session, but in short in has:
+
+* A single rectangular table to represent the data
+* A column for each variable
+* A row for each observation
+
+This is very similar to how datasets are stored in software like SPSS or Stata, or in a database, but is very different to how you might record data using GraphPad Prism.
+
+We can extract individual variables like this:
+
+```{r eval=FALSE}
+
+iris$Sepal.Length
+
+```
+
+Or use functions to get descriptive statistics for a variable
+
+```{r eval=FALSE}
+
+mean(iris$Sepal.Length)
+
+sd(iris$Sepal.Length)
+```
+
+Or we can work on more than one variable at a time:
+
+```{r eval=FALSE}
+
+cor(iris$Sepal.Length, iris$Sepal.Width)
+
+cor.test(iris$Sepal.Length, iris$Sepal.Width)
+
+```
+
+```{r eval=FALSE}
+with(iris , cor(Sepal.Length , Sepal.Width))
+```
+
+`r section("Tidyverse")`
+
+Before we go any further we're going to install a package.  `Base' R has a few ways to manipulate datasets, but these can get very cumbersome and you won't use them much in practice so it's better to start using add-on packages as soon as possible.
+
+The two major packages of data wrangling functions are `data.table` and `tidyverse`.  
+
+Tidyverse is more widely used and so this is what we will focus on here.  If you become more familiar with R you might want to explore `data.table`, which is used more by programmers.
+
+Tidyverse is in fact a large set of packages.  You can see all of the details here https://www.tidyverse.org/packages/.  In particular we will use functions from the following packages:
+
+* **readxl** for reading data from excel files
+* **dplyr** for data manipulation
+* **ggplot2** for making graphics
+
+If you do not have the tidyverse installed, then install them now from the menu or by using
+
+```{r eval=FALSE}
+install.packages("tidyverse")
+```
+
+This will install a lot of packages and might take a few minutes.
+
+The tidyverse packages are installed you can use all of their functions.  There are two ways to use functions installed as part of a package.  For example, to use the `glimpse` function from the `dplyr` package to look at the iris dataset, you can type:
+
+```{r eval=FALSE}
+dplyr::glimpse(iris)
+```
+
+or
+
+```{r eval=FALSE}
+library(dplyr) # or library(tidyverse)
+
+glimpse(iris)
+```
+
+Using `library` adds the library to the search path for the whole of your R session, so R will be able to find all of the functions in this library without explicitly referencing the package every time.
+
+What do each of the following functions do?
+
+```{r eval=TRUE, echo=FALSE}
+library(tidyverse)
+```
+
+```{r e}
+iris |> select(Sepal.Length, Sepal.Width)
+
+iris |> filter(Species=="setosa")
+
+iris |> filter(Sepal.Length > 7.5)
+
+iris |> summarise(`Median Petal Width` = median(Petal.Width))
+
+iris |> summarise(`Mean` = median(Petal.Width), `SD` = sd(Petal.Width))
+
+iris |> mutate(Sepal.Area = Sepal.Length * Sepal.Width) -> iris2
+
+iris |> arrange(Sepal.Length)
+
+iris <- iris |> mutate(logPetalLength = log(Petal.Length))
+
+```
+
+Using pipes you can chain functions together:
+
+```{r eval=FALSE}
+iris |> group_by(Species) |> summarise(mean(Sepal.Length), mean(Sepal.Width), n=n())
+```
+
+
+`r section("Making graphs with ggplot2")`
+
+R has a simple built in system for making graphs but the outputs are not very good!
+
+```{r }
+boxplot(Petal.Length ~ Species, data=iris)
+```
+
+The ggplot() system is much more flexible, and produces publication quality outputs:
+
+```{r }
+iris |> ggplot() + aes(x=Sepal.Length, y=Sepal.Width, color=Species) + geom_point()
+
+iris |> ggplot() + 
+  aes(x=Species, y=Petal.Length, fill=Species) + 
+  geom_boxplot() + 
+  theme_bw()
+
+```
+
+We'll see more ggplot in later sessions.
+
+`r section("Types of data")`
+
+We saw two object of two different 'classes' in the previous exercise. These classes were 'numeric' and 'character'.  The class of an object defines what kind of information it holds, and how other functions act on it.
+
+There are four basic classes (modes) that you will commonly use and should be aware of.  These correspond to the types of data you might have.  The basic types are:
+
+*	'numeric' – For keeping numbers, can be discrete or continuous
+*	'logical' – can only take the values (TRUE or FALSE)
+*	'character' – for strings of text
+*	'factor' – for labelled categorical variables (ordered or unordered)
+
+Later in this tutorial we will see objects of more complex classes, these can store lots of different information of different modes:
+
+*	‘data.frame’ – storing datasets
+*	‘lm’ – stores the all results of a linear regression model
+
+## Character strings
+
+Character strings represent text rather than numbers.  Strings are used to label categories in a dataset, to identify columns in a dataset, to make your outputs more readable.  You also might find that part of your data has been entered as a string, for example patient identifiers or gene names in a database, or responses to open ended questions.
+
+Strings are identified in R (and in most other programming languages) by enclosing them in quotes.  Single quotes and double quotes can be used (and are treated almost identically), but double quotes are preferred.  For example try:
+
+```{r eval=FALSE}
+print("Hello")
+
+print('Hello')
+
+# What happens here?
+#print(Hello)
+```
+
+A common mistake in R is to forget to enclose strings in quotes.  In which case R tries to interpret your input as an object name, leading to an error message if that name doesn’t exist.
+
+## Logicals
+
+Logicals represent binary information in the form `TRUE` or `FALSE`.  They most often arise as the result of a comparison, for example try:
+
+```{r eval=FALSE}
+3>2
+
+"Hello" == "hello"  # note the double equals sign, this distinguishes assignment from comparison
+
+```
+
+## Converting between types
+
+Sometimes it is possible to convert an object from one class to another.  For example, a number might be stored as a character string in your data, and you will need to convert it into a numeric before you can do any analysis with it. For example:
+
+```{r eval=FALSE}
+x <- "3"
+x*2 # What is the error message here?  What does it mean?
+
+y <- as.numeric(x)
+y*2
+```
+
+
+## Missing elements in vectors
+
+Often your data will include missing values.  R uses `NA` to represent missing values.  For example the following creates a vector (a single variable, like a single column of a data frame) with a missing value in the fourth position:
+
+```{r eval=FALSE}
+myvector <- c(10,21,32,NA,54)
+myvector
+```
+:::{.callout-warning}
+Note the difference between `NA` (a missing value) and `"NA"` (a character string containing the letters N and A.  I have been tripped up by this a few times when `"NA"` has been entered into a dataset.)
+:::
+
+`r exercise("Effect of missing values")`
+
+Try some other functions with myvector to see what impact the missing data point has.
+
+```{r eval=FALSE}
+class(myvector)
+
+plot(myvector)
+
+myvector>20
+
+mean(myvector) # what happens here?  Why?  Can you fix it?
+
+is.na(myvector) # what does this do?
+
+sum(is.na(myvector)) # can you explain what this does?
+```
+
+
+## Citing R and R packages
+
+It is important to cite R and R packages you use correctly, particularly where the package is essential to make your analysis reproducible.  To find out how to cite a package use the `citation()` function.
+
+How should you cite the ‘tidyverse’ package?
+
+
+`{r section("Descriptive statistics")}
+
+In this rest of this session we'll use base and tidyverse functions to complete some common descriptive and analytic tasks using the iris dataset.
+
+## A continuous variable stratified by a grouping variable, and the formula interface
+
+Let’s get the sepal length by species.  We can do this using the ‘aggregate’ function:
+
+```{r eval=FALSE}
+aggregate( Sepal.Length ~ Species, FUN=mean, data = iris )
+```
+
+Although this is a relatively simple example, there is a lot to unpick in the syntax that is important for understanding how R analysis functions often work.
+
+Here `aggregate()` uses the 'formula' interface, that is, its first argument is a *formula* of the form `y ~ x`.  It's important to understand this now because this is how variables are specified as arguments in many different R functions, eg to run analyses and to make graphics.  
+
+Formulas are generally used in R to specify relationships between variables in a dataset.  Different functions use formulas in different ways, but in general the left hand side of a formula represents one or more dependent variables, and the right hand represents variables that act as predictors or grouping variables.
+
+Look at the help file for `aggregate()` to understand how the rest of the arguments are specified.  Note there is more than one syntax for `aggregate()` in the help file, since we gave a formula for the first argument R will choose the appropriate version of the function to use.
+
+`aggregate()` will use the function specified to its `FUN` argument to summarise the left-hand side variable, stratified by the right hand side variable.
+
+How did R know where to find the objects 'height' and 'species.name'?  The final `data` argument tells aggregate where to look for the variables that have been specified in the formula.  When you use `data=` like this in an R function it temporarily adds your data frame to the search path, so that R will find the vectors that you named in the formula.
+
+Note, this way of using `data=` in a function doesn't always work, only in those functions that explicitly allow it.  So to get the mean heights in this dataset you can't, for example, use:
+
+```{r eval=FALSE}
+mean( Sepal.Length, data=iris)
+```
+
+you would instead have to use either of the following:
+
+```{r eval=FALSE}
+mean(iris$Sepal.Length)
+with(iris, mean(Sepal.Length)) # look up 'with' if you're interested!
+```
+
+We already saw a way to get means over a categorical variable with Tidyverse:
+
+```{r eval=FALSE}
+library(tidyverse)
+iris |> group_by(Species) |> summarise(mean(Sepal.Length))
+```
+
+This is a situation where the tidyverse solution is no easier than the `base` solution, but the tidverse solution extends better.  If we want more than one summary statistic for example, it's easy with tidyverse but difficult with base:
+
+```{r eval=FALSE}
+iris |> group_by(Species) |> summarise(n(),mean(Sepal.Length),sd(Sepal.Length))
+```
+
+`r exercise("Medians over groups")`
+
+1. Use `aggregate()` to find the maximum petal length, stratified by tree health. 
+3. Try the same thing using Tidyverse functions.
+
+## Recoding a variable into groups
+
+Suppose we want to classify flowers into three groups based on their petal length.  We need to add another variable to the dataset.
+
+What class should that variable be?
+
+Base R has the function `cut` that 
+
+```{r eval=FALSE}
+cut_number(iris$Petal.Length, 3, labels=c("Short", "Medium", "Long") )
+```
+
+```{r }
+# Using tidyverse to create this variable and add it to the dataset:
+iris <- iris |> mutate(PetalLengthGrouped = cut_number(Petal.Length, 3, labels=c("Short", "Medium", "Long") )) 
+
+```
+
+## Tabulating a categorical variable over groups
+
+For a categorical variable, a summary of frequency counts might be the most appropriate descriptive statistic.  We can get this with the `table()` function.  Suppose we wanted to know the distribution of species in our dataset.
+
+```{r eval=FALSE}
+table(iris$Species)
+```
+
+The ‘table’ function can also generate cross-tabs, by specifying two or three variables.  Note here how they are defined using the accessor operator.  `table()` does not use the forumula interface we discussed above, although the sister function `xtabs()` does.
+
+```{r eval=FALSE}
+table(iris$Species, iris$PetalLengthGrouped)
+xtabs(  ~ Species + PetalLengthGrouped, data=iris )
+
+```
+
+Notice the formula for `xtabs()` did not need a left hand side variable, both of the grouping factors are entered on the right hand side.
+
+Tables of counts are useful, but it might be more helpful to see the proportion of healthy trees by species.  To get this we can pass the table we just made into the prop.table() function:
+
+```{r }
+table1 <- table(iris$Species, iris$PetalLengthGrouped)
+prop.table(table1)
+```
+
+This is where pipes might be more intuitive:
+
+```{r eval=FALSE}
+table(iris$Species, iris$PetalLengthGrouped) |> prop.table()
+```
+The table above has calculated the ‘cell proportions’.  If we want the row percentages we need to set the `margin` option in `prop.table()` appropriately. `margin=1` is the rows, `margin=2` is the columns.  If you left out margins altogether, you’d get the cell proportions.
+
+We could round this (or any numeric) to 2 d.p. by passing the resulting proportion table into the `round()` function. and using the function `multiply_by` from the `magrittr` package (installed as part of tidyverse) we can turn our proportions into percentages:
+
+```{r }
+library(magrittr)
+
+table(iris$Species, iris$PetalLengthGrouped) |> 
+  prop.table(margin=1) |> 
+  multiply_by(100) |> 
+  round(digits=2)
+```
+
+`r section("Hypothesis tests")`
+
+Does petal length depend on species?  We can generate a simple box plot as previously to explore this question:
+
+```{r }
+## Base R method
+boxplot( Petal.Length ~ Species, data=iris , 
+         ylab="Petal Length", 
+         xlab="Species",
+         col="red") # Note the use of a multi-line command in a script!
+
+## ggplot2 method
+ggplot(data=iris, aes(x=Species, y=Petal.Length)) + 
+  geom_boxplot(fill="red") + 
+  labs(x="Species", y="Petal Length")
+```
+
+It looks like the two variables are related,  but we would like to perform a hypothesis test to see if the difference is statistically significant, and to get an estimate (with confidence interval) for the difference.
+
+The syntax for the ANOVA is almost exactly the same as that used to generate the box plot.  We use the same formula `height~health` to again specify that height depends on health in our analysis:
+
+```{r eval=FALSE}
+aov( Sepal.Length ~ Species, data=iris) |> summary()
+```
+
+To get the coefficients (mean differences between groups) we can estimate a linear model:
+
+```{r eval=FALSE}
+lm( Sepal.Length ~ Species, data=iris) |> summary() 
+```
+
+Then use either the base function `confint` or the `tidy` function from the `broom` package (installed with tidyverse) to get the confidence intervals for those differences:
+
+```{r }
+# Base R methods:
+lm( Sepal.Length ~ Species, data=iris) |> confint()
+
+# Tidyverse method:
+lm( Sepal.Length ~ Species, data=iris) |> broom::tidy(conf.int=TRUE)
+```
+
+Finally, we can use `augment` from the `broom` package to add predicted values to our dataset, with confidence intervals, and plot these with `ggplot`.  
+
+```{r }
+
+library(broom)
+
+lm( Sepal.Length ~ Species * Petal.Length, data=iris) |>
+  augment(interval="confidence") |> 
+  ggplot() + 
+    aes(x=Petal.Length, y=Sepal.Length, color=Species) + 
+    geom_ribbon(aes(y=.fitted,ymin=.lower, ymax=.upper), alpha=0.1) + 
+    geom_point() + 
+    geom_line(aes(y=.fitted),lwd=1) + 
+    theme_bw()
+```
+
+
+
