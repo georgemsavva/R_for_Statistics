@@ -167,7 +167,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  <span class="dropdown-text">Day 3</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./workshopscript.qmd">
+    <a class="dropdown-item" href="./workshopscript.html">
  <span class="dropdown-text">JIC MSc Workshop (2001/2002)</span></a>
   </li>  
         <li>
@@ -363,7 +363,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>v ggplot2 3.4.1     v purrr   0.3.4
-v tibble  3.1.6     v dplyr   1.0.8
+v tibble  3.2.1     v dplyr   1.1.2
 v tidyr   1.2.0     v stringr 1.5.0
 v readr   2.1.2     v forcats 0.5.1</code></pre>
 </div>
@@ -438,7 +438,10 @@ control   treat
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tidyverse version:</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>walkingdat <span class="ot">&lt;-</span> walkingdat <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">age =</span> <span class="fu">as.numeric</span>(age))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning in mask$eval_all_mutate(quo): NAs introduced by coercion</code></pre>
+<pre><code>Warning: There was 1 warning in `mutate()`.
+i In argument: `age = as.numeric(age)`.
+Caused by warning:
+! NAs introduced by coercion</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Base R version:</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>walkingdat<span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(walkingdat<span class="sc">$</span>age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

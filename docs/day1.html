@@ -164,7 +164,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  <span class="dropdown-text">Day 3</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./workshopscript.qmd">
+    <a class="dropdown-item" href="./workshopscript.html">
  <span class="dropdown-text">JIC MSc Workshop (2001/2002)</span></a>
   </li>  
         <li>
@@ -725,7 +725,7 @@ Note
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>v ggplot2 3.4.1     v purrr   0.3.4
-v tibble  3.1.6     v dplyr   1.0.8
+v tibble  3.2.1     v dplyr   1.1.2
 v tidyr   1.2.0     v stringr 1.5.0
 v readr   2.1.2     v forcats 0.5.1</code></pre>
 </div>
@@ -977,7 +977,8 @@ F-statistic: 151.7 on 5 and 144 DF,  p-value: &lt; 2.2e-16</code></pre>
  8          5   setosa           1.5    5.03   4.93   5.12 -0.0266 0.0210  0.338
  9          4.4 setosa           1.4    4.97   4.87   5.07 -0.572  0.0226  0.334
 10          4.9 setosa           1.5    5.03   4.93   5.12 -0.127  0.0210  0.337
-# ... with 140 more rows, and 2 more variables: .cooksd &lt;dbl&gt;, .std.resid &lt;dbl&gt;</code></pre>
+# i 140 more rows
+# i 2 more variables: .cooksd &lt;dbl&gt;, .std.resid &lt;dbl&gt;</code></pre>
 </div>
 </div>
 <p>Finally we can use ggplot to show these predicted values and confidence intervals. Take care to understand how the output from each function (ie <code>lm</code>, <code>augment</code>) is piped into the next.</p>
@@ -1111,12 +1112,12 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
 <div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">tbl_summary</span>( <span class="at">by=</span>Species )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="kxrrrhqxax" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="hvgchigojz" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-:where(#kxrrrhqxax) .gt_table {
+:where(#hvgchigojz) .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1141,7 +1142,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   border-left-color: #D3D3D3;
 }
 
-:where(#kxrrrhqxax) .gt_heading {
+:where(#hvgchigojz) .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1153,7 +1154,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   border-right-color: #D3D3D3;
 }
 
-:where(#kxrrrhqxax) .gt_title {
+:where(#hvgchigojz) .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1165,7 +1166,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   border-bottom-width: 0;
 }
 
-:where(#kxrrrhqxax) .gt_subtitle {
+:where(#hvgchigojz) .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1177,13 +1178,13 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   border-top-width: 0;
 }
 
-:where(#kxrrrhqxax) .gt_bottom_border {
+:where(#hvgchigojz) .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-:where(#kxrrrhqxax) .gt_col_headings {
+:where(#hvgchigojz) .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1198,7 +1199,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   border-right-color: #D3D3D3;
 }
 
-:where(#kxrrrhqxax) .gt_col_heading {
+:where(#hvgchigojz) .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1218,7 +1219,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   overflow-x: hidden;
 }
 
-:where(#kxrrrhqxax) .gt_column_spanner_outer {
+:where(#hvgchigojz) .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1230,15 +1231,15 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   padding-right: 4px;
 }
 
-:where(#kxrrrhqxax) .gt_column_spanner_outer:first-child {
+:where(#hvgchigojz) .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-:where(#kxrrrhqxax) .gt_column_spanner_outer:last-child {
+:where(#hvgchigojz) .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-:where(#kxrrrhqxax) .gt_column_spanner {
+:where(#hvgchigojz) .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1250,7 +1251,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   width: 100%;
 }
 
-:where(#kxrrrhqxax) .gt_group_heading {
+:where(#hvgchigojz) .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1275,7 +1276,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   vertical-align: middle;
 }
 
-:where(#kxrrrhqxax) .gt_empty_group_heading {
+:where(#hvgchigojz) .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1290,15 +1291,15 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   vertical-align: middle;
 }
 
-:where(#kxrrrhqxax) .gt_from_md > :first-child {
+:where(#hvgchigojz) .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-:where(#kxrrrhqxax) .gt_from_md > :last-child {
+:where(#hvgchigojz) .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-:where(#kxrrrhqxax) .gt_row {
+:where(#hvgchigojz) .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1317,7 +1318,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   overflow-x: hidden;
 }
 
-:where(#kxrrrhqxax) .gt_stub {
+:where(#hvgchigojz) .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1330,7 +1331,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   padding-right: 5px;
 }
 
-:where(#kxrrrhqxax) .gt_stub_row_group {
+:where(#hvgchigojz) .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1344,11 +1345,11 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   vertical-align: top;
 }
 
-:where(#kxrrrhqxax) .gt_row_group_first td {
+:where(#hvgchigojz) .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-:where(#kxrrrhqxax) .gt_summary_row {
+:where(#hvgchigojz) .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1358,16 +1359,16 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   padding-right: 5px;
 }
 
-:where(#kxrrrhqxax) .gt_first_summary_row {
+:where(#hvgchigojz) .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-:where(#kxrrrhqxax) .gt_first_summary_row.thick {
+:where(#hvgchigojz) .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-:where(#kxrrrhqxax) .gt_last_summary_row {
+:where(#hvgchigojz) .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1377,7 +1378,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   border-bottom-color: #D3D3D3;
 }
 
-:where(#kxrrrhqxax) .gt_grand_summary_row {
+:where(#hvgchigojz) .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1387,7 +1388,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   padding-right: 5px;
 }
 
-:where(#kxrrrhqxax) .gt_first_grand_summary_row {
+:where(#hvgchigojz) .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1397,11 +1398,11 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   border-top-color: #D3D3D3;
 }
 
-:where(#kxrrrhqxax) .gt_striped {
+:where(#hvgchigojz) .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-:where(#kxrrrhqxax) .gt_table_body {
+:where(#hvgchigojz) .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1410,7 +1411,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   border-bottom-color: #D3D3D3;
 }
 
-:where(#kxrrrhqxax) .gt_footnotes {
+:where(#hvgchigojz) .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1424,7 +1425,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   border-right-color: #D3D3D3;
 }
 
-:where(#kxrrrhqxax) .gt_footnote {
+:where(#hvgchigojz) .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -1433,7 +1434,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   padding-right: 5px;
 }
 
-:where(#kxrrrhqxax) .gt_sourcenotes {
+:where(#hvgchigojz) .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1447,7 +1448,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   border-right-color: #D3D3D3;
 }
 
-:where(#kxrrrhqxax) .gt_sourcenote {
+:where(#hvgchigojz) .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1455,60 +1456,60 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   padding-right: 5px;
 }
 
-:where(#kxrrrhqxax) .gt_left {
+:where(#hvgchigojz) .gt_left {
   text-align: left;
 }
 
-:where(#kxrrrhqxax) .gt_center {
+:where(#hvgchigojz) .gt_center {
   text-align: center;
 }
 
-:where(#kxrrrhqxax) .gt_right {
+:where(#hvgchigojz) .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-:where(#kxrrrhqxax) .gt_font_normal {
+:where(#hvgchigojz) .gt_font_normal {
   font-weight: normal;
 }
 
-:where(#kxrrrhqxax) .gt_font_bold {
+:where(#hvgchigojz) .gt_font_bold {
   font-weight: bold;
 }
 
-:where(#kxrrrhqxax) .gt_font_italic {
+:where(#hvgchigojz) .gt_font_italic {
   font-style: italic;
 }
 
-:where(#kxrrrhqxax) .gt_super {
+:where(#hvgchigojz) .gt_super {
   font-size: 65%;
 }
 
-:where(#kxrrrhqxax) .gt_footnote_marks {
+:where(#hvgchigojz) .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-:where(#kxrrrhqxax) .gt_asterisk {
+:where(#hvgchigojz) .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-:where(#kxrrrhqxax) .gt_slash_mark {
+:where(#hvgchigojz) .gt_slash_mark {
   font-size: 0.7em;
   line-height: 0.7em;
   vertical-align: 0.15em;
 }
 
-:where(#kxrrrhqxax) .gt_fraction_numerator {
+:where(#hvgchigojz) .gt_fraction_numerator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: 0.45em;
 }
 
-:where(#kxrrrhqxax) .gt_fraction_denominator {
+:where(#hvgchigojz) .gt_fraction_denominator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: -0.05em;

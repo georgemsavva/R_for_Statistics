@@ -25,8 +25,6 @@ library(tidyverse)
 
 # Welcome
 
-
-
 This 'flipbook' template demonstrates the key features of ggplot2 in building nice scientific graphs
 
 --

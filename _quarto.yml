@@ -7,6 +7,7 @@ project:
     day3_data_lm.pptx
     day3.pptx
     walkingspeed.xlsx
+    walkingspeed_msc.xlsx
     walkingspeed_day2.xlsx
     day1.qmd
   title: "R for Statistics"    
@@ -27,7 +28,7 @@ website:
           - text: Day 3
             href: day3.qmd
           - text: JIC MSc Workshop (2001/2002)
-            href: workshopscript.qmd
+            href: workshopscript.Rmd
           - text: ggplot example (2001/2002)
             href: flipbook.qmd
       - text: Statistics notes
