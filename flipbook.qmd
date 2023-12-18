@@ -4,14 +4,14 @@ subtitle: "Made with Quarto and flipbookr"
 author: "George Savva"
 format: 
   revealjs:
-    fontsize: 50%
+    fontsize: 100%
 ---
 
 
 ```{r, include = F}
 # This is the recommended set up for flipbooks
 # you might think about setting cache to TRUE as you gain practice --- building flipbooks from scratch can be time consuming
-knitr::opts_chunk$set(fig.width = 6,
+knitr::opts_chunk$set(fig.width = 5,
                       fig.height=4,
                       fig.retina = 2, 
                       message = FALSE, 
@@ -26,6 +26,8 @@ library(tidyverse)
 # Welcome
 
 This 'flipbook' template demonstrates the key features of ggplot2 in building nice scientific graphs
+
+You need to install the development version of `flipbookr` from Keiran Healy for this to work.
 
 --
 
@@ -120,7 +122,7 @@ ggplot(walkingdata) +
 
 
 ```{css, eval = TRUE, echo = FALSE}
-.remark-code{line-height: 1.5; font-size: 50%}
+.remark-code{line-height: 1.5}
 
 @media print {
   .has-continuation {

@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.251">
+<meta name="generator" content="quarto-1.3.353">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="George Savva, (QIB)">
 
-<title>Why is ‘grouping’ your samples bad for analysis?</title>
+<title>R for Statistics - Why is ‘grouping’ your samples bad for analysis?</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -18,9 +18,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -47,43 +48,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -137,44 +108,51 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <span class="navbar-title">R for Statistics</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html">Home</a>
+    <a class="nav-link" href="./index.html" rel="" target=""><i class="bi bi-fa-home" role="img">
+</i> 
+ <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-intro-to-r-for-statistics" role="button" data-bs-toggle="dropdown" aria-expanded="false">Intro to R for Statistics</a>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-intro-to-r-for-statistics" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Intro to R for Statistics</span>
+    </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-intro-to-r-for-statistics">    
         <li>
-    <a class="dropdown-item" href="./day1.html">
+    <a class="dropdown-item" href="./day1.html" rel="" target="">
  <span class="dropdown-text">NBI PhD Intro to R Day 1</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./day2.html">
+    <a class="dropdown-item" href="./day2.html" rel="" target="">
  <span class="dropdown-text">Day 2</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./day3.html">
+    <a class="dropdown-item" href="./day3.html" rel="" target="">
  <span class="dropdown-text">Day 3</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./workshopscript.html">
+    <a class="dropdown-item" href="./workshopscript.html" rel="" target="">
  <span class="dropdown-text">JIC MSc Workshop (2001/2002)</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./flipbook.html">
+    <a class="dropdown-item" href="./flipbook.html" rel="" target="">
  <span class="dropdown-text">ggplot example (2001/2002)</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-statistics-notes" role="button" data-bs-toggle="dropdown" aria-expanded="false">Statistics notes</a>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-statistics-notes" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Statistics notes</span>
+    </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-statistics-notes">    
         <li>
-    <a class="dropdown-item" href="./dichot.html">
+    <a class="dropdown-item" href="./dichot.html" rel="" target="">
  <span class="dropdown-text">Don’t group your data points</span></a>
   </li>  
     </ul>
@@ -182,13 +160,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="mailto:george.savva@quadram.ac.uk">Contact me</a>
+    <a class="nav-link" href="mailto:george.savva@quadram.ac.uk" rel="" target=""><i class="bi bi-fa-envelope-o" role="img">
+</i> 
+ <span class="menu-text">Contact me</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://github.com/georgemsavva">GitHub</a>
+    <a class="nav-link" href="https://github.com/georgemsavva" rel="" target=""><i class="bi bi-fa-github" role="img">
+</i> 
+ <span class="menu-text">GitHub</span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
+            <div class="quarto-navbar-tools">
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -209,6 +192,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#dichotomising-variables" id="toc-dichotomising-variables" class="nav-link" data-scroll-target="#dichotomising-variables">Dichotomising variables</a></li>
   <li><a href="#implications-for-power-and-sample-size" id="toc-implications-for-power-and-sample-size" class="nav-link" data-scroll-target="#implications-for-power-and-sample-size">Implications for power and sample size</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#references-todo---tidy-this-up" id="toc-references-todo---tidy-this-up" class="nav-link" data-scroll-target="#references-todo---tidy-this-up">References (todo - tidy this up)</a></li>
   </ul>
 </nav>
     </div>
@@ -231,6 +215,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
   </div>
     
+  
     
   </div>
   
@@ -240,16 +225,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="summary" class="level1">
 <h1>Summary</h1>
 <p>If we have continuous data then we should keep it continuous in analysis. Grouping samples into (say) ‘high’ vs ‘low’ or ‘recovered’ vs ‘not recovered’ throws away information and makes it more difficult to detect associations. The power of your study is reduced and the sample size needed goes up.</p>
-<div class="cell">
-
-</div>
 </section>
 <section id="motivation" class="level1">
 <h1>Motivation</h1>
 <p>Suppose we are interested in the effect of an exposure on an outcome, and we have measured both in a sample. Both our exposure and our outcome are measured as continuous variables, for example we might be interested in the effect of fibre intake on gut microbial diversity.</p>
 <p>There are a couple of possible approaches to the analysis. First, we could estimate or test for a <em>correlation</em> between the exposure and the outcome.</p>
 <p>Alternatively we could dichotomise the exposure, splitting the samples into a “high fibre” and a “low fibre” group, before comparing the microbial diversity in each group. Or we could dichotomise the outcome into “high diversity” and “low diversity”.</p>
-<p>Which should we choose? Intuitively we might prefer the dichotomised version for ease of interpretation, but how does it affect our ability to detect any association?</p>
+<p>Which should we choose? Intuitively we might prefer the dichotomised version for “ease of interpretation”, but how does it affect our ability to detect any association?</p>
 </section>
 <section id="packages" class="level1">
 <h1>Packages</h1>
@@ -269,9 +251,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Suppose our exposure and outcome are both normally distributed with a correlation of 0.5.</p>
 <p>We can sample 50 points as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="fu">mvrnorm</span>(<span class="at">n=</span><span class="dv">30</span>, <span class="at">mu=</span><span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">10</span>), <span class="at">Sigma =</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="fl">0.5</span>,<span class="fl">0.5</span>,<span class="dv">1</span>),<span class="at">nrow=</span><span class="dv">2</span>)))</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(dat) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Exposure"</span>, <span class="st">"Outcome"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="at">x=</span>Exposure, <span class="at">y=</span>Outcome)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">21</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="fu">mvrnorm</span>(<span class="at">n=</span><span class="dv">30</span>, <span class="at">mu=</span><span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">10</span>), <span class="at">Sigma =</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="fl">0.5</span>,<span class="fl">0.5</span>,<span class="dv">1</span>),<span class="at">nrow=</span><span class="dv">2</span>)))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(dat) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Exposure"</span>, <span class="st">"Outcome"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="at">x=</span>Exposure, <span class="at">y=</span>Outcome)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="dichot_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -285,16 +269,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     Pearson's product-moment correlation
 
 data:  dat$Exposure and dat$Outcome
-t = 6.6297, df = 28, p-value = 3.422e-07
+t = 3.0861, df = 28, p-value = 0.004535
 alternative hypothesis: true correlation is not equal to 0
 95 percent confidence interval:
- 0.5864265 0.8909662
+ 0.1753575 0.7313294
 sample estimates:
       cor 
-0.7815719 </code></pre>
+0.5037987 </code></pre>
 </div>
 </div>
-<p>So in our sample this correlation is clearly detectable (estimated r=0.47, p=0.0075).</p>
+<p>So in our sample this correlation is clearly detectable (estimated r=0.50, p=0.0045).</p>
 </section>
 <section id="dichotomising-variables" class="level1">
 <h1>Dichotomising variables</h1>
@@ -319,16 +303,16 @@ sample estimates:
     Welch Two Sample t-test
 
 data:  Outcome by HighExposure
-t = -4.385, df = 26.914, p-value = 0.0001597
+t = -2.3855, df = 27.985, p-value = 0.02407
 alternative hypothesis: true difference in means between group FALSE and group TRUE is not equal to 0
 95 percent confidence interval:
- -2.3611496 -0.8557059
+ -1.5826037 -0.1203041
 sample estimates:
 mean in group FALSE  mean in group TRUE 
-           9.413821           11.022249 </code></pre>
+           9.723858           10.575312 </code></pre>
 </div>
 </div>
-<p>The difference is now barely detectable (p=0.02)!</p>
+<p>The difference is now barely detectable (p=0.024)!</p>
 <p>We could go further, and dichotomise both the outcome and the exposure.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>HighOutcome <span class="ot">&lt;-</span> dat<span class="sc">$</span>Outcome <span class="sc">&gt;</span> <span class="fu">median</span>(dat<span class="sc">$</span>Outcome)</span>
@@ -349,8 +333,8 @@ mean in group FALSE  mean in group TRUE
 <div class="cell-output cell-output-stdout">
 <pre><code>       
         FALSE TRUE
-  FALSE    12    3
-  TRUE      3   12</code></pre>
+  FALSE    10    5
+  TRUE      5   10</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="fu">table</span>(dat<span class="sc">$</span>HighExposure, dat<span class="sc">$</span>HighOutcome))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -358,7 +342,7 @@ mean in group FALSE  mean in group TRUE
     Pearson's Chi-squared test with Yates' continuity correction
 
 data:  table(dat$HighExposure, dat$HighOutcome)
-X-squared = 8.5333, df = 1, p-value = 0.003487</code></pre>
+X-squared = 2.1333, df = 1, p-value = 0.1441</code></pre>
 </div>
 </div>
 <p>The difference in ‘high outcome’ proportions between exposure groups is not statistically significant! (p=0.14). This shows that it is much more difficult to see the relationship if we throw away the exact values of the data points.</p>
@@ -366,8 +350,8 @@ X-squared = 8.5333, df = 1, p-value = 0.003487</code></pre>
 </section>
 <section id="implications-for-power-and-sample-size" class="level1">
 <h1>Implications for power and sample size</h1>
-<p>Our single example illustrated that dichotomising data made analysis difficult or impossible by discarding data.</p>
-<p>We can quantify this loss of information by power calculations, and consider how much our sample size would need to increase to overcome this.</p>
+<p>Our single example illustrated that dichotomising data made analysis difficult or impossible by discarding data. But it’s easy to cherry pick examples, how does this work in general?</p>
+<p>We can quantify the average loss of information by power calculations (repeated simulations), and consider how much our sample size would need to increase to overcome this.</p>
 <p>The graph below shows the power to detect a correlation of 0.5 as the sample size changes using each of the methods described above.</p>
 <p>If we analyse the continuous data then we need a sample size of about 28 for a power of 80%. If we dichotomise the exposure only we would need 43 samples, if we dichotomise both and analyse the 2x2 table we would need 69, more than twice the original sample.</p>
 <div class="cell">
@@ -404,6 +388,14 @@ X-squared = 8.5333, df = 1, p-value = 0.003487</code></pre>
 <p>Grouping up our continuous variables for analysis throws away information. It makes associations more difficult to detect, and increases the number of samples we need to analyse.</p>
 <p>There are other harmful consequences to dichotomising data. Sometimes a defense of the practice is that by collapsing quantiative findings into yes/no outcomes makes results easier to interpret, but Stephen Senn makes a good case that this is wrong and can even be misleading.</p>
 <p>So in general, if the phenomenon you are interested in can be measured continuously then you should do so, and be sure to use all of this quantitative information in the analysis.</p>
+</section>
+<section id="references-todo---tidy-this-up" class="level1">
+<h1>References (todo - tidy this up)</h1>
+<p>This phenomenon has been discussed many times in the statistical literature and in blogs</p>
+<p>https://errorstatistics.com/2016/08/02/s-senn-painful-dichotomies-guest-post/ (Senn 2016 - a not identical but related problem with dichtomies)</p>
+<p>https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1458573/ (Altman and Royston 2006)</p>
+<p>http://www.psychology.sunysb.edu/attachment/measures/content/maccallum_on_dichotomizing.pdf (MacCallum et al 2002)</p>
+<p>https://bjo.bmj.com/content/98/6/841 (Cumberland et al 2014)</p>
 
 
 </section>
@@ -436,9 +428,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -450,7 +456,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -486,24 +509,128 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>

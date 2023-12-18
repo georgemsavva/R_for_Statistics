@@ -23,7 +23,7 @@ There are a couple of possible approaches to the analysis.  First, we could esti
 
 Alternatively we could dichotomise the exposure, splitting the samples into a "high fibre" and a "low fibre" group, before comparing the microbial diversity in each group.  Or we could dichotomise the outcome into "high diversity" and "low diversity".  
 
-Which should we choose?  Intuitively we might prefer the dichotomised version for ease of interpretation, but how does it affect our ability to detect any association?
+Which should we choose?  Intuitively we might prefer the dichotomised version for "ease of interpretation", but how does it affect our ability to detect any association?
 
 # Packages
 
@@ -46,8 +46,10 @@ Suppose our exposure and outcome are both normally distributed with a correlatio
 We can sample 50 points as follows:
 
 ```{r }
+set.seed(21)
 dat = data.frame(mvrnorm(n=30, mu=c(10,10), Sigma = matrix(c(1,0.5,0.5,1),nrow=2)))
 names(dat) <- c("Exposure", "Outcome")
+
 ggplot(dat, aes(x=Exposure, y=Outcome)) + geom_point() + theme_bw()
 ```
 
@@ -59,7 +61,7 @@ The simplest way would be to test
 cor.test(dat$Exposure, dat$Outcome)
 ```
 
-So in our sample this correlation is clearly detectable (estimated r=0.47, p=0.0075).
+So in our sample this correlation is clearly detectable (estimated r=0.50, p=0.0045).
 
 # Dichotomising variables
 
@@ -82,7 +84,7 @@ Now we can use (for example) a t-test to for difference in outcome between "high
 t.test(data=dat, Outcome ~ HighExposure)
 ```
 
-The difference is now barely detectable (p=0.02)!
+The difference is now barely detectable (p=0.024)!
 
 We could go further, and dichotomise both the outcome and the exposure.
 
@@ -111,9 +113,9 @@ So although there is a real relationship between exposure and outcome that we ha
 
 # Implications for power and sample size
 
-Our single example illustrated that dichotomising data made analysis difficult or impossible by discarding data.  
+Our single example illustrated that dichotomising data made analysis difficult or impossible by discarding data.  But it's easy to cherry pick examples, how does this work in general?
 
-We can quantify this loss of information by power calculations, and consider how much our sample size would need to increase to overcome this.
+We can quantify the average loss of information by power calculations (repeated simulations), and consider how much our sample size would need to increase to overcome this.
 
 The graph below shows the power to detect a correlation of 0.5 as the sample size changes using each of the methods described above.
 
@@ -156,4 +158,15 @@ There are other harmful consequences to dichotomising data.  Sometimes a defense
 
 So in general, if the phenomenon you are interested in can be measured continuously then you should do so, and be sure to use all of this quantitative information in the analysis.
 
+# References (todo - tidy this up)
+
+This phenomenon has been discussed many times in the statistical literature and in blogs
+
+https://errorstatistics.com/2016/08/02/s-senn-painful-dichotomies-guest-post/ (Senn 2016 - a not identical but related problem with dichtomies)
+
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1458573/ (Altman and Royston 2006)
+
+http://www.psychology.sunysb.edu/attachment/measures/content/maccallum_on_dichotomizing.pdf (MacCallum et al 2002)
+
+https://bjo.bmj.com/content/98/6/841 (Cumberland et al 2014)
 
