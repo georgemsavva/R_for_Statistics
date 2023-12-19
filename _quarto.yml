@@ -35,6 +35,8 @@ website:
         menu:
           - text: Don't group your data points
             href: dichot.qmd
+          - text: Simple alpha and beta diversity simulation
+            href: alphabeta.qmd
     right:
       - text: "Contact me"
         icon: fa-envelope-o

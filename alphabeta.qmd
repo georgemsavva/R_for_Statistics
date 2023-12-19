@@ -1,0 +1,74 @@
+---
+title: "Simulations exploring alpha and beta diversity"
+author: "George Savva, (QIB)"
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+```
+
+This file will include short simulations to understand how differences in community compositions are reflected in alpha and beta diversity metrics.
+
+In each simulation I'll create some data with given characteristics then look at how this is reflected in the diversity measures.  This could be extended into power calculations if needed.
+
+## Simulation 1
+
+* We'll assume that there are 100 possible species in my communities.  
+
+* There are two different classes of environments from which we can sample communities, 
+
+* In samples from the first environment each species is present with probability 0.4.
+
+* In samples from the the second environment each species is present with probability 0.6.
+
+Step 1: sample a matrix of the community compositions:
+
+
+```{r }
+
+N = 10 # Number of samples per class
+n = 100 # Number of possible species
+set.seed("19122023")
+classes <- rep(c("A", "B"), each=N)
+classProbabilities <- c("A"=0.4,"B"=0.5)
+dat <- sapply(classes, \(class) rbinom(n=n, size = 1, p=classProbabilities[class])) |> t()
+
+```
+
+Now look at the alpha diversity (Shannon index):
+
+```{r message=FALSE}
+
+library(vegan)
+library(ggplot2)
+## Shannon index
+t.test(diversity(dat) ~ classes)
+ggplot() + aes(y=diversity(dat), x=classes) + 
+  geom_boxplot()  +
+  geom_point() + 
+  stat_summary()
+
+```
+
+Beta-diversity (NMDS following Jaccard diversity):
+
+```{r }
+
+## Not so clear with the beta-diversity
+vegdist(dat, method = "jaccard", binary = TRUE) |> 
+  metaMDS(trace = 0) |>
+  scores() |> 
+  plot(col=factor(classes), pch=20)
+  legend("topright", legend=c("A","B"), col=1:2,pch=20)
+
+dm1 <- vegdist(dat, method = "jaccard", binary = TRUE)
+adonis2(dm1 ~ classes  )  
+  
+anosim(dm1, grouping = classes)
+```
+
+So in this case we see a clear difference in alpha diversity between sites but it's not so clear for beta diversity.  It looks like the environment B samples are slightly more clustered while the A samples are more spread out.  The difference is not reflected in a PERMANOVA (via adonis2) or ANOSIM.
+
+This is a good reminder that important differences in community composition might not be visible in beta diversity plots.  Maybe you all know that anyway but it was a good reminder for me.
+

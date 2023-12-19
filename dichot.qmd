@@ -162,11 +162,11 @@ So in general, if the phenomenon you are interested in can be measured continuou
 
 This phenomenon has been discussed many times in the statistical literature and in blogs
 
-https://errorstatistics.com/2016/08/02/s-senn-painful-dichotomies-guest-post/ (Senn 2016 - a not identical but related problem with dichtomies)
+<https://errorstatistics.com/2016/08/02/s-senn-painful-dichotomies-guest-post/> (Senn 2016 - a not identical but related problem with dichtomies)
 
-https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1458573/ (Altman and Royston 2006)
+<https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1458573/> (Altman and Royston 2006)
 
-http://www.psychology.sunysb.edu/attachment/measures/content/maccallum_on_dichotomizing.pdf (MacCallum et al 2002)
+<http://www.psychology.sunysb.edu/attachment/measures/content/maccallum_on_dichotomizing.pdf> (MacCallum et al 2002)
 
-https://bjo.bmj.com/content/98/6/841 (Cumberland et al 2014)
+<https://bjo.bmj.com/content/98/6/841> (Cumberland et al 2014)
 
