@@ -27,9 +27,9 @@ website:
             href: day2.qmd
           - text: Day 3
             href: day3.qmd
-          - text: JIC MSc Workshop (2001/2002)
+          - text: JIC MSc Workshop (2021/2022)
             href: workshopscript.Rmd
-          - text: ggplot example (2001/2002)
+          - text: ggplot example
             href: flipbook.qmd
       - text: Statistics notes
         menu:

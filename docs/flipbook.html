@@ -603,7 +603,7 @@ George Savva
 6     6 control  3.04 M        62 4         </code></pre>
 </div>
 <div class="cell-output-display">
-<p><img data-src="flipbook_files/figure-html/walking_auto_09_output-1.png" width="480"></p>
+<p><img data-src="flipbook_files/figure-revealjs/walking_auto_09_output-1.png" width="480"></p>
 </div>
 </div>
 </div>
@@ -643,7 +643,7 @@ George Savva
 6     6 control  3.04 M        62 4         </code></pre>
 </div>
 <div class="cell-output-display">
-<p><img data-src="flipbook_files/figure-html/walking_auto_10_output-1.png" width="480"></p>
+<p><img data-src="flipbook_files/figure-revealjs/walking_auto_10_output-1.png" width="480"></p>
 </div>
 </div>
 </div>
@@ -684,7 +684,7 @@ George Savva
 6     6 control  3.04 M        62 4         </code></pre>
 </div>
 <div class="cell-output-display">
-<p><img data-src="flipbook_files/figure-html/walking_auto_11_output-1.png" width="480"></p>
+<p><img data-src="flipbook_files/figure-revealjs/walking_auto_11_output-1.png" width="480"></p>
 </div>
 </div>
 </div>
@@ -727,7 +727,7 @@ George Savva
 6     6 control  3.04 M        62 4         </code></pre>
 </div>
 <div class="cell-output-display">
-<p><img data-src="flipbook_files/figure-html/walking_auto_12_output-1.png" width="480"></p>
+<p><img data-src="flipbook_files/figure-revealjs/walking_auto_12_output-1.png" width="480"></p>
 </div>
 </div>
 </div>
@@ -771,7 +771,7 @@ George Savva
 6     6 control  3.04 M        62 4         </code></pre>
 </div>
 <div class="cell-output-display">
-<p><img data-src="flipbook_files/figure-html/walking_auto_13_output-1.png" width="480"></p>
+<p><img data-src="flipbook_files/figure-revealjs/walking_auto_13_output-1.png" width="480"></p>
 </div>
 </div>
 </div>
@@ -816,7 +816,7 @@ George Savva
 6     6 control  3.04 M        62 4         </code></pre>
 </div>
 <div class="cell-output-display">
-<p><img data-src="flipbook_files/figure-html/walking_auto_14_output-1.png" width="480"></p>
+<p><img data-src="flipbook_files/figure-revealjs/walking_auto_14_output-1.png" width="480"></p>
 </div>
 </div>
 </div>
@@ -862,7 +862,7 @@ George Savva
 6     6 control  3.04 M        62 4         </code></pre>
 </div>
 <div class="cell-output-display">
-<p><img data-src="flipbook_files/figure-html/walking_auto_15_output-1.png" width="480"></p>
+<p><img data-src="flipbook_files/figure-revealjs/walking_auto_15_output-1.png" width="480"></p>
 </div>
 </div>
 </div>
@@ -909,7 +909,7 @@ George Savva
 6     6 control  3.04 M        62 4         </code></pre>
 </div>
 <div class="cell-output-display">
-<p><img data-src="flipbook_files/figure-html/walking_auto_16_output-1.png" width="480"></p>
+<p><img data-src="flipbook_files/figure-revealjs/walking_auto_16_output-1.png" width="480"></p>
 </div>
 </div>
 </div>
@@ -957,7 +957,7 @@ George Savva
 6     6 control  3.04 M        62 4         </code></pre>
 </div>
 <div class="cell-output-display">
-<p><img data-src="flipbook_files/figure-html/walking_auto_17_output-1.png" width="480"></p>
+<p><img data-src="flipbook_files/figure-revealjs/walking_auto_17_output-1.png" width="480"></p>
 </div>
 </div>
 </div>
@@ -1006,7 +1006,7 @@ George Savva
 6     6 control  3.04 M        62 4         </code></pre>
 </div>
 <div class="cell-output-display">
-<p><img data-src="flipbook_files/figure-html/walking_auto_18_output-1.png" width="480"></p>
+<p><img data-src="flipbook_files/figure-revealjs/walking_auto_18_output-1.png" width="480"></p>
 </div>
 </div>
 </div>
@@ -1057,7 +1057,7 @@ George Savva
 6     6 control  3.04 M        62 4         </code></pre>
 </div>
 <div class="cell-output-display">
-<p><img data-src="flipbook_files/figure-html/walking_auto_19_output-1.png" width="480"></p>
+<p><img data-src="flipbook_files/figure-revealjs/walking_auto_19_output-1.png" width="480"></p>
 </div>
 </div>
 </div>
@@ -1108,7 +1108,7 @@ George Savva
 6     6 control  3.04 M        62 4         </code></pre>
 </div>
 <div class="cell-output-display">
-<p><img data-src="flipbook_files/figure-html/walking_auto_20_output-1.png" width="480"></p>
+<p><img data-src="flipbook_files/figure-revealjs/walking_auto_20_output-1.png" width="480"></p>
 </div>
 </div>
 </div>
@@ -1392,6 +1392,44 @@ code.r.hljs.remark-code:hover{
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {

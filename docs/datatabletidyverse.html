@@ -139,11 +139,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
         <li>
     <a class="dropdown-item" href="./workshopscript.html" rel="" target="">
- <span class="dropdown-text">JIC MSc Workshop (2001/2002)</span></a>
+ <span class="dropdown-text">JIC MSc Workshop (2021/2022)</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./flipbook.html" rel="" target="">
- <span class="dropdown-text">ggplot example (2001/2002)</span></a>
+ <span class="dropdown-text">ggplot example</span></a>
   </li>  
     </ul>
   </li>
@@ -263,12 +263,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    height    sex
-1 177.7818 Female
-2 212.6941   Male
-3 181.5340 Female
-4 188.1750   Male
-5 191.0310   Male
-6 178.7688 Female</code></pre>
+1 176.7833 Female
+2 178.7310   Male
+3 200.3947   Male
+4 175.8151 Female
+5 185.7612   Male
+6 181.3784 Female</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(dat<span class="sc">$</span>height<span class="sc">~</span>dat<span class="sc">$</span>sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -283,8 +283,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>( height <span class="sc">~</span> sex , <span class="at">FUN=</span>mean, <span class="at">data=</span>dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     sex   height
-1 Female 181.2352
-2   Male 188.5174</code></pre>
+1 Female 180.8146
+2   Male 191.0969</code></pre>
 </div>
 </div>
 <p>Alternatively we could use <code>tapply</code>:</p>
@@ -292,7 +292,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>( dat<span class="sc">$</span>height, dat<span class="sc">$</span>sex , <span class="at">FUN=</span>mean )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Female     Male 
-181.2352 188.5174 </code></pre>
+180.8146 191.0969 </code></pre>
 </div>
 </div>
 <p>While this works in this simple case it is difficult to get a more complicated table. For example, there is no obvious way to get a table of means, standard deviations and counts (the standard table 1 in any biomedical paper) without using an external package.</p>
@@ -317,17 +317,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>dat[ , <span class="fu">mean</span>(height), by<span class="ot">=</span>sex ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      sex       V1
-1: Female 181.2352
-2:   Male 188.5174</code></pre>
+1: Female 180.8146
+2:   Male 191.0969</code></pre>
 </div>
 </div>
 <p>Next, adding the counts and standard deviations:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>dat[ , .(<span class="at">Count=</span>.N, <span class="at">Mean=</span><span class="fu">mean</span>(height),<span class="at">SD=</span><span class="fu">sd</span>(height)), by<span class="ot">=</span>sex]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      sex Count     Mean        SD
-1: Female    40 181.2352  8.663934
-2:   Male    60 188.5174 10.920001</code></pre>
+<pre><code>      sex Count     Mean       SD
+1: Female    50 180.8146 8.718867
+2:   Male    50 191.0969 9.313782</code></pre>
 </div>
 </div>
 <section id="breaking-down-the-data.table-syntax" class="level2">
@@ -377,7 +377,7 @@ Attaching package: 'dplyr'</code></pre>
   sex    `mean(height)`
   &lt;chr&gt;           &lt;dbl&gt;
 1 Female           181.
-2 Male             189.</code></pre>
+2 Male             191.</code></pre>
 </div>
 </div>
 <p>Now with the counts and standard deviations:</p>
@@ -387,8 +387,8 @@ Attaching package: 'dplyr'</code></pre>
 <pre><code># A tibble: 2 × 4
   sex        N `mean(height)` `sd(height)`
   &lt;chr&gt;  &lt;int&gt;          &lt;dbl&gt;        &lt;dbl&gt;
-1 Female    40           181.         8.66
-2 Male      60           189.        10.9 </code></pre>
+1 Female    50           181.         8.72
+2 Male      50           191.         9.31</code></pre>
 </div>
 </div>
 <section id="the-tidyverse-dplyr-syntax" class="level2">
@@ -406,23 +406,23 @@ Attaching package: 'dplyr'</code></pre>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_summary</span>(dat, <span class="at">by=</span>sex, <span class="at">statistic=</span><span class="fu">list</span>(height<span class="sc">~</span><span class="st">"{mean} ({sd})"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="hrizmnkwtw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#hrizmnkwtw table {
+<div id="iuhxlrgnsj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#iuhxlrgnsj table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#hrizmnkwtw thead, #hrizmnkwtw tbody, #hrizmnkwtw tfoot, #hrizmnkwtw tr, #hrizmnkwtw td, #hrizmnkwtw th {
+#iuhxlrgnsj thead, #iuhxlrgnsj tbody, #iuhxlrgnsj tfoot, #iuhxlrgnsj tr, #iuhxlrgnsj td, #iuhxlrgnsj th {
   border-style: none;
 }
 
-#hrizmnkwtw p {
+#iuhxlrgnsj p {
   margin: 0;
   padding: 0;
 }
 
-#hrizmnkwtw .gt_table {
+#iuhxlrgnsj .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -448,12 +448,12 @@ Attaching package: 'dplyr'</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#hrizmnkwtw .gt_caption {
+#iuhxlrgnsj .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#hrizmnkwtw .gt_title {
+#iuhxlrgnsj .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -465,7 +465,7 @@ Attaching package: 'dplyr'</code></pre>
   border-bottom-width: 0;
 }
 
-#hrizmnkwtw .gt_subtitle {
+#iuhxlrgnsj .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -477,7 +477,7 @@ Attaching package: 'dplyr'</code></pre>
   border-top-width: 0;
 }
 
-#hrizmnkwtw .gt_heading {
+#iuhxlrgnsj .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -489,13 +489,13 @@ Attaching package: 'dplyr'</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#hrizmnkwtw .gt_bottom_border {
+#iuhxlrgnsj .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#hrizmnkwtw .gt_col_headings {
+#iuhxlrgnsj .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -510,7 +510,7 @@ Attaching package: 'dplyr'</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#hrizmnkwtw .gt_col_heading {
+#iuhxlrgnsj .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -530,7 +530,7 @@ Attaching package: 'dplyr'</code></pre>
   overflow-x: hidden;
 }
 
-#hrizmnkwtw .gt_column_spanner_outer {
+#iuhxlrgnsj .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -542,15 +542,15 @@ Attaching package: 'dplyr'</code></pre>
   padding-right: 4px;
 }
 
-#hrizmnkwtw .gt_column_spanner_outer:first-child {
+#iuhxlrgnsj .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#hrizmnkwtw .gt_column_spanner_outer:last-child {
+#iuhxlrgnsj .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#hrizmnkwtw .gt_column_spanner {
+#iuhxlrgnsj .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -562,11 +562,11 @@ Attaching package: 'dplyr'</code></pre>
   width: 100%;
 }
 
-#hrizmnkwtw .gt_spanner_row {
+#iuhxlrgnsj .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#hrizmnkwtw .gt_group_heading {
+#iuhxlrgnsj .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -592,7 +592,7 @@ Attaching package: 'dplyr'</code></pre>
   text-align: left;
 }
 
-#hrizmnkwtw .gt_empty_group_heading {
+#iuhxlrgnsj .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -607,15 +607,15 @@ Attaching package: 'dplyr'</code></pre>
   vertical-align: middle;
 }
 
-#hrizmnkwtw .gt_from_md > :first-child {
+#iuhxlrgnsj .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#hrizmnkwtw .gt_from_md > :last-child {
+#iuhxlrgnsj .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#hrizmnkwtw .gt_row {
+#iuhxlrgnsj .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -634,7 +634,7 @@ Attaching package: 'dplyr'</code></pre>
   overflow-x: hidden;
 }
 
-#hrizmnkwtw .gt_stub {
+#iuhxlrgnsj .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -647,7 +647,7 @@ Attaching package: 'dplyr'</code></pre>
   padding-right: 5px;
 }
 
-#hrizmnkwtw .gt_stub_row_group {
+#iuhxlrgnsj .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -661,15 +661,15 @@ Attaching package: 'dplyr'</code></pre>
   vertical-align: top;
 }
 
-#hrizmnkwtw .gt_row_group_first td {
+#iuhxlrgnsj .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#hrizmnkwtw .gt_row_group_first th {
+#iuhxlrgnsj .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#hrizmnkwtw .gt_summary_row {
+#iuhxlrgnsj .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -679,16 +679,16 @@ Attaching package: 'dplyr'</code></pre>
   padding-right: 5px;
 }
 
-#hrizmnkwtw .gt_first_summary_row {
+#iuhxlrgnsj .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#hrizmnkwtw .gt_first_summary_row.thick {
+#iuhxlrgnsj .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#hrizmnkwtw .gt_last_summary_row {
+#iuhxlrgnsj .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -698,7 +698,7 @@ Attaching package: 'dplyr'</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#hrizmnkwtw .gt_grand_summary_row {
+#iuhxlrgnsj .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -708,7 +708,7 @@ Attaching package: 'dplyr'</code></pre>
   padding-right: 5px;
 }
 
-#hrizmnkwtw .gt_first_grand_summary_row {
+#iuhxlrgnsj .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -718,7 +718,7 @@ Attaching package: 'dplyr'</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#hrizmnkwtw .gt_last_grand_summary_row_top {
+#iuhxlrgnsj .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -728,11 +728,11 @@ Attaching package: 'dplyr'</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#hrizmnkwtw .gt_striped {
+#iuhxlrgnsj .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#hrizmnkwtw .gt_table_body {
+#iuhxlrgnsj .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -741,7 +741,7 @@ Attaching package: 'dplyr'</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#hrizmnkwtw .gt_footnotes {
+#iuhxlrgnsj .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -755,7 +755,7 @@ Attaching package: 'dplyr'</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#hrizmnkwtw .gt_footnote {
+#iuhxlrgnsj .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -764,7 +764,7 @@ Attaching package: 'dplyr'</code></pre>
   padding-right: 5px;
 }
 
-#hrizmnkwtw .gt_sourcenotes {
+#iuhxlrgnsj .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -778,7 +778,7 @@ Attaching package: 'dplyr'</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#hrizmnkwtw .gt_sourcenote {
+#iuhxlrgnsj .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -786,63 +786,63 @@ Attaching package: 'dplyr'</code></pre>
   padding-right: 5px;
 }
 
-#hrizmnkwtw .gt_left {
+#iuhxlrgnsj .gt_left {
   text-align: left;
 }
 
-#hrizmnkwtw .gt_center {
+#iuhxlrgnsj .gt_center {
   text-align: center;
 }
 
-#hrizmnkwtw .gt_right {
+#iuhxlrgnsj .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#hrizmnkwtw .gt_font_normal {
+#iuhxlrgnsj .gt_font_normal {
   font-weight: normal;
 }
 
-#hrizmnkwtw .gt_font_bold {
+#iuhxlrgnsj .gt_font_bold {
   font-weight: bold;
 }
 
-#hrizmnkwtw .gt_font_italic {
+#iuhxlrgnsj .gt_font_italic {
   font-style: italic;
 }
 
-#hrizmnkwtw .gt_super {
+#iuhxlrgnsj .gt_super {
   font-size: 65%;
 }
 
-#hrizmnkwtw .gt_footnote_marks {
+#iuhxlrgnsj .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#hrizmnkwtw .gt_asterisk {
+#iuhxlrgnsj .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#hrizmnkwtw .gt_indent_1 {
+#iuhxlrgnsj .gt_indent_1 {
   text-indent: 5px;
 }
 
-#hrizmnkwtw .gt_indent_2 {
+#iuhxlrgnsj .gt_indent_2 {
   text-indent: 10px;
 }
 
-#hrizmnkwtw .gt_indent_3 {
+#iuhxlrgnsj .gt_indent_3 {
   text-indent: 15px;
 }
 
-#hrizmnkwtw .gt_indent_4 {
+#iuhxlrgnsj .gt_indent_4 {
   text-indent: 20px;
 }
 
-#hrizmnkwtw .gt_indent_5 {
+#iuhxlrgnsj .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -851,14 +851,14 @@ Attaching package: 'dplyr'</code></pre>
     
     <tr class="gt_col_headings">
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="<strong>Characteristic</strong>"><strong>Characteristic</strong></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>Female</strong>, N = 40<span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>"><strong>Female</strong>, N = 40<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>Male</strong>, N = 60<span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>"><strong>Male</strong>, N = 60<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>Female</strong>, N = 50<span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>"><strong>Female</strong>, N = 50<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>Male</strong>, N = 50<span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>"><strong>Male</strong>, N = 50<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
     </tr>
   </thead>
   <tbody class="gt_table_body">
     <tr><td headers="label" class="gt_row gt_left">height</td>
 <td headers="stat_1" class="gt_row gt_center">181 (9)</td>
-<td headers="stat_2" class="gt_row gt_center">189 (11)</td></tr>
+<td headers="stat_2" class="gt_row gt_center">191 (9)</td></tr>
   </tbody>
   
   <tfoot class="gt_footnotes">
