@@ -6,7 +6,9 @@ format:
     smooth-scroll: true
 ---
 
-This site hosts my course notes, presentations and data files accompanying my courses on R and RStudio.
+This site hosts my course notes, presentations and data files accompanying my courses on R and RStudio.  
+
+There are also some general notes on statistics that I have created for myself (for exploring different ideas) or to help others.
 
 * NBI/JIC MSc Introduction to R
     * [Day 1](day1.qmd)
@@ -18,6 +20,7 @@ This site hosts my course notes, presentations and data files accompanying my co
     * [Simple alpha and beta diversity simulation](alphabeta.qmd)
     * [Selection bias (Berkson bias) in observational studies](berkson.qmd)
     * [Sampling from clustered data in observational studies](independentclusters.qmd)
+    * [Run bigger experiments instead of internal replications of smaller experiments](repeats.qmd)
 * Notes on using R
     * [Tidyverse, data.table and others for making descriptive tables](datatabletidyverse.qmd)
     * [Using packages, functions and pipes](praise.qmd)

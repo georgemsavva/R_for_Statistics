@@ -8,7 +8,7 @@
 
 <meta name="author" content="George Savva">
 
-<title>R for Statistics - Clustering independent of sampling in observational studies</title>
+<title>R and Statistics - Clustering independent of sampling in observational studies</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -105,7 +105,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">R for Statistics</span>
+    <span class="navbar-title">Statistics and R in Biology</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -167,6 +167,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="./independentclusters.html" rel="" target="">
  <span class="dropdown-text">Sampling from clustered data in observational studies</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./repeats.html" rel="" target="">
+ <span class="dropdown-text">Run bigger experiments instead of internal replications</span></a>
+  </li>  
     </ul>
   </li>
 </ul>
@@ -200,6 +204,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#simulation-data" id="toc-simulation-data" class="nav-link" data-scroll-target="#simulation-data">Simulation data</a></li>
   <li><a href="#type-1-error-rate" id="toc-type-1-error-rate" class="nav-link" data-scroll-target="#type-1-error-rate">Type 1 error rate</a></li>
+  <li><a href="#conclusion-and-discussion" id="toc-conclusion-and-discussion" class="nav-link" data-scroll-target="#conclusion-and-discussion">Conclusion and Discussion</a></li>
   </ul>
 </nav>
     </div>
@@ -239,9 +244,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="simulation-data" class="level2">
 <h2 class="anchored" data-anchor-id="simulation-data">Simulation data</h2>
 <p>The research question here is whether there is a difference between two populations.</p>
-<p>For the simulation I will create a dataset of 20 points from each population. Each point is sampled independently at random, but arises from one of five clusters in each population. So, to sample each point we first select a cluster at random, then generate a point from that cluster.</p>
+<p>For the simulation I will create a dataset of 100 points from each population. Each point is sampled independently at random, but arises from one of five clusters in each population. So, to sample each point we first select a cluster at random, then generate a point from that cluster.</p>
 <p>The cluster averages in turn are selected from a normal distribution with mean zero.</p>
-<p>An real example question might relate to educational attainment in two different cities. We can select children from each city completely at random. But if each city has only five schools then the data points are clustered by school, even if the children are selected completely randomly without any reference to which school they attend.</p>
+<p>An real example question might relate to whether there is a difference in educational attainment between two different cities. We can select children from each city completely at random. But if each city has only five schools then the data points are clustered by school, even if the children are selected completely randomly without any reference to which school they attend.</p>
 <p>So although children are selected independently of each other, they are still clustered in some sense! Do we still need to run a ‘clustered’ analysis if we are interested in understanding whether ‘city’ has any effect on educational attainment?</p>
 <p>Remember we know that there is no effect of city on average school outcome in our simulation. Differences in outcomes do occur completely randomly at the school level and at the individual child level.</p>
 <div class="cell">
@@ -326,14 +331,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(significant) <span class="sc">+</span> <span class="fu">aes</span>(<span class="at">x=</span>clusterVariance, <span class="at">y=</span>rate, <span class="at">col=</span>Method) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
 <span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="fl">0.05</span>, <span class="at">lty=</span><span class="st">"dashed"</span>) <span class="sc">+</span> </span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Between cluster variance"</span>, <span class="at">y=</span><span class="st">"Type 1 error rate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Between cluster standard deviation"</span>, <span class="at">y=</span><span class="st">"Type 1 error rate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="independentclusters_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+</section>
+<section id="conclusion-and-discussion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion-and-discussion">Conclusion and Discussion</h2>
 <p>The type 1 error rate increases markedly with the among of variance between ‘clusters’ when a simple linear model is used. A mixed model broadly corrects this, and may over-compensate when the between-cluster variance is very low.</p>
 <p>So for our school analogy, if schools are very variable, then if we don’t model the clustering it may look like there are inherent differences between cities instead of there simply being random differences between the schools that are not attributable to the city they are in.</p>
-<p>Whether this is the correct or incorrect answer depends on exactly what the question is that we are trying to answer, that is whether we are trying to identify the city that just happens to have the best schools, or whether we are asking about whether there is something about the city that promotes good schools or good outcomes.</p>
+<p>Whether this is the correct or incorrect answer depends on exactly what the question is that we are trying to answer, that is whether we are trying to (1) identify the city that just happens (by chance) to have the best schools, or (2) whether we are asking about whether the city itself promotes good schools or good outcomes.</p>
+<p>In most situations we are asking the latter question in which case we need to include the grouping in our analysis to get a meaningful result.</p>
+<p>To generate our simulated datasets we included no effect of the grouping factor on the cluster means or the individual means, and we sampled each unit independently from the population. Yet a simple linear model (equivalent of t-test or ANOVA) returned a strongly significant effect. This was corrected by considering the shared variance within clusters in our model.</p>
+<p>This should be another reminder that to avoid looking silly we need to understand how our datasets come to be, and what shared variance there is between our observations, even if we know that our samples are generated from our populations using simple random sampling.</p>
 
 
 </section>

@@ -24,11 +24,11 @@ Here I use a simple simulation to show that even with random sampling, data that
 
 The research question here is whether there is a difference between two populations.
 
-For the simulation I will create a dataset of 20 points from each population.  Each point is sampled independently at random, but arises from one of five clusters in each population.  So, to sample each point we first select a cluster at random, then generate a point from that cluster.
+For the simulation I will create a dataset of 100 points from each population.  Each point is sampled independently at random, but arises from one of five clusters in each population.  So, to sample each point we first select a cluster at random, then generate a point from that cluster.
 
 The cluster averages in turn are selected from a normal distribution with mean zero.
 
-An real example question might relate to educational attainment in two different cities.  We can select children from each city completely at random.  But if each city has only five schools then the data points are clustered by school, even if the children are selected completely randomly without any reference to which school they attend.
+An real example question might relate to whether there is a difference in educational attainment between two different cities.  We can select children from each city completely at random.  But if each city has only five schools then the data points are clustered by school, even if the children are selected completely randomly without any reference to which school they attend.
 
 So although children are selected independently of each other, they are still clustered in some sense!  Do we still need to run a 'clustered' analysis if we are interested in understanding whether 'city' has any effect on educational attainment?
 
@@ -106,13 +106,21 @@ significant <- data.table::melt(significant, id.vars="clusterVariance", variable
 
 ggplot(significant) + aes(x=clusterVariance, y=rate, col=Method) + geom_point() + geom_line() + 
   geom_hline(yintercept=0.05, lty="dashed") + 
-  labs(x="Between cluster variance", y="Type 1 error rate")
+  labs(x="Between cluster standard deviation", y="Type 1 error rate")
 
 ```
+
+## Conclusion and Discussion 
 
 The type 1 error rate increases markedly with the among of variance between 'clusters' when a simple linear model is used.  A mixed model broadly corrects this, and may over-compensate when the between-cluster variance is very low.
 
 So for our school analogy, if schools are very variable, then if we don't model the clustering it may look like there are inherent differences between cities instead of there simply being random differences between the schools that are not attributable to the city they are in.
 
-Whether this is the correct or incorrect answer depends on exactly what the question is that we are trying to answer, that is whether we are trying to identify the city that just happens to have the best schools, or whether we are asking about whether there is something about the city that promotes good schools or good outcomes.
+Whether this is the correct or incorrect answer depends on exactly what the question is that we are trying to answer, that is whether we are trying to (1) identify the city that just happens (by chance) to have the best schools, or (2) whether we are asking about whether the city itself promotes good schools or good outcomes.  
+
+In most situations we are asking the latter question in which case we need to include the grouping in our analysis to get a meaningful result.
+
+To generate our simulated datasets we included no effect of the grouping factor on the cluster means or the individual means, and we sampled each unit independently from the population.  Yet a simple linear model (equivalent of t-test or ANOVA) returned a strongly significant effect.  This was corrected by considering the shared variance within clusters in our model.
+
+This should be another reminder that to avoid looking silly we need to understand how our datasets come to be, and what shared variance there is between our observations, even if we know that our samples are generated from our populations using simple random sampling.
 

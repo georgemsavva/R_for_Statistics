@@ -10,11 +10,11 @@ project:
     walkingspeed_msc.xlsx
     walkingspeed_day2.xlsx
     day1.qmd
-  title: "R for Statistics"    
+  title: "R and Statistics"    
   
 website:
   navbar: 
-    title: "R for Statistics"  
+    title: "Statistics and R in Biology"  
     left:
       - text: "Home"
         icon: fa-home
@@ -41,6 +41,8 @@ website:
             href: berkson.qmd
           - text: Sampling from clustered data in observational studies
             href: independentclusters.qmd
+          - text: Run bigger experiments instead of internal replications
+            href: repeats.qmd
 
     right:
       - text: "Contact me"

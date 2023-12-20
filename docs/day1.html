@@ -10,7 +10,7 @@
 <meta name="author" content="Pirita Paajanen, JIC">
 <meta name="dcterms.date" content="2023-09-01">
 
-<title>R for Statistics - Introduction to ‘R’ for statistical analysis</title>
+<title>R and Statistics - Introduction to ‘R’ for statistical analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -108,7 +108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">R for Statistics</span>
+    <span class="navbar-title">Statistics and R in Biology</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -169,6 +169,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li>
     <a class="dropdown-item" href="./independentclusters.html" rel="" target="">
  <span class="dropdown-text">Sampling from clustered data in observational studies</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./repeats.html" rel="" target="">
+ <span class="dropdown-text">Run bigger experiments instead of internal replications</span></a>
   </li>  
     </ul>
   </li>
@@ -1100,26 +1104,29 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: package 'gtsummary' was built under R version 4.2.3</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">tbl_summary</span>( <span class="at">by=</span>Species )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#BlackLivesMatter</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">tbl_summary</span>( <span class="at">by=</span>Species )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="vndzhhzdim" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#vndzhhzdim table {
+<div id="oeybqsqkfg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#oeybqsqkfg table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#vndzhhzdim thead, #vndzhhzdim tbody, #vndzhhzdim tfoot, #vndzhhzdim tr, #vndzhhzdim td, #vndzhhzdim th {
+#oeybqsqkfg thead, #oeybqsqkfg tbody, #oeybqsqkfg tfoot, #oeybqsqkfg tr, #oeybqsqkfg td, #oeybqsqkfg th {
   border-style: none;
 }
 
-#vndzhhzdim p {
+#oeybqsqkfg p {
   margin: 0;
   padding: 0;
 }
 
-#vndzhhzdim .gt_table {
+#oeybqsqkfg .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1145,12 +1152,12 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   border-left-color: #D3D3D3;
 }
 
-#vndzhhzdim .gt_caption {
+#oeybqsqkfg .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#vndzhhzdim .gt_title {
+#oeybqsqkfg .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1162,7 +1169,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   border-bottom-width: 0;
 }
 
-#vndzhhzdim .gt_subtitle {
+#oeybqsqkfg .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1174,7 +1181,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   border-top-width: 0;
 }
 
-#vndzhhzdim .gt_heading {
+#oeybqsqkfg .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1186,13 +1193,13 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   border-right-color: #D3D3D3;
 }
 
-#vndzhhzdim .gt_bottom_border {
+#oeybqsqkfg .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#vndzhhzdim .gt_col_headings {
+#oeybqsqkfg .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1207,7 +1214,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   border-right-color: #D3D3D3;
 }
 
-#vndzhhzdim .gt_col_heading {
+#oeybqsqkfg .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1227,7 +1234,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   overflow-x: hidden;
 }
 
-#vndzhhzdim .gt_column_spanner_outer {
+#oeybqsqkfg .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1239,15 +1246,15 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   padding-right: 4px;
 }
 
-#vndzhhzdim .gt_column_spanner_outer:first-child {
+#oeybqsqkfg .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#vndzhhzdim .gt_column_spanner_outer:last-child {
+#oeybqsqkfg .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#vndzhhzdim .gt_column_spanner {
+#oeybqsqkfg .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1259,11 +1266,11 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   width: 100%;
 }
 
-#vndzhhzdim .gt_spanner_row {
+#oeybqsqkfg .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#vndzhhzdim .gt_group_heading {
+#oeybqsqkfg .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1289,7 +1296,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   text-align: left;
 }
 
-#vndzhhzdim .gt_empty_group_heading {
+#oeybqsqkfg .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1304,15 +1311,15 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   vertical-align: middle;
 }
 
-#vndzhhzdim .gt_from_md > :first-child {
+#oeybqsqkfg .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#vndzhhzdim .gt_from_md > :last-child {
+#oeybqsqkfg .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#vndzhhzdim .gt_row {
+#oeybqsqkfg .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1331,7 +1338,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   overflow-x: hidden;
 }
 
-#vndzhhzdim .gt_stub {
+#oeybqsqkfg .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1344,7 +1351,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   padding-right: 5px;
 }
 
-#vndzhhzdim .gt_stub_row_group {
+#oeybqsqkfg .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1358,15 +1365,15 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   vertical-align: top;
 }
 
-#vndzhhzdim .gt_row_group_first td {
+#oeybqsqkfg .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#vndzhhzdim .gt_row_group_first th {
+#oeybqsqkfg .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#vndzhhzdim .gt_summary_row {
+#oeybqsqkfg .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1376,16 +1383,16 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   padding-right: 5px;
 }
 
-#vndzhhzdim .gt_first_summary_row {
+#oeybqsqkfg .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#vndzhhzdim .gt_first_summary_row.thick {
+#oeybqsqkfg .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#vndzhhzdim .gt_last_summary_row {
+#oeybqsqkfg .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1395,7 +1402,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   border-bottom-color: #D3D3D3;
 }
 
-#vndzhhzdim .gt_grand_summary_row {
+#oeybqsqkfg .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1405,7 +1412,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   padding-right: 5px;
 }
 
-#vndzhhzdim .gt_first_grand_summary_row {
+#oeybqsqkfg .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1415,7 +1422,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   border-top-color: #D3D3D3;
 }
 
-#vndzhhzdim .gt_last_grand_summary_row_top {
+#oeybqsqkfg .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1425,11 +1432,11 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   border-bottom-color: #D3D3D3;
 }
 
-#vndzhhzdim .gt_striped {
+#oeybqsqkfg .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#vndzhhzdim .gt_table_body {
+#oeybqsqkfg .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1438,7 +1445,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   border-bottom-color: #D3D3D3;
 }
 
-#vndzhhzdim .gt_footnotes {
+#oeybqsqkfg .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1452,7 +1459,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   border-right-color: #D3D3D3;
 }
 
-#vndzhhzdim .gt_footnote {
+#oeybqsqkfg .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1461,7 +1468,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   padding-right: 5px;
 }
 
-#vndzhhzdim .gt_sourcenotes {
+#oeybqsqkfg .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1475,7 +1482,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   border-right-color: #D3D3D3;
 }
 
-#vndzhhzdim .gt_sourcenote {
+#oeybqsqkfg .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1483,63 +1490,63 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   padding-right: 5px;
 }
 
-#vndzhhzdim .gt_left {
+#oeybqsqkfg .gt_left {
   text-align: left;
 }
 
-#vndzhhzdim .gt_center {
+#oeybqsqkfg .gt_center {
   text-align: center;
 }
 
-#vndzhhzdim .gt_right {
+#oeybqsqkfg .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#vndzhhzdim .gt_font_normal {
+#oeybqsqkfg .gt_font_normal {
   font-weight: normal;
 }
 
-#vndzhhzdim .gt_font_bold {
+#oeybqsqkfg .gt_font_bold {
   font-weight: bold;
 }
 
-#vndzhhzdim .gt_font_italic {
+#oeybqsqkfg .gt_font_italic {
   font-style: italic;
 }
 
-#vndzhhzdim .gt_super {
+#oeybqsqkfg .gt_super {
   font-size: 65%;
 }
 
-#vndzhhzdim .gt_footnote_marks {
+#oeybqsqkfg .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#vndzhhzdim .gt_asterisk {
+#oeybqsqkfg .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#vndzhhzdim .gt_indent_1 {
+#oeybqsqkfg .gt_indent_1 {
   text-indent: 5px;
 }
 
-#vndzhhzdim .gt_indent_2 {
+#oeybqsqkfg .gt_indent_2 {
   text-indent: 10px;
 }
 
-#vndzhhzdim .gt_indent_3 {
+#oeybqsqkfg .gt_indent_3 {
   text-indent: 15px;
 }
 
-#vndzhhzdim .gt_indent_4 {
+#oeybqsqkfg .gt_indent_4 {
   text-indent: 20px;
 }
 
-#vndzhhzdim .gt_indent_5 {
+#oeybqsqkfg .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1588,32 +1595,32 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
 <p>What class should that new variable be?</p>
 <p>Base R has the function <code>cut</code> that divides continuous variables into groups. Tidyverse has a few extensions of this (weirdly in the ggplot2 package), including <code>cut_number</code> that can divide up a continuous variable into three equal groups, and allow us to add labels to them.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cut_number</span>(iris<span class="sc">$</span>Petal.Length, <span class="dv">3</span>, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"Short"</span>, <span class="st">"Medium"</span>, <span class="st">"Long"</span>) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cut_number</span>(iris<span class="sc">$</span>Petal.Length, <span class="dv">3</span>, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"Short"</span>, <span class="st">"Medium"</span>, <span class="st">"Long"</span>) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using tidyverse to create this variable and add it to the dataset:</span></span>
-<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>iris <span class="ot">&lt;-</span> iris <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">PetalLengthGrouped =</span> <span class="fu">cut_number</span>(Petal.Length, <span class="dv">3</span>, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"Short"</span>, <span class="st">"Medium"</span>, <span class="st">"Long"</span>) )) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using tidyverse to create this variable and add it to the dataset:</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>iris <span class="ot">&lt;-</span> iris <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">PetalLengthGrouped =</span> <span class="fu">cut_number</span>(Petal.Length, <span class="dv">3</span>, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"Short"</span>, <span class="st">"Medium"</span>, <span class="st">"Long"</span>) )) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="tabulating-a-categorical-variable-over-groups" class="level2" data-number="10.3">
 <h2 data-number="10.3" class="anchored" data-anchor-id="tabulating-a-categorical-variable-over-groups"><span class="header-section-number">10.3</span> Tabulating a categorical variable over groups</h2>
 <p>For a categorical variable, a summary of frequency counts might be the most appropriate descriptive statistic. We can get this with the <code>table()</code> function. Suppose we wanted to know the distribution of species in our dataset.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(iris<span class="sc">$</span>Species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(iris<span class="sc">$</span>Species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The ‘table’ function can also generate cross-tabs, by specifying two or three variables.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(iris<span class="sc">$</span>Species, iris<span class="sc">$</span>PetalLengthGrouped) <span class="co"># Base R version</span></span>
-<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> janitor<span class="sc">::</span><span class="fu">tabyl</span>(Species, PetalLengthGrouped)  <span class="co">#  The tidyverse version using `tabyl` from the `janitor` package.</span></span>
-<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">group_by</span>(Species, PetalLengthGrouped) <span class="sc">|&gt;</span> <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(iris<span class="sc">$</span>Species, iris<span class="sc">$</span>PetalLengthGrouped) <span class="co"># Base R version</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> janitor<span class="sc">::</span><span class="fu">tabyl</span>(Species, PetalLengthGrouped)  <span class="co">#  The tidyverse version using `tabyl` from the `janitor` package.</span></span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">group_by</span>(Species, PetalLengthGrouped) <span class="sc">|&gt;</span> <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Tables of counts are useful, but it might be more helpful to see the proportion of healthy trees by species. To get this we can pass the table we just made into the prop.table() function:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">&lt;-</span> <span class="fu">table</span>(iris<span class="sc">$</span>Species, iris<span class="sc">$</span>PetalLengthGrouped)</span>
-<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(table1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">&lt;-</span> <span class="fu">table</span>(iris<span class="sc">$</span>Species, iris<span class="sc">$</span>PetalLengthGrouped)</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(table1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            
                   Short     Medium       Long
@@ -1624,12 +1631,12 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
 </div>
 <p>This is where pipes might be more intuitive:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(iris<span class="sc">$</span>Species, iris<span class="sc">$</span>PetalLengthGrouped) <span class="sc">|&gt;</span> <span class="fu">prop.table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(iris<span class="sc">$</span>Species, iris<span class="sc">$</span>PetalLengthGrouped) <span class="sc">|&gt;</span> <span class="fu">prop.table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The table above has calculated the ‘cell proportions’. If we want the row percentages we need to set the <code>margin</code> option in <code>prop.table()</code> appropriately. <code>margin=1</code> is the rows, <code>margin=2</code> is the columns. If you left out margins altogether, you’d get the cell proportions.</p>
 <p>We could round this (or any numeric) to 2 d.p. by passing the resulting proportion table into the <code>round()</code> function. and using the function <code>multiply_by</code> from the <code>magrittr</code> package (installed as part of tidyverse) we can turn our proportions into percentages:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'magrittr'</code></pre>
@@ -1644,10 +1651,10 @@ Attaching package: 'magrittr'</code></pre>
 
     extract</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(iris<span class="sc">$</span>Species, iris<span class="sc">$</span>PetalLengthGrouped) <span class="sc">|&gt;</span> </span>
-<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prop.table</span>(<span class="at">margin=</span><span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">multiply_by</span>(<span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="at">digits=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(iris<span class="sc">$</span>Species, iris<span class="sc">$</span>PetalLengthGrouped) <span class="sc">|&gt;</span> </span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prop.table</span>(<span class="at">margin=</span><span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">multiply_by</span>(<span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="at">digits=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            
              Short Medium Long
