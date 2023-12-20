@@ -37,6 +37,11 @@ website:
             href: dichot.qmd
           - text: Simple alpha and beta diversity simulation
             href: alphabeta.qmd
+          - text: Selection bias (Berkson bias) in observational studies
+            href: berkson.qmd
+          - text: Sampling from clustered data in observational studies
+            href: independentclusters.qmd
+
     right:
       - text: "Contact me"
         icon: fa-envelope-o

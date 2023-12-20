@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="George Savva, (QIB)">
+<meta name="author" content="George Savva">
 
-<title>R for Statistics - Simulations exploring alpha and beta diversity</title>
+<title>R for Statistics - Clustering independent of sampling in observational studies</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -197,7 +197,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#simulation-1" id="toc-simulation-1" class="nav-link active" data-scroll-target="#simulation-1">Simulation 1</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#simulation-data" id="toc-simulation-data" class="nav-link" data-scroll-target="#simulation-data">Simulation data</a></li>
+  <li><a href="#type-1-error-rate" id="toc-type-1-error-rate" class="nav-link" data-scroll-target="#type-1-error-rate">Type 1 error rate</a></li>
   </ul>
 </nav>
     </div>
@@ -206,7 +208,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Simulations exploring alpha and beta diversity</h1>
+<h1 class="title">Clustering independent of sampling in observational studies</h1>
 </div>
 
 
@@ -216,7 +218,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>George Savva, (QIB) </p>
+             <p>George Savva </p>
           </div>
   </div>
     
@@ -227,93 +229,111 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>This file will include short simulations to understand how differences in community compositions are reflected in alpha and beta diversity metrics.</p>
-<p>In each simulation I’ll create some data with given characteristics then look at how this is reflected in the diversity measures. This could be extended into power calculations if needed.</p>
-<section id="simulation-1" class="level2">
-<h2 class="anchored" data-anchor-id="simulation-1">Simulation 1</h2>
-<ul>
-<li><p>We’ll assume that there are 100 possible species in my communities.</p></li>
-<li><p>There are two different classes of environments from which we can sample communities,</p></li>
-<li><p>In samples from the first environment each species is present with probability 0.4.</p></li>
-<li><p>In samples from the the second environment each species is present with probability 0.6.</p></li>
-</ul>
-<p>Step 1: sample a matrix of the community compositions:</p>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>We know that random sampling is important to get good inferences from epidemiological studies.</p>
+<p>If sampling is ‘clustered’ then we need to account for this in our analysis. This is well known.</p>
+<p>However we may have a situation where data points are generated in clusters, but we still sample them randomly. Is there a risk of false positive associations in such situations? How should we deal with it?</p>
+<p>Here I use a simple simulation to show that even with random sampling, data that is generated in clusters can still lead us to false positive conclusions.</p>
+</section>
+<section id="simulation-data" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-data">Simulation data</h2>
+<p>The research question here is whether there is a difference between two populations.</p>
+<p>For the simulation I will create a dataset of 20 points from each population. Each point is sampled independently at random, but arises from one of five clusters in each population. So, to sample each point we first select a cluster at random, then generate a point from that cluster.</p>
+<p>The cluster averages in turn are selected from a normal distribution with mean zero.</p>
+<p>An real example question might relate to educational attainment in two different cities. We can select children from each city completely at random. But if each city has only five schools then the data points are clustered by school, even if the children are selected completely randomly without any reference to which school they attend.</p>
+<p>So although children are selected independently of each other, they are still clustered in some sense! Do we still need to run a ‘clustered’ analysis if we are interested in understanding whether ‘city’ has any effect on educational attainment?</p>
+<p>Remember we know that there is no effect of city on average school outcome in our simulation. Differences in outcomes do occur completely randomly at the school level and at the individual child level.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>N <span class="ot">=</span> <span class="dv">10</span> <span class="co"># Number of samples per class</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">100</span> <span class="co"># Number of possible species</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="st">"19122023"</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>classes <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>), <span class="at">each=</span>N)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>classProbabilities <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"A"</span><span class="ot">=</span><span class="fl">0.4</span>,<span class="st">"B"</span><span class="ot">=</span><span class="fl">0.5</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">sapply</span>(classes, \(class) <span class="fu">rbinom</span>(<span class="at">n=</span>n, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">p=</span>classProbabilities[class])) <span class="sc">|&gt;</span> <span class="fu">t</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Now look at the alpha diversity (Shannon index):</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vegan)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Shannon index</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="fu">diversity</span>(dat) <span class="sc">~</span> classes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Nclusters <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>clustersMeans <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(Nclusters, <span class="dv">0</span>,<span class="dv">1</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Suppose group A come from clusters 1 to 5</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Group B come from clusters 6 to 10.</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>NperGroup <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>GroupAClusters <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,NperGroup, <span class="at">replace=</span><span class="cn">TRUE</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>GroupBClusters <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">6</span><span class="sc">:</span><span class="dv">10</span>,NperGroup, <span class="at">replace=</span><span class="cn">TRUE</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Group=</span><span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"A"</span>,<span class="st">"B"</span>),<span class="at">each=</span>NperGroup), <span class="at">cluster=</span><span class="fu">c</span>(GroupAClusters, GroupBClusters))</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(NperGroup<span class="sc">*</span><span class="dv">2</span> , clustersMeans[dat<span class="sc">$</span>cluster], <span class="dv">1</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-    Welch Two Sample t-test
-
-data:  diversity(dat) by classes
-t = -4.6706, df = 16.102, p-value = 0.0002517
-alternative hypothesis: true difference in means between group A and group B is not equal to 0
-95 percent confidence interval:
- -0.3544225 -0.1332105
-sample estimates:
-mean in group A mean in group B 
-       3.672421        3.916238 </code></pre>
+<pre><code>  Group cluster           y
+1     A       1  2.17314644
+2     A       4  0.23199408
+3     A       4 -0.14176686
+4     A       2  1.05632863
+5     A       4  0.15161343
+6     A       3  0.08051086</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">aes</span>(<span class="at">y=</span><span class="fu">diversity</span>(dat), <span class="at">x=</span>classes) <span class="sc">+</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()  <span class="sc">+</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we can plot the data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Group, <span class="at">y=</span>y, <span class="at">shape=</span><span class="fu">factor</span>(cluster))) <span class="sc">+</span> </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_shape_manual</span>(<span class="at">values=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) <span class="sc">+</span> </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">position =</span> <span class="fu">position_dodge2</span>(<span class="at">width=</span><span class="fl">0.2</span>)) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="alphabeta_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+<p><img src="independentclusters_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Beta-diversity (NMDS following Jaccard diversity):</p>
+<p>The clustering is evident in the plot. How does this affect the p-values for a linear model? Do we need to use a LMM?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Not so clear with the beta-diversity</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">vegdist</span>(dat, <span class="at">method =</span> <span class="st">"jaccard"</span>, <span class="at">binary =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">metaMDS</span>(<span class="at">trace =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scores</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="at">col=</span><span class="fu">factor</span>(classes), <span class="at">pch=</span><span class="dv">20</span>)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend=</span><span class="fu">c</span>(<span class="st">"A"</span>,<span class="st">"B"</span>), <span class="at">col=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="at">pch=</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">## A naive linear model would suggest a difference between groups</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> Group , <span class="at">data=</span>dat) <span class="sc">|&gt;</span> broom<span class="sc">::</span><span class="fu">tidy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 5
+  term        estimate std.error statistic     p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+1 (Intercept)    0.286     0.111      2.56 0.0111     
+2 GroupB        -0.821     0.158     -5.21 0.000000480</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">## While mixed model taking the clustering into account does not</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lmer</span>(y <span class="sc">~</span> Group <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>cluster), <span class="at">data=</span>dat) <span class="sc">|&gt;</span> broom.mixed<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">|&gt;</span> <span class="fu">subset</span>(effect<span class="sc">==</span><span class="st">"fixed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 8
+  effect group term        estimate std.error statistic    df p.value
+  &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+1 fixed  &lt;NA&gt;  (Intercept)    0.313     0.291      1.07  8.08  0.313 
+2 fixed  &lt;NA&gt;  GroupB        -0.913     0.412     -2.22  8.08  0.0571</code></pre>
+</div>
+</div>
+<p>So if we ignore the clusters we get a false positive result (p&lt;0.001), but if we incorporate them into our analysis we do not.</p>
+</section>
+<section id="type-1-error-rate" class="level2">
+<h2 class="anchored" data-anchor-id="type-1-error-rate">Type 1 error rate</h2>
+<p>To quantify the problem we can look at how the false positive rate changes with the extent of the clustering.</p>
+<p>We’ll simulate datasets and analysis 1000 times for each value of the cluster standard deviation, from 1.0 (the same as the between individual standard deviation) to zero. Then we’ll look at the proportion of statistically significant results (p&lt;0.05), and compare this to the nominal 5% rate.</p>
+<p>In each simulation we generate new cluster means, and then a new dataset of points. We then apply the simple linear model and a mixed effects model, and extract the p-values for the hypothesis test that the effect of ‘population’ is zero.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>oneRep <span class="ot">&lt;-</span> <span class="cf">function</span>(clusterSD){</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  clustersMeans <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(Nclusters, <span class="dv">0</span>,clusterSD)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  dat<span class="sc">$</span>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(NperGroup<span class="sc">*</span><span class="dv">2</span> , clustersMeans[dat<span class="sc">$</span>cluster], <span class="dv">1</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  plmer <span class="ot">&lt;-</span> (<span class="fu">lmer</span>(y <span class="sc">~</span> Group <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>cluster), <span class="at">data=</span>dat) <span class="sc">|&gt;</span> <span class="fu">summary</span>() <span class="sc">|&gt;</span> <span class="fu">coef</span>())[<span class="dv">2</span>,<span class="dv">5</span>]</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  plm <span class="ot">&lt;-</span> (<span class="fu">lm</span>(y <span class="sc">~</span> Group , <span class="at">data=</span>dat) <span class="sc">|&gt;</span> <span class="fu">summary</span>() <span class="sc">|&gt;</span> <span class="fu">coef</span>())[<span class="dv">2</span>,<span class="dv">4</span>]</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(plmer,plm)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>pvals <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="fu">c</span>(<span class="fl">1.0</span>,<span class="fl">0.8</span>,<span class="fl">0.6</span>,<span class="fl">0.4</span>,<span class="fl">0.2</span>,<span class="fl">0.0</span>) , \(s) <span class="fu">replicate</span>(<span class="dv">1000</span>,<span class="fu">oneRep</span>(s)))</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>significant <span class="ot">&lt;-</span> <span class="fu">sapply</span>(pvals, apply, <span class="dv">1</span>, \(p) <span class="fu">mean</span>(p<span class="sc">&lt;</span><span class="fl">0.05</span>)) <span class="sc">|&gt;</span> <span class="fu">t</span>() <span class="sc">|&gt;</span> <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span> <span class="fu">setNames</span>(<span class="fu">c</span>(<span class="st">"Mixed model"</span>, <span class="st">"Simple Linear model"</span>))</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>significant<span class="sc">$</span>clusterVariance <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.0</span>,<span class="fl">0.8</span>,<span class="fl">0.6</span>,<span class="fl">0.4</span>,<span class="fl">0.2</span>,<span class="fl">0.0</span>)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>significant <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">melt</span>(significant, <span class="at">id.vars=</span><span class="st">"clusterVariance"</span>, <span class="at">variable.name=</span><span class="st">"Method"</span>, <span class="at">value.name=</span><span class="st">"rate"</span>)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(significant) <span class="sc">+</span> <span class="fu">aes</span>(<span class="at">x=</span>clusterVariance, <span class="at">y=</span>rate, <span class="at">col=</span>Method) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="fl">0.05</span>, <span class="at">lty=</span><span class="st">"dashed"</span>) <span class="sc">+</span> </span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Between cluster variance"</span>, <span class="at">y=</span><span class="st">"Type 1 error rate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="alphabeta_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
-</div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dm1 <span class="ot">&lt;-</span> <span class="fu">vegdist</span>(dat, <span class="at">method =</span> <span class="st">"jaccard"</span>, <span class="at">binary =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">adonis2</span>(dm1 <span class="sc">~</span> classes  )  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Permutation test for adonis under reduced model
-Terms added sequentially (first to last)
-Permutation: free
-Number of permutations: 999
-
-adonis2(formula = dm1 ~ classes)
-         Df SumOfSqs      R2      F Pr(&gt;F)
-classes   1   0.2915 0.06188 1.1873  0.166
-Residual 18   4.4193 0.93812              
-Total    19   4.7108 1.00000              </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anosim</span>(dm1, <span class="at">grouping =</span> classes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-anosim(x = dm1, grouping = classes) 
-Dissimilarity: binary jaccard 
-
-ANOSIM statistic R: 0.02167 
-      Significance: 0.36 
-
-Permutation: free
-Number of permutations: 999</code></pre>
+<p><img src="independentclusters_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>So in this case we see a clear difference in alpha diversity between sites but it’s not so clear for beta diversity. It looks like the environment B samples are slightly more clustered while the A samples are more spread out. The difference is not reflected in a PERMANOVA (via adonis2) or ANOSIM.</p>
-<p>This is a good reminder that important differences in community composition might not be visible in beta diversity plots. Maybe you all know that anyway but it was a good reminder for me.</p>
+<p>The type 1 error rate increases markedly with the among of variance between ‘clusters’ when a simple linear model is used. A mixed model broadly corrects this, and may over-compensate when the between-cluster variance is very low.</p>
+<p>So for our school analogy, if schools are very variable, then if we don’t model the clustering it may look like there are inherent differences between cities instead of there simply being random differences between the schools that are not attributable to the city they are in.</p>
+<p>Whether this is the correct or incorrect answer depends on exactly what the question is that we are trying to answer, that is whether we are trying to identify the city that just happens to have the best schools, or whether we are asking about whether there is something about the city that promotes good schools or good outcomes.</p>
 
 
 </section>

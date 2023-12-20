@@ -1,0 +1,85 @@
+
+---
+title: "Selection bias in observational studies"
+author: "George Savva, (QIB)"
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+```
+
+This is a short illustration of "Berkson bias" using simulated data.  This is the phenomenon that selection bias can induce correlations in samples that are not present in populations.  
+
+This bias is likely to be an issue for many observational studies but is not well understood in the medical research literature.
+
+The Wikipedia page for the phenonomenon is here:  <https://en.wikipedia.org/wiki/Berkson%27s_paradox>
+
+# Selection bias in observational studies
+
+Suppose we are trying to understand the correlation between health and wealth.
+
+First, let's simulation a population in which health and wealth are both normally distributed but are not correlated with each other:
+
+```{r }
+set.seed(1)
+populationsize = 1e4
+samplesize = 200
+
+population <- data.frame(health=rnorm(populationsize), wealth=rnorm(populationsize))
+plot(population)
+```
+
+Now if we take a simple random sample from this cohort from this group and test the correlation...
+
+```{r }
+sample1 <- population[sample(populationsize, samplesize),]
+plot(sample1$health, sample1$wealth)
+cor.test(sample1$health, sample1$wealth)
+```
+
+We see no evidence that wealth and health are related, as we would expect given this is true in the population.
+
+However we *know* that healthier, wealthier people are more likely to participate in our studies.  So let's create a sample that reflects this:
+
+```{r }
+population$b_participate = (population$health + population$wealth)
+population$prob_participate = exp(population$b_participate) / (1+exp(population$b_participate))
+
+sample2 <- population[sample(populationsize, samplesize, prob = population$prob_participate),]
+```
+
+How will the average health and wealth in our sample compare to the population?
+
+```{r }
+mean(sample2$health)
+mean(sample2$wealth)
+```
+
+Well we know that health and wealth are higher in the sample than the population, but this should hopefullt be obvious.  But how are the two things correlated in the population?
+
+```{r }
+plot(sample2$health, sample2$wealth)
+cor.test(sample2$health, sample2$wealth)
+```
+
+It looks like a negative correlation in the sample, despite there being no correlation in the population!
+
+Was this unlucky?  We can look at the distribution of p-values from repeated samples, to see what the chance of a false positive correlation is here:
+
+```{r }
+onepvalue <- function(){
+  samplen <- population[sample(populationsize, samplesize, prob = population$prob_participate),]
+  cor.test(samplen$health, samplen$wealth)$p.value
+}
+replicate(1000, onepvalue()) |> hist(breaks=20)
+```
+
+In more than 50% of cases there is now a significant correlation in the sample even though there is no correlation in the population.  It is simply caused by the factors under investigation also being factors that lead people to participate in research.
+
+What are the implications of this for observational studies?
+
+What can we do about it?
+
+
+

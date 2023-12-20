@@ -8,7 +8,7 @@
 
 <meta name="author" content="George Savva, (QIB)">
 
-<title>R for Statistics - Simulations exploring alpha and beta diversity</title>
+<title>R for Statistics - Selection bias in observational studies</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -197,7 +197,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#simulation-1" id="toc-simulation-1" class="nav-link active" data-scroll-target="#simulation-1">Simulation 1</a></li>
+  <li><a href="#selection-bias-in-observational-studies" id="toc-selection-bias-in-observational-studies" class="nav-link active" data-scroll-target="#selection-bias-in-observational-studies">Selection bias in observational studies</a></li>
   </ul>
 </nav>
     </div>
@@ -206,7 +206,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Simulations exploring alpha and beta diversity</h1>
+<h1 class="title">Selection bias in observational studies</h1>
 </div>
 
 
@@ -227,93 +227,101 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>This file will include short simulations to understand how differences in community compositions are reflected in alpha and beta diversity metrics.</p>
-<p>In each simulation I’ll create some data with given characteristics then look at how this is reflected in the diversity measures. This could be extended into power calculations if needed.</p>
-<section id="simulation-1" class="level2">
-<h2 class="anchored" data-anchor-id="simulation-1">Simulation 1</h2>
-<ul>
-<li><p>We’ll assume that there are 100 possible species in my communities.</p></li>
-<li><p>There are two different classes of environments from which we can sample communities,</p></li>
-<li><p>In samples from the first environment each species is present with probability 0.4.</p></li>
-<li><p>In samples from the the second environment each species is present with probability 0.6.</p></li>
-</ul>
-<p>Step 1: sample a matrix of the community compositions:</p>
+<p>This is a short illustration of “Berkson bias” using simulated data. This is the phenomenon that selection bias can induce correlations in samples that are not present in populations.</p>
+<p>This bias is likely to be an issue for many observational studies but is not well understood in the medical research literature.</p>
+<p>The Wikipedia page for the phenonomenon is here: <a href="https://en.wikipedia.org/wiki/Berkson%27s_paradox" class="uri">https://en.wikipedia.org/wiki/Berkson%27s_paradox</a></p>
+<section id="selection-bias-in-observational-studies" class="level1">
+<h1>Selection bias in observational studies</h1>
+<p>Suppose we are trying to understand the correlation between health and wealth.</p>
+<p>First, let’s simulation a population in which health and wealth are both normally distributed but are not correlated with each other:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>N <span class="ot">=</span> <span class="dv">10</span> <span class="co"># Number of samples per class</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">100</span> <span class="co"># Number of possible species</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="st">"19122023"</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>classes <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>), <span class="at">each=</span>N)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>classProbabilities <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"A"</span><span class="ot">=</span><span class="fl">0.4</span>,<span class="st">"B"</span><span class="ot">=</span><span class="fl">0.5</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">sapply</span>(classes, \(class) <span class="fu">rbinom</span>(<span class="at">n=</span>n, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">p=</span>classProbabilities[class])) <span class="sc">|&gt;</span> <span class="fu">t</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>populationsize <span class="ot">=</span> <span class="fl">1e4</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>samplesize <span class="ot">=</span> <span class="dv">200</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>population <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">health=</span><span class="fu">rnorm</span>(populationsize), <span class="at">wealth=</span><span class="fu">rnorm</span>(populationsize))</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(population)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="berkson_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
 </div>
-<p>Now look at the alpha diversity (Shannon index):</p>
+</div>
+<p>Now if we take a simple random sample from this cohort from this group and test the correlation…</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vegan)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Shannon index</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="fu">diversity</span>(dat) <span class="sc">~</span> classes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sample1 <span class="ot">&lt;-</span> population[<span class="fu">sample</span>(populationsize, samplesize),]</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(sample1<span class="sc">$</span>health, sample1<span class="sc">$</span>wealth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="berkson_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(sample1<span class="sc">$</span>health, sample1<span class="sc">$</span>wealth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-    Welch Two Sample t-test
+    Pearson's product-moment correlation
 
-data:  diversity(dat) by classes
-t = -4.6706, df = 16.102, p-value = 0.0002517
-alternative hypothesis: true difference in means between group A and group B is not equal to 0
+data:  sample1$health and sample1$wealth
+t = -0.78426, df = 198, p-value = 0.4338
+alternative hypothesis: true correlation is not equal to 0
 95 percent confidence interval:
- -0.3544225 -0.1332105
+ -0.19290026  0.08373896
 sample estimates:
-mean in group A mean in group B 
-       3.672421        3.916238 </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">aes</span>(<span class="at">y=</span><span class="fu">diversity</span>(dat), <span class="at">x=</span>classes) <span class="sc">+</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()  <span class="sc">+</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="alphabeta_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+        cor 
+-0.05564858 </code></pre>
 </div>
 </div>
-<p>Beta-diversity (NMDS following Jaccard diversity):</p>
+<p>We see no evidence that wealth and health are related, as we would expect given this is true in the population.</p>
+<p>However we <em>know</em> that healthier, wealthier people are more likely to participate in our studies. So let’s create a sample that reflects this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Not so clear with the beta-diversity</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">vegdist</span>(dat, <span class="at">method =</span> <span class="st">"jaccard"</span>, <span class="at">binary =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">metaMDS</span>(<span class="at">trace =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scores</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="at">col=</span><span class="fu">factor</span>(classes), <span class="at">pch=</span><span class="dv">20</span>)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend=</span><span class="fu">c</span>(<span class="st">"A"</span>,<span class="st">"B"</span>), <span class="at">col=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="at">pch=</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="alphabeta_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>population<span class="sc">$</span>b_participate <span class="ot">=</span> (population<span class="sc">$</span>health <span class="sc">+</span> population<span class="sc">$</span>wealth)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>population<span class="sc">$</span>prob_participate <span class="ot">=</span> <span class="fu">exp</span>(population<span class="sc">$</span>b_participate) <span class="sc">/</span> (<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(population<span class="sc">$</span>b_participate))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>sample2 <span class="ot">&lt;-</span> population[<span class="fu">sample</span>(populationsize, samplesize, <span class="at">prob =</span> population<span class="sc">$</span>prob_participate),]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dm1 <span class="ot">&lt;-</span> <span class="fu">vegdist</span>(dat, <span class="at">method =</span> <span class="st">"jaccard"</span>, <span class="at">binary =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">adonis2</span>(dm1 <span class="sc">~</span> classes  )  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>How will the average health and wealth in our sample compare to the population?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(sample2<span class="sc">$</span>health)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Permutation test for adonis under reduced model
-Terms added sequentially (first to last)
-Permutation: free
-Number of permutations: 999
-
-adonis2(formula = dm1 ~ classes)
-         Df SumOfSqs      R2      F Pr(&gt;F)
-classes   1   0.2915 0.06188 1.1873  0.166
-Residual 18   4.4193 0.93812              
-Total    19   4.7108 1.00000              </code></pre>
+<pre><code>[1] 0.3808598</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anosim</span>(dm1, <span class="at">grouping =</span> classes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(sample2<span class="sc">$</span>wealth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3049277</code></pre>
+</div>
+</div>
+<p>Well we know that health and wealth are higher in the sample than the population, but this should hopefullt be obvious. But how are the two things correlated in the population?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(sample2<span class="sc">$</span>health, sample2<span class="sc">$</span>wealth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="berkson_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(sample2<span class="sc">$</span>health, sample2<span class="sc">$</span>wealth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-Call:
-anosim(x = dm1, grouping = classes) 
-Dissimilarity: binary jaccard 
+    Pearson's product-moment correlation
 
-ANOSIM statistic R: 0.02167 
-      Significance: 0.36 
-
-Permutation: free
-Number of permutations: 999</code></pre>
+data:  sample2$health and sample2$wealth
+t = -2.9629, df = 198, p-value = 0.003421
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.3352015 -0.0692823
+sample estimates:
+       cor 
+-0.2060428 </code></pre>
 </div>
 </div>
-<p>So in this case we see a clear difference in alpha diversity between sites but it’s not so clear for beta diversity. It looks like the environment B samples are slightly more clustered while the A samples are more spread out. The difference is not reflected in a PERMANOVA (via adonis2) or ANOSIM.</p>
-<p>This is a good reminder that important differences in community composition might not be visible in beta diversity plots. Maybe you all know that anyway but it was a good reminder for me.</p>
+<p>It looks like a negative correlation in the sample, despite there being no correlation in the population!</p>
+<p>Was this unlucky? We can look at the distribution of p-values from repeated samples, to see what the chance of a false positive correlation is here:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>onepvalue <span class="ot">&lt;-</span> <span class="cf">function</span>(){</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  samplen <span class="ot">&lt;-</span> population[<span class="fu">sample</span>(populationsize, samplesize, <span class="at">prob =</span> population<span class="sc">$</span>prob_participate),]</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor.test</span>(samplen<span class="sc">$</span>health, samplen<span class="sc">$</span>wealth)<span class="sc">$</span>p.value</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">replicate</span>(<span class="dv">1000</span>, <span class="fu">onepvalue</span>()) <span class="sc">|&gt;</span> <span class="fu">hist</span>(<span class="at">breaks=</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="berkson_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>In more than 50% of cases there is now a significant correlation in the sample even though there is no correlation in the population. It is simply caused by the factors under investigation also being factors that lead people to participate in research.</p>
+<p>What are the implications of this for observational studies?</p>
+<p>What can we do about it?</p>
 
 
 </section>

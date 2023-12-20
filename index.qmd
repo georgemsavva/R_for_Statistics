@@ -15,6 +15,9 @@ This site hosts my course notes, presentations and data files accompanying my co
     * [Day 3](day3.qmd)
 * Statistics notes
     * [Don't dichotomise your data](dichot.qmd)
+    * [Simple alpha and beta diversity simulation](alphabeta.qmd)
+    * [Selection bias (Berkson bias) in observational studies](berkson.qmd)
+    * [Sampling from clustered data in observational studies](independentclusters.qmd)
 * Notes on using R
     * [Tidyverse, data.table and others for making descriptive tables](datatabletidyverse.qmd)
     * [Using packages, functions and pipes](praise.qmd)
