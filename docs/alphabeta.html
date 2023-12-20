@@ -239,23 +239,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>We’ll assume that there are 100 possible species in my communities.</p></li>
 <li><p>There are two different classes of environments from which we can sample communities,</p></li>
 <li><p>In samples from the first environment each species is present with probability 0.4.</p></li>
-<li><p>In samples from the the second environment each species is present with probability 0.6.</p></li>
+<li><p>In samples from the the second environment each species is present with probability 0.5.</p></li>
+<li><p>We’ll sample ten communities per class, and look at their alpha and beta diversities</p></li>
 </ul>
-<p>Step 1: sample a matrix of the community compositions:</p>
+<p>First sample a matrix of the community compositions:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>N <span class="ot">=</span> <span class="dv">10</span> <span class="co"># Number of samples per class</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">100</span> <span class="co"># Number of possible species</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="st">"19122023"</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>classes <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>), <span class="at">each=</span>N)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>classProbabilities <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"A"</span><span class="ot">=</span><span class="fl">0.4</span>,<span class="st">"B"</span><span class="ot">=</span><span class="fl">0.5</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">sapply</span>(classes, \(class) <span class="fu">rbinom</span>(<span class="at">n=</span>n, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">p=</span>classProbabilities[class])) <span class="sc">|&gt;</span> <span class="fu">t</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">sapply</span>(classes, \(class) <span class="fu">rbinom</span>(<span class="at">n=</span>n, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">p=</span>classProbabilities[class])) <span class="sc">|&gt;</span> <span class="fu">t</span>()</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Check it looks OK</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>dat[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+A    1    1    1    0    0    0    0    0    1     1
+A    0    1    1    1    0    1    0    0    1     1
+A    0    0    1    0    0    1    0    1    1     0
+A    0    0    1    0    0    0    0    0    0     0
+A    1    1    1    1    0    0    1    0    1     0
+A    0    1    1    0    0    0    1    0    1     1
+A    1    0    1    1    0    0    1    0    0     0
+A    1    1    1    0    0    0    0    1    0     1
+A    1    0    0    0    1    0    1    1    0     0
+A    1    0    0    0    1    1    1    0    0     0</code></pre>
+</div>
 </div>
 <p>Now look at the alpha diversity (Shannon index):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vegan)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Shannon index</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="fu">diversity</span>(dat) <span class="sc">~</span> classes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vegan)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Shannon index</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="fu">diversity</span>(dat) <span class="sc">~</span> classes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Welch Two Sample t-test
@@ -269,27 +286,27 @@ sample estimates:
 mean in group A mean in group B 
        3.672421        3.916238 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">aes</span>(<span class="at">y=</span><span class="fu">diversity</span>(dat), <span class="at">x=</span>classes) <span class="sc">+</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()  <span class="sc">+</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">aes</span>(<span class="at">y=</span><span class="fu">diversity</span>(dat), <span class="at">x=</span>classes) <span class="sc">+</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()  <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="alphabeta_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Beta-diversity (NMDS following Jaccard diversity):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Not so clear with the beta-diversity</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">vegdist</span>(dat, <span class="at">method =</span> <span class="st">"jaccard"</span>, <span class="at">binary =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">metaMDS</span>(<span class="at">trace =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scores</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="at">col=</span><span class="fu">factor</span>(classes), <span class="at">pch=</span><span class="dv">20</span>)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend=</span><span class="fu">c</span>(<span class="st">"A"</span>,<span class="st">"B"</span>), <span class="at">col=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="at">pch=</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Not so clear with the beta-diversity</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">vegdist</span>(dat, <span class="at">method =</span> <span class="st">"jaccard"</span>, <span class="at">binary =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">metaMDS</span>(<span class="at">trace =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scores</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="at">col=</span><span class="fu">factor</span>(classes), <span class="at">pch=</span><span class="dv">20</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend=</span><span class="fu">c</span>(<span class="st">"A"</span>,<span class="st">"B"</span>), <span class="at">col=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="at">pch=</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="alphabeta_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dm1 <span class="ot">&lt;-</span> <span class="fu">vegdist</span>(dat, <span class="at">method =</span> <span class="st">"jaccard"</span>, <span class="at">binary =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">adonis2</span>(dm1 <span class="sc">~</span> classes  )  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dm1 <span class="ot">&lt;-</span> <span class="fu">vegdist</span>(dat, <span class="at">method =</span> <span class="st">"jaccard"</span>, <span class="at">binary =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">adonis2</span>(dm1 <span class="sc">~</span> classes  )  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Permutation test for adonis under reduced model
 Terms added sequentially (first to last)
@@ -302,7 +319,7 @@ classes   1   0.2915 0.06188 1.1873  0.166
 Residual 18   4.4193 0.93812              
 Total    19   4.7108 1.00000              </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anosim</span>(dm1, <span class="at">grouping =</span> classes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anosim</span>(dm1, <span class="at">grouping =</span> classes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -317,7 +334,7 @@ Number of permutations: 999</code></pre>
 </div>
 </div>
 <p>So in this case we see a clear difference in alpha diversity between sites but it’s not so clear for beta diversity. It looks like the environment B samples are slightly more clustered while the A samples are more spread out. The difference is not reflected in a PERMANOVA (via adonis2) or ANOSIM.</p>
-<p>This is a good reminder that important differences in community composition might not be visible in beta diversity plots. Maybe you all know that anyway but it was a good reminder for me.</p>
+<p>This is a good reminder that important differences in community composition might not be immediately visible in beta diversity plots. Maybe you all know that anyway but it was a good reminder for me.</p>
 
 
 </section>

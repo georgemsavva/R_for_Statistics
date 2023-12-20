@@ -20,9 +20,11 @@ In each simulation I'll create some data with given characteristics then look at
 
 * In samples from the first environment each species is present with probability 0.4.
 
-* In samples from the the second environment each species is present with probability 0.6.
+* In samples from the the second environment each species is present with probability 0.5.
 
-Step 1: sample a matrix of the community compositions:
+* We'll sample ten communities per class, and look at their alpha and beta diversities
+
+First sample a matrix of the community compositions:
 
 
 ```{r }
@@ -34,6 +36,8 @@ classes <- rep(c("A", "B"), each=N)
 classProbabilities <- c("A"=0.4,"B"=0.5)
 dat <- sapply(classes, \(class) rbinom(n=n, size = 1, p=classProbabilities[class])) |> t()
 
+# Check it looks OK
+dat[1:10,1:10]
 ```
 
 Now look at the alpha diversity (Shannon index):
@@ -70,5 +74,5 @@ anosim(dm1, grouping = classes)
 
 So in this case we see a clear difference in alpha diversity between sites but it's not so clear for beta diversity.  It looks like the environment B samples are slightly more clustered while the A samples are more spread out.  The difference is not reflected in a PERMANOVA (via adonis2) or ANOSIM.
 
-This is a good reminder that important differences in community composition might not be visible in beta diversity plots.  Maybe you all know that anyway but it was a good reminder for me.
+This is a good reminder that important differences in community composition might not be immediately visible in beta diversity plots.  Maybe you all know that anyway but it was a good reminder for me.
 
