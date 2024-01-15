@@ -193,10 +193,10 @@ I have created a script including all the analyses from this tutorial, in Tutori
 
 See:
 
-* https://kdestasio.github.io/post/r_best_practices/
-* https://r4ds.had.co.nz/workflow-projects.html
-* https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects
-* https://rstats.wtf
+* [https://kdestasio.github.io/post/r_best_practices/]
+* [https://r4ds.had.co.nz/workflow-projects.html]
+* [https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects]
+* [https://rstats.wtf]
 
 for more information on using projects and scripts
 
@@ -204,7 +204,7 @@ for more information on using projects and scripts
 
 So far we have used R as a calculator.  Next we'll see how R stores objects and applies functions to data.  
 
-[Objects, functions, packages and pipes tutorial](praise.qmd)
+(Optional - a tutorial on packages, function and pipes using the `cowsay`, `praise` and `spongebob` packages.) [Objects, functions, packages and pipes tutorial](praise.qmd)
 
 ## Functions
 
@@ -316,9 +316,7 @@ What is the class of the ‘myname’ object?
 
 We can R as a simple calculator like this but we'll most often be using R to analyse datasets.
 
-Later we'll look into getting real data into R from Excel files, but for now we'll work on a built-in dataset to understand how data is stored and how to describe it.  
-
-We'll make some descriptive statistics.  
+We'll load a simple dataset into R, and do some analysis.
 
 ::: {.callout-note}
 There are two types of statistical analysis:
@@ -330,14 +328,28 @@ We use *analytic* statistics to test our hypotheses, estimate treatment effects 
 Both types are important!
 :::
 
-## Explore the structure of the dataset
+## Download and explore the structure of the dataset in Excel
+
+The 'iris' dataset is stored in a comma-separated value file here [iris.csv](iris.csv)
+
+Download the dataset and have a look around in Excel.  Note the structure of the dataset
+
+The `iris` data is an example of a dataset in *tidy* form.  We'll learn more about this in the next session, but in short in has:
+
+* A single rectangular table to represent the data
+* A column for each variable (characteristic)
+* A row for each observation (flower in this case)
+
+This is very similar to how datasets are stored in software like SPSS or Stata, or in a database, but is different to how you might record data using GraphPad Prism.  We'll see more about how to arrange data like this later in the course.
+
+Make sure the dataset is stored in the root directory of your project.
 
 Start a new script to begin your analysis of the 'iris' dataset.
 
-Type:
+We can use the `read.csv` function to load data from a csv file (later we'll see how to import Excel format data).  Type:
 
 ```{r }
-data(iris)
+iris <- read.csv("iris.csv")
 ```
 
 Check your 'environment' tab for a new object.  Click on the object name to see it in the Viewer, or click on the small blue button next to it to expand the view in the environment window.
@@ -345,6 +357,8 @@ Check your 'environment' tab for a new object.  Click on the object name to see 
 What is the class of the `iris` object that you have created?
 
 What is in this data?  What kind of descriptive statistics might we calculate to learn about this dataset?
+
+## Explore the structure of the dataset using R
 
 There are a few different functions you can use to explore a dataset.  Test each to see what they do.
 
@@ -357,13 +371,6 @@ nrow(iris)
 View(iris)
 ```
 
-The `iris` data is an example of a dataset in *tidy* form.  We'll learn more about this in the next session, but in short in has:
-
-* A single rectangular table to represent the data
-* A column for each variable
-* A row for each observation
-
-This is very similar to how datasets are stored in software like SPSS or Stata, or in a database, but is different to how you might record data using GraphPad Prism.
 
 ## Use the data in calculations
 
@@ -412,7 +419,6 @@ sd(iris$Sepal.Length)
 iris$Sepal.Width |> hist()
 
 ```
-Can you make a histogram with red bars?
 
 We can work on more than one variable at a time:
 
@@ -433,10 +439,13 @@ with(iris , cor(Sepal.Length , Sepal.Width))
 
 1. How many rows does the `iris` dataset have?
 2. What is the class of each of its columns?
-3. What is the mean sepal length of the flowers
-4. What is the smallest (minimum) sepal width
-5. (Difficult) How many `viriginca` flowers are included in the dataset?  Can you tabulate the `species` variable?
-6. Can you make a cow say the median petal length?
+3. What is the mean sepal length of the flowers?
+4. What is the smallest (minimum) sepal width?
+5. What is the correlation between petal length and petal width?
+6. Is this correlation statistically significant?
+7. (Difficult) How many `viriginca` flowers are included in the dataset?  
+8. Can you tabulate the `species` variable?
+9. Can you make a histogram of species with red bars?
 
 ## Other packages for descriptive statistics (if you have time)
 
@@ -447,7 +456,7 @@ install.packages("gtsummary")
 gtsummary::tbl_summary(iris)
 ```
 
-Can you stratify the table by species? (Check the help)
+Can you stratify this table by species? (Check the help)
 
 ```{r eval=FALSE}
 install.packages("GGally")
@@ -470,7 +479,7 @@ Tidyverse is more widely used and so this is what we will focus on here.  If you
 I am only going to teach `tidyverse` methods because they are the most widely used.  See [https://wetlandscapes.com/blog/a-comparison-of-r-dialects/] for how to use base or data.table to perform the same options.
 :::
 
-Tidyverse is in fact a large collection of packages.  You can see all of the details here https://www.tidyverse.org/packages/.  In this course we will use functions from the following packages:
+Tidyverse is in fact a large collection of packages.  You can see all of the details here [https://www.tidyverse.org/packages/].  In this course we will use functions from the following packages:
 
 * **dplyr** for data manipulation
 * **ggplot2** for making graphics
@@ -577,13 +586,13 @@ iris |> ggplot() +
 
 ```
 
-We'll see more ggplot in later sessions, but note the syntax, in partidular how a dataset is passed to the ggplot function, how we specify the linkage between the data and the plot, and how different elements are added to make the plot.
+We'll see more ggplot in later sessions, but note the syntax, in particular how a dataset is passed to the ggplot function, how we specify the linkage between the data and the plot, and how different elements are added to make the plot.
 
 # Hypothesis tests and linear models
 
-Descriptives are useful but our goal in science is usually to test hypotheses or understand the mechanisms behind our data generation.
+Descriptives are useful but our goal in science is often to test hypotheses or understand the mechanisms behind our data generation.
 
-So, we might observe a difference in petal length between species in our sample, but we want to know if this reflects a real difference in average petal length in the population.  That is, does petal length depend on species?  
+So, we might observe a difference in petal length between species in our sample, but we want to know if this reflects a real difference in average petal length in the population.  That is, does petal length depend on species amobg iris flowers in general?  
 
 First, we can generate a simple box plot as previously to explore this question:
 
@@ -602,33 +611,37 @@ To get the coefficients (mean differences between groups) we can estimate a line
 model1 <- lm( Sepal.Length ~ Species, data=iris)
 ```
 
-When you estimate a model R will not display any output, it is all stored in the model object that is created.  Then you can access whatever output you want using other functions, eg:
+When you estimate a model R will not display any output. The results are all stored in the model object that is created.  Then you can access whatever output you want using other functions, eg:
 
 ```{r }
+# Base R functions
 summary(model1)
 anova(model1)
-```
+confint(model1)
 
-You can use either the base function `confint` or the `tidy` function from the `broom` package (`broom` is installed with `tidyverse`) to get the confidence intervals for the mean differences:
+# A tidyverse method:
+broom::tidy(model1, conf.int=TRUE)
+
+# Functions from the `gtsummary` package if you have it installed
+gtsummary::tbl_regression(model1)
+```
 
 ## Test yourself
 
 1. Can you estimate the linear model and display the summary in one line using pipes?
-2. How much of the output summary do you understand?
+2. Can you interpret the model summaries?
+3. Which model output do you prefer?
 
-```{r }
-# Base R methods:
-confint(model1)
-
-# Tidyverse method:
-broom::tidy(model1, conf.int=TRUE)
-```
 
 ::: {.callout-note}
-Note - you can run t-tests like this, since a t-test is equivalent to a linear model with two group categorical predictor.
+Note - you can run t-tests like this, since a t-test is equivalent to a linear model with two group categorical predictor.  Linear models generalise many traditional statistical procedures.
 :::
 
-All pairwise comparisons using `emmeans` or t-tests for individual pairs with `filter` then `lm`?
+## Further work we might consider for this model during the practical.
+
+Generate all pairwise comparisons using `emmeans` or t-tests for individual pairs with `filter` then `lm`?
+
+Model diagnostics with the `performance` package.
 
 ### More complex models
 
@@ -675,7 +688,9 @@ lm( Sepal.Length ~ Species * Petal.Length, data=iris) |>
 
 ```
 
+# Extra material below here
 
+Below this point is extra material that was cut from the main day 1 tutorial but I've kept in this document because it might be interesting.  There are likely to be a few small mistakes here.
 
 # More detail on types and classes
 
@@ -777,15 +792,28 @@ library(tidyverse)
 iris |> group_by(Species) |> summarise(mean(Sepal.Length))
 ```
 
-
 If we want more than one summary statistic for example, it's easy with tidyverse (this is an example of a task that is difficult with base R):
 
 ```{r eval=FALSE}
 iris |> group_by(Species) |> summarise(n(),mean(Sepal.Length),sd(Sepal.Length))
 ```
 
-While dplyr is good for making summary statistics, but to make publication ready tables you can explore the `gtsummary` package.  
-https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html
+Note here that we can write the call in more than one line to make it easier to read:
+
+```{r }
+iris |> 
+  group_by(Species) |> 
+  summarise(
+    n(),
+    mean(Sepal.Length),
+    sd(Sepal.Length)
+    )
+```
+
+dplyr is good for making summary statistics, but to make publication ready tables you can explore the `gtsummary` package.
+
+[https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html]
+
 
 ```{r }
 library(gtsummary)
@@ -826,13 +854,10 @@ The ‘table’ function can also generate cross-tabs, by specifying two or thre
 ```{r eval=FALSE}
 table(iris$Species, iris$PetalLengthGrouped) # Base R version
 
-iris |> janitor::tabyl(Species, PetalLengthGrouped)  #  The tidyverse version using `tabyl` from the `janitor` package.
-iris |> group_by(Species, PetalLengthGrouped) |> tally()
+iris |> group_by(Species, PetalLengthGrouped) |> summarise(n())
 
 ```
-
-
-Tables of counts are useful, but it might be more helpful to see the proportion of healthy trees by species.  To get this we can pass the table we just made into the prop.table() function:
+Tables of counts are useful, but it might be more helpful to see the proportion of flowers with long petals by species.  To get this we can pass the table we just made into the prop.table() function:
 
 ```{r }
 table1 <- table(iris$Species, iris$PetalLengthGrouped)

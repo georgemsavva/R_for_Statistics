@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.353">
+<meta name="generator" content="quarto-1.1.251">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,7 +10,7 @@
 <meta name="author" content="Pirita Paajanen, JIC">
 <meta name="dcterms.date" content="2023-09-01">
 
-<title>R and Statistics - Introduction to ‘R’ for statistical analysis</title>
+<title>Introduction to ‘R’ for statistical analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,10 +20,9 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -50,13 +49,43 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
+    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -111,67 +140,60 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <span class="navbar-title">Statistics and R in Biology</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html" rel="" target=""><i class="bi bi-fa-home" role="img">
-</i> 
- <span class="menu-text">Home</span></a>
+    <a class="nav-link" href="./index.html">Home</a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-intro-to-r-for-statistics" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
- <span class="menu-text">Intro to R for Statistics</span>
-    </a>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-intro-to-r-for-statistics" role="button" data-bs-toggle="dropdown" aria-expanded="false">Intro to R for Statistics</a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-intro-to-r-for-statistics">    
         <li>
-    <a class="dropdown-item" href="./day1.html" rel="" target="">
+    <a class="dropdown-item" href="./day1.html">
  <span class="dropdown-text">NBI PhD Intro to R Day 1</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./day2.html" rel="" target="">
+    <a class="dropdown-item" href="./day2.html">
  <span class="dropdown-text">Day 2</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./day3.html" rel="" target="">
+    <a class="dropdown-item" href="./day3.html">
  <span class="dropdown-text">Day 3</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./workshopscript.html" rel="" target="">
+    <a class="dropdown-item" href="./workshopscript.html">
  <span class="dropdown-text">JIC MSc Workshop (2021/2022)</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./flipbook.html" rel="" target="">
+    <a class="dropdown-item" href="./flipbook.html">
  <span class="dropdown-text">ggplot example</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-statistics-notes" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
- <span class="menu-text">Statistics notes</span>
-    </a>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-statistics-notes" role="button" data-bs-toggle="dropdown" aria-expanded="false">Statistics notes</a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-statistics-notes">    
         <li>
-    <a class="dropdown-item" href="./dichot.html" rel="" target="">
+    <a class="dropdown-item" href="./dichot.html">
  <span class="dropdown-text">Don’t group your data points</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./alphabeta.html" rel="" target="">
+    <a class="dropdown-item" href="./alphabeta.html">
  <span class="dropdown-text">Simple alpha and beta diversity simulation</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./berkson.html" rel="" target="">
+    <a class="dropdown-item" href="./berkson.html">
  <span class="dropdown-text">Selection bias (Berkson bias) in observational studies</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./independentclusters.html" rel="" target="">
+    <a class="dropdown-item" href="./independentclusters.html">
  <span class="dropdown-text">Sampling from clustered data in observational studies</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./repeats.html" rel="" target="">
+    <a class="dropdown-item" href="./repeats.html">
  <span class="dropdown-text">Run bigger experiments instead of internal replications</span></a>
   </li>  
     </ul>
@@ -179,18 +201,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="mailto:george.savva@quadram.ac.uk" rel="" target=""><i class="bi bi-fa-envelope-o" role="img">
-</i> 
- <span class="menu-text">Contact me</span></a>
+    <a class="nav-link" href="mailto:george.savva@quadram.ac.uk">Contact me</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://github.com/georgemsavva" rel="" target=""><i class="bi bi-fa-github" role="img">
-</i> 
- <span class="menu-text">GitHub</span></a>
+    <a class="nav-link" href="https://github.com/georgemsavva">GitHub</a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
-</div>
+              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -204,57 +221,60 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul class="collapse">
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="toc-section-number">1</span>  Introduction</a>
   <ul class="collapse">
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives"><span class="header-section-number">1.1</span> Learning objectives</a></li>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives"><span class="toc-section-number">1.1</span>  Learning objectives</a></li>
   </ul></li>
-  <li><a href="#r-and-rstudio" id="toc-r-and-rstudio" class="nav-link" data-scroll-target="#r-and-rstudio"><span class="header-section-number">2</span> R and RStudio</a>
+  <li><a href="#r-and-rstudio" id="toc-r-and-rstudio" class="nav-link" data-scroll-target="#r-and-rstudio"><span class="toc-section-number">2</span>  R and RStudio</a>
   <ul class="collapse">
-  <li><a href="#what-are-r-and-rstudio" id="toc-what-are-r-and-rstudio" class="nav-link" data-scroll-target="#what-are-r-and-rstudio"><span class="header-section-number">2.1</span> What are R and RStudio?</a></li>
-  <li><a href="#getting-r-and-rstudio" id="toc-getting-r-and-rstudio" class="nav-link" data-scroll-target="#getting-r-and-rstudio"><span class="header-section-number">2.2</span> Getting R and RStudio</a></li>
-  <li><a href="#starting-rstudio" id="toc-starting-rstudio" class="nav-link" data-scroll-target="#starting-rstudio"><span class="header-section-number">2.3</span> Starting RStudio</a></li>
-  <li><a href="#check-r-and-rstudio-are-working-run-your-first-command" id="toc-check-r-and-rstudio-are-working-run-your-first-command" class="nav-link" data-scroll-target="#check-r-and-rstudio-are-working-run-your-first-command"><span class="header-section-number">2.4</span> Check R and RStudio are working, run your first command</a></li>
+  <li><a href="#what-are-r-and-rstudio" id="toc-what-are-r-and-rstudio" class="nav-link" data-scroll-target="#what-are-r-and-rstudio"><span class="toc-section-number">2.1</span>  What are R and RStudio?</a></li>
+  <li><a href="#getting-r-and-rstudio" id="toc-getting-r-and-rstudio" class="nav-link" data-scroll-target="#getting-r-and-rstudio"><span class="toc-section-number">2.2</span>  Getting R and RStudio</a></li>
+  <li><a href="#starting-rstudio" id="toc-starting-rstudio" class="nav-link" data-scroll-target="#starting-rstudio"><span class="toc-section-number">2.3</span>  Starting RStudio</a></li>
+  <li><a href="#check-r-and-rstudio-are-working-run-your-first-command" id="toc-check-r-and-rstudio-are-working-run-your-first-command" class="nav-link" data-scroll-target="#check-r-and-rstudio-are-working-run-your-first-command"><span class="toc-section-number">2.4</span>  Check R and RStudio are working, run your first command</a></li>
   </ul></li>
-  <li><a href="#using-projects-and-scripts" id="toc-using-projects-and-scripts" class="nav-link" data-scroll-target="#using-projects-and-scripts"><span class="header-section-number">3</span> Using projects and scripts</a>
+  <li><a href="#using-projects-and-scripts" id="toc-using-projects-and-scripts" class="nav-link" data-scroll-target="#using-projects-and-scripts"><span class="toc-section-number">3</span>  Using projects and scripts</a>
   <ul class="collapse">
-  <li><a href="#making-a-script" id="toc-making-a-script" class="nav-link" data-scroll-target="#making-a-script"><span class="header-section-number">3.1</span> Making a script</a></li>
+  <li><a href="#making-a-script" id="toc-making-a-script" class="nav-link" data-scroll-target="#making-a-script"><span class="toc-section-number">3.1</span>  Making a script</a></li>
   </ul></li>
-  <li><a href="#objects-and-functions" id="toc-objects-and-functions" class="nav-link" data-scroll-target="#objects-and-functions"><span class="header-section-number">4</span> Objects and functions</a>
+  <li><a href="#objects-and-functions" id="toc-objects-and-functions" class="nav-link" data-scroll-target="#objects-and-functions"><span class="toc-section-number">4</span>  Objects and functions</a>
   <ul class="collapse">
-  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions"><span class="header-section-number">4.1</span> Functions</a></li>
-  <li><a href="#objects" id="toc-objects" class="nav-link" data-scroll-target="#objects"><span class="header-section-number">4.2</span> Objects</a></li>
-  <li><a href="#test-yourself" id="toc-test-yourself" class="nav-link" data-scroll-target="#test-yourself"><span class="header-section-number">4.3</span> Test yourself</a></li>
+  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions"><span class="toc-section-number">4.1</span>  Functions</a></li>
+  <li><a href="#objects" id="toc-objects" class="nav-link" data-scroll-target="#objects"><span class="toc-section-number">4.2</span>  Objects</a></li>
+  <li><a href="#test-yourself" id="toc-test-yourself" class="nav-link" data-scroll-target="#test-yourself"><span class="toc-section-number">4.3</span>  Test yourself</a></li>
   </ul></li>
-  <li><a href="#using-r-to-analyse-data" id="toc-using-r-to-analyse-data" class="nav-link" data-scroll-target="#using-r-to-analyse-data"><span class="header-section-number">5</span> Using R to analyse data</a>
+  <li><a href="#using-r-to-analyse-data" id="toc-using-r-to-analyse-data" class="nav-link" data-scroll-target="#using-r-to-analyse-data"><span class="toc-section-number">5</span>  Using R to analyse data</a>
   <ul class="collapse">
-  <li><a href="#explore-the-structure-of-the-dataset" id="toc-explore-the-structure-of-the-dataset" class="nav-link" data-scroll-target="#explore-the-structure-of-the-dataset"><span class="header-section-number">5.1</span> Explore the structure of the dataset</a></li>
-  <li><a href="#use-the-data-in-calculations" id="toc-use-the-data-in-calculations" class="nav-link" data-scroll-target="#use-the-data-in-calculations"><span class="header-section-number">5.2</span> Use the data in calculations</a></li>
-  <li><a href="#test-yourself---more-exploration-of-the-iris-dataset" id="toc-test-yourself---more-exploration-of-the-iris-dataset" class="nav-link" data-scroll-target="#test-yourself---more-exploration-of-the-iris-dataset"><span class="header-section-number">5.3</span> Test yourself - More exploration of the iris dataset</a></li>
-  <li><a href="#other-packages-for-descriptive-statistics-if-you-have-time" id="toc-other-packages-for-descriptive-statistics-if-you-have-time" class="nav-link" data-scroll-target="#other-packages-for-descriptive-statistics-if-you-have-time"><span class="header-section-number">5.4</span> Other packages for descriptive statistics (if you have time)</a></li>
+  <li><a href="#download-and-explore-the-structure-of-the-dataset-in-excel" id="toc-download-and-explore-the-structure-of-the-dataset-in-excel" class="nav-link" data-scroll-target="#download-and-explore-the-structure-of-the-dataset-in-excel"><span class="toc-section-number">5.1</span>  Download and explore the structure of the dataset in Excel</a></li>
+  <li><a href="#explore-the-structure-of-the-dataset-using-r" id="toc-explore-the-structure-of-the-dataset-using-r" class="nav-link" data-scroll-target="#explore-the-structure-of-the-dataset-using-r"><span class="toc-section-number">5.2</span>  Explore the structure of the dataset using R</a></li>
+  <li><a href="#use-the-data-in-calculations" id="toc-use-the-data-in-calculations" class="nav-link" data-scroll-target="#use-the-data-in-calculations"><span class="toc-section-number">5.3</span>  Use the data in calculations</a></li>
+  <li><a href="#test-yourself---more-exploration-of-the-iris-dataset" id="toc-test-yourself---more-exploration-of-the-iris-dataset" class="nav-link" data-scroll-target="#test-yourself---more-exploration-of-the-iris-dataset"><span class="toc-section-number">5.4</span>  Test yourself - More exploration of the iris dataset</a></li>
+  <li><a href="#other-packages-for-descriptive-statistics-if-you-have-time" id="toc-other-packages-for-descriptive-statistics-if-you-have-time" class="nav-link" data-scroll-target="#other-packages-for-descriptive-statistics-if-you-have-time"><span class="toc-section-number">5.5</span>  Other packages for descriptive statistics (if you have time)</a></li>
   </ul></li>
-  <li><a href="#tidyverse" id="toc-tidyverse" class="nav-link" data-scroll-target="#tidyverse"><span class="header-section-number">6</span> Tidyverse</a>
+  <li><a href="#tidyverse" id="toc-tidyverse" class="nav-link" data-scroll-target="#tidyverse"><span class="toc-section-number">6</span>  Tidyverse</a>
   <ul class="collapse">
-  <li><a href="#using-dplyr-functions-to-manipulate-and-summarise-data" id="toc-using-dplyr-functions-to-manipulate-and-summarise-data" class="nav-link" data-scroll-target="#using-dplyr-functions-to-manipulate-and-summarise-data"><span class="header-section-number">6.1</span> Using dplyr functions to manipulate and summarise data</a></li>
-  <li><a href="#test-yourself-data-wrangling-and-summarising" id="toc-test-yourself-data-wrangling-and-summarising" class="nav-link" data-scroll-target="#test-yourself-data-wrangling-and-summarising"><span class="header-section-number">6.2</span> Test yourself: data wrangling and summarising</a></li>
+  <li><a href="#using-dplyr-functions-to-manipulate-and-summarise-data" id="toc-using-dplyr-functions-to-manipulate-and-summarise-data" class="nav-link" data-scroll-target="#using-dplyr-functions-to-manipulate-and-summarise-data"><span class="toc-section-number">6.1</span>  Using dplyr functions to manipulate and summarise data</a></li>
+  <li><a href="#test-yourself-data-wrangling-and-summarising" id="toc-test-yourself-data-wrangling-and-summarising" class="nav-link" data-scroll-target="#test-yourself-data-wrangling-and-summarising"><span class="toc-section-number">6.2</span>  Test yourself: data wrangling and summarising</a></li>
   </ul></li>
-  <li><a href="#graphics" id="toc-graphics" class="nav-link" data-scroll-target="#graphics"><span class="header-section-number">7</span> Graphics</a></li>
-  <li><a href="#hypothesis-tests-and-linear-models" id="toc-hypothesis-tests-and-linear-models" class="nav-link" data-scroll-target="#hypothesis-tests-and-linear-models"><span class="header-section-number">8</span> Hypothesis tests and linear models</a>
+  <li><a href="#graphics" id="toc-graphics" class="nav-link" data-scroll-target="#graphics"><span class="toc-section-number">7</span>  Graphics</a></li>
+  <li><a href="#hypothesis-tests-and-linear-models" id="toc-hypothesis-tests-and-linear-models" class="nav-link" data-scroll-target="#hypothesis-tests-and-linear-models"><span class="toc-section-number">8</span>  Hypothesis tests and linear models</a>
   <ul class="collapse">
-  <li><a href="#test-yourself-1" id="toc-test-yourself-1" class="nav-link" data-scroll-target="#test-yourself-1"><span class="header-section-number">8.1</span> Test yourself</a></li>
+  <li><a href="#test-yourself-1" id="toc-test-yourself-1" class="nav-link" data-scroll-target="#test-yourself-1"><span class="toc-section-number">8.1</span>  Test yourself</a></li>
+  <li><a href="#further-work-we-might-consider-for-this-model-during-the-practical." id="toc-further-work-we-might-consider-for-this-model-during-the-practical." class="nav-link" data-scroll-target="#further-work-we-might-consider-for-this-model-during-the-practical."><span class="toc-section-number">8.2</span>  Further work we might consider for this model during the practical.</a></li>
   </ul></li>
-  <li><a href="#more-detail-on-types-and-classes" id="toc-more-detail-on-types-and-classes" class="nav-link" data-scroll-target="#more-detail-on-types-and-classes"><span class="header-section-number">9</span> More detail on types and classes</a>
+  <li><a href="#extra-material-below-here" id="toc-extra-material-below-here" class="nav-link" data-scroll-target="#extra-material-below-here"><span class="toc-section-number">9</span>  Extra material below here</a></li>
+  <li><a href="#more-detail-on-types-and-classes" id="toc-more-detail-on-types-and-classes" class="nav-link" data-scroll-target="#more-detail-on-types-and-classes"><span class="toc-section-number">10</span>  More detail on types and classes</a>
   <ul class="collapse">
-  <li><a href="#character-strings" id="toc-character-strings" class="nav-link" data-scroll-target="#character-strings"><span class="header-section-number">9.1</span> Character strings</a></li>
-  <li><a href="#logicals" id="toc-logicals" class="nav-link" data-scroll-target="#logicals"><span class="header-section-number">9.2</span> Logicals</a></li>
-  <li><a href="#converting-between-types" id="toc-converting-between-types" class="nav-link" data-scroll-target="#converting-between-types"><span class="header-section-number">9.3</span> Converting between types</a></li>
-  <li><a href="#missing-elements-in-vectors" id="toc-missing-elements-in-vectors" class="nav-link" data-scroll-target="#missing-elements-in-vectors"><span class="header-section-number">9.4</span> Missing elements in vectors</a></li>
-  <li><a href="#exercise-1.-effect-of-missing-values" id="toc-exercise-1.-effect-of-missing-values" class="nav-link" data-scroll-target="#exercise-1.-effect-of-missing-values"><span class="header-section-number">9.5</span> Exercise 1. Effect of missing values</a></li>
+  <li><a href="#character-strings" id="toc-character-strings" class="nav-link" data-scroll-target="#character-strings"><span class="toc-section-number">10.1</span>  Character strings</a></li>
+  <li><a href="#logicals" id="toc-logicals" class="nav-link" data-scroll-target="#logicals"><span class="toc-section-number">10.2</span>  Logicals</a></li>
+  <li><a href="#converting-between-types" id="toc-converting-between-types" class="nav-link" data-scroll-target="#converting-between-types"><span class="toc-section-number">10.3</span>  Converting between types</a></li>
+  <li><a href="#missing-elements-in-vectors" id="toc-missing-elements-in-vectors" class="nav-link" data-scroll-target="#missing-elements-in-vectors"><span class="toc-section-number">10.4</span>  Missing elements in vectors</a></li>
+  <li><a href="#exercise-1.-effect-of-missing-values" id="toc-exercise-1.-effect-of-missing-values" class="nav-link" data-scroll-target="#exercise-1.-effect-of-missing-values"><span class="toc-section-number">10.5</span>  Exercise 1. Effect of missing values</a></li>
   </ul></li>
-  <li><a href="#more-descriptive-statistics" id="toc-more-descriptive-statistics" class="nav-link" data-scroll-target="#more-descriptive-statistics"><span class="header-section-number">10</span> More descriptive statistics</a>
+  <li><a href="#more-descriptive-statistics" id="toc-more-descriptive-statistics" class="nav-link" data-scroll-target="#more-descriptive-statistics"><span class="toc-section-number">11</span>  More descriptive statistics</a>
   <ul class="collapse">
-  <li><a href="#a-continuous-variable-stratified-by-a-grouping-variable-and-the-formula-interface" id="toc-a-continuous-variable-stratified-by-a-grouping-variable-and-the-formula-interface" class="nav-link" data-scroll-target="#a-continuous-variable-stratified-by-a-grouping-variable-and-the-formula-interface"><span class="header-section-number">10.1</span> A continuous variable stratified by a grouping variable, and the formula interface</a></li>
-  <li><a href="#recoding-a-variable-into-groups" id="toc-recoding-a-variable-into-groups" class="nav-link" data-scroll-target="#recoding-a-variable-into-groups"><span class="header-section-number">10.2</span> Recoding a variable into groups</a></li>
-  <li><a href="#tabulating-a-categorical-variable-over-groups" id="toc-tabulating-a-categorical-variable-over-groups" class="nav-link" data-scroll-target="#tabulating-a-categorical-variable-over-groups"><span class="header-section-number">10.3</span> Tabulating a categorical variable over groups</a></li>
+  <li><a href="#a-continuous-variable-stratified-by-a-grouping-variable-and-the-formula-interface" id="toc-a-continuous-variable-stratified-by-a-grouping-variable-and-the-formula-interface" class="nav-link" data-scroll-target="#a-continuous-variable-stratified-by-a-grouping-variable-and-the-formula-interface"><span class="toc-section-number">11.1</span>  A continuous variable stratified by a grouping variable, and the formula interface</a></li>
+  <li><a href="#recoding-a-variable-into-groups" id="toc-recoding-a-variable-into-groups" class="nav-link" data-scroll-target="#recoding-a-variable-into-groups"><span class="toc-section-number">11.2</span>  Recoding a variable into groups</a></li>
+  <li><a href="#tabulating-a-categorical-variable-over-groups" id="toc-tabulating-a-categorical-variable-over-groups" class="nav-link" data-scroll-target="#tabulating-a-categorical-variable-over-groups"><span class="toc-section-number">11.3</span>  Tabulating a categorical variable over groups</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -285,13 +305,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <p class="date">September 1, 2023</p>
     </div>
   </div>
-  
     
   </div>
   
 
 </header>
 
+<div class="cell">
+
+</div>
 <section id="introduction" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
 <p>This course will introduce</p>
@@ -358,7 +380,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="./rstudio.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure: RStudio Window</figcaption>
+<p></p><figcaption class="figure-caption">Figure: RStudio Window</figcaption><p></p>
 </figure>
 </div>
 <p>On the left is the console window, where you type commands and see output. The windows on the right hold various useful tabs, including your data, graphs, help files, and your command history.</p>
@@ -437,10 +459,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>I have created a script including all the analyses from this tutorial, in TutorialScript.R. Open this and have a look around. Notice my comments to remind myself why I did things, this might be helpful when I next come to revise the analysis!</p>
 <p>See:</p>
 <ul>
-<li>https://kdestasio.github.io/post/r_best_practices/</li>
-<li>https://r4ds.had.co.nz/workflow-projects.html</li>
-<li>https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects</li>
-<li>https://rstats.wtf</li>
+<li>[https://kdestasio.github.io/post/r_best_practices/]</li>
+<li>[https://r4ds.had.co.nz/workflow-projects.html]</li>
+<li>[https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects]</li>
+<li>[https://rstats.wtf]</li>
 </ul>
 <p>for more information on using projects and scripts</p>
 </section>
@@ -449,7 +471,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="objects-and-functions" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Objects and functions</h1>
 <p>So far we have used R as a calculator. Next we’ll see how R stores objects and applies functions to data.</p>
-<p><a href="./praise.html">Objects, functions, packages and pipes tutorial</a></p>
+<p>(Optional - a tutorial on packages, function and pipes using the <code>cowsay</code>, <code>praise</code> and <code>spongebob</code> packages.) <a href="./praise.html">Objects, functions, packages and pipes tutorial</a></p>
 <section id="functions" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="functions"><span class="header-section-number">4.1</span> Functions</h2>
 <p>Everything in R is done by executing ‘functions’. When you typed <code>1+2</code> at the console above you were calling the <code>+</code> function, with <code>1</code> and <code>2</code> as its arguments, and the result was printed in the console window.</p>
@@ -543,14 +565,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="using-r-to-analyse-data" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Using R to analyse data</h1>
 <p>We can R as a simple calculator like this but we’ll most often be using R to analyse datasets.</p>
-<p>Later we’ll look into getting real data into R from Excel files, but for now we’ll work on a built-in dataset to understand how data is stored and how to describe it.</p>
-<p>We’ll make some descriptive statistics.</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<p>We’ll load a simple dataset into R, and do some analysis.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Note
 </div>
 </div>
@@ -561,16 +582,29 @@ Note
 <p>Both types are important!</p>
 </div>
 </div>
-<section id="explore-the-structure-of-the-dataset" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="explore-the-structure-of-the-dataset"><span class="header-section-number">5.1</span> Explore the structure of the dataset</h2>
+<section id="download-and-explore-the-structure-of-the-dataset-in-excel" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="download-and-explore-the-structure-of-the-dataset-in-excel"><span class="header-section-number">5.1</span> Download and explore the structure of the dataset in Excel</h2>
+<p>The ‘iris’ dataset is stored in a comma-separated value file here <a href="iris.csv">iris.csv</a></p>
+<p>Download the dataset and have a look around in Excel. Note the structure of the dataset</p>
+<p>The <code>iris</code> data is an example of a dataset in <em>tidy</em> form. We’ll learn more about this in the next session, but in short in has:</p>
+<ul>
+<li>A single rectangular table to represent the data</li>
+<li>A column for each variable (characteristic)</li>
+<li>A row for each observation (flower in this case)</li>
+</ul>
+<p>This is very similar to how datasets are stored in software like SPSS or Stata, or in a database, but is different to how you might record data using GraphPad Prism. We’ll see more about how to arrange data like this later in the course.</p>
+<p>Make sure the dataset is stored in the root directory of your project.</p>
 <p>Start a new script to begin your analysis of the ‘iris’ dataset.</p>
-<p>Type:</p>
+<p>We can use the <code>read.csv</code> function to load data from a csv file (later we’ll see how to import Excel format data). Type:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>iris <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"iris.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Check your ‘environment’ tab for a new object. Click on the object name to see it in the Viewer, or click on the small blue button next to it to expand the view in the environment window.</p>
 <p>What is the class of the <code>iris</code> object that you have created?</p>
 <p>What is in this data? What kind of descriptive statistics might we calculate to learn about this dataset?</p>
+</section>
+<section id="explore-the-structure-of-the-dataset-using-r" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="explore-the-structure-of-the-dataset-using-r"><span class="header-section-number">5.2</span> Explore the structure of the dataset using R</h2>
 <p>There are a few different functions you can use to explore a dataset. Test each to see what they do.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(iris)</span>
@@ -580,16 +614,9 @@ Note
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(iris)</span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The <code>iris</code> data is an example of a dataset in <em>tidy</em> form. We’ll learn more about this in the next session, but in short in has:</p>
-<ul>
-<li>A single rectangular table to represent the data</li>
-<li>A column for each variable</li>
-<li>A row for each observation</li>
-</ul>
-<p>This is very similar to how datasets are stored in software like SPSS or Stata, or in a database, but is different to how you might record data using GraphPad Prism.</p>
 </section>
-<section id="use-the-data-in-calculations" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="use-the-data-in-calculations"><span class="header-section-number">5.2</span> Use the data in calculations</h2>
+<section id="use-the-data-in-calculations" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="use-the-data-in-calculations"><span class="header-section-number">5.3</span> Use the data in calculations</h2>
 <p>We can extract individual variables (characteristics) and individual elements like this:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>Sepal.Length </span>
@@ -612,12 +639,12 @@ Note
 <span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(iris, <span class="at">col=</span>iris<span class="sc">$</span>Species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Note
 </div>
 </div>
@@ -636,7 +663,6 @@ Note
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>Sepal.Width <span class="sc">|&gt;</span> <span class="fu">hist</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Can you make a histogram with red bars?</p>
 <p>We can work on more than one variable at a time:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(iris<span class="sc">$</span>Sepal.Length, iris<span class="sc">$</span>Sepal.Width)</span>
@@ -647,25 +673,29 @@ Note
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(iris , <span class="fu">cor</span>(Sepal.Length , Sepal.Width))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="test-yourself---more-exploration-of-the-iris-dataset" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="test-yourself---more-exploration-of-the-iris-dataset"><span class="header-section-number">5.3</span> Test yourself - More exploration of the iris dataset</h2>
+<section id="test-yourself---more-exploration-of-the-iris-dataset" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="test-yourself---more-exploration-of-the-iris-dataset"><span class="header-section-number">5.4</span> Test yourself - More exploration of the iris dataset</h2>
 <ol type="1">
 <li>How many rows does the <code>iris</code> dataset have?</li>
 <li>What is the class of each of its columns?</li>
-<li>What is the mean sepal length of the flowers</li>
-<li>What is the smallest (minimum) sepal width</li>
-<li>(Difficult) How many <code>viriginca</code> flowers are included in the dataset? Can you tabulate the <code>species</code> variable?</li>
-<li>Can you make a cow say the median petal length?</li>
+<li>What is the mean sepal length of the flowers?</li>
+<li>What is the smallest (minimum) sepal width?</li>
+<li>What is the correlation between petal length and petal width?</li>
+<li>Is this correlation statistically significant?</li>
+<li>(Difficult) How many <code>viriginca</code> flowers are included in the dataset?<br>
+</li>
+<li>Can you tabulate the <code>species</code> variable?</li>
+<li>Can you make a histogram of species with red bars?</li>
 </ol>
 </section>
-<section id="other-packages-for-descriptive-statistics-if-you-have-time" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="other-packages-for-descriptive-statistics-if-you-have-time"><span class="header-section-number">5.4</span> Other packages for descriptive statistics (if you have time)</h2>
+<section id="other-packages-for-descriptive-statistics-if-you-have-time" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="other-packages-for-descriptive-statistics-if-you-have-time"><span class="header-section-number">5.5</span> Other packages for descriptive statistics (if you have time)</h2>
 <p>(If we have time) <code>Base</code> R does not have good functions for making descriptive tables and graphs. But there are many other packages that have been developed to help with this. In particular the <code>gt</code> system is very good for making tables, and the <code>GGally</code> package has a nice function for making pairs plots. You could install these packages and try them out:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"gtsummary"</span>)</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>gtsummary<span class="sc">::</span><span class="fu">tbl_summary</span>(iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Can you stratify the table by species? (Check the help)</p>
+<p>Can you stratify this table by species? (Check the help)</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"GGally"</span>)</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>GGally<span class="sc">::</span><span class="fu">ggpairs</span>(iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -679,12 +709,12 @@ Note
 <p>Before we go any further we’re going to install another set of packages. `Base’ R has a few ways to manipulate datasets, but these can get very clunky and you won’t use them much in practice so it’s better to start using add-on packages as soon as possible.</p>
 <p>The two major packages of data wrangling functions are <code>data.table</code> and <code>tidyverse</code>.</p>
 <p>Tidyverse is more widely used and so this is what we will focus on here. If you become more familiar with R you might want to explore <code>data.table</code>.</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Note
 </div>
 </div>
@@ -692,7 +722,7 @@ Note
 <p>I am only going to teach <code>tidyverse</code> methods because they are the most widely used. See [https://wetlandscapes.com/blog/a-comparison-of-r-dialects/] for how to use base or data.table to perform the same options.</p>
 </div>
 </div>
-<p>Tidyverse is in fact a large collection of packages. You can see all of the details here https://www.tidyverse.org/packages/. In this course we will use functions from the following packages:</p>
+<p>Tidyverse is in fact a large collection of packages. You can see all of the details here [https://www.tidyverse.org/packages/]. In this course we will use functions from the following packages:</p>
 <ul>
 <li><strong>dplyr</strong> for data manipulation</li>
 <li><strong>ggplot2</strong> for making graphics</li>
@@ -718,16 +748,18 @@ Note
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.3     ✔ readr     2.1.4
-✔ forcats   1.0.0     ✔ stringr   1.5.0
-✔ ggplot2   3.4.2     ✔ tibble    3.2.1
-✔ lubridate 1.9.2     ✔ tidyr     1.3.0
-✔ purrr     1.0.1     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+<pre><code>-- Attaching packages --------------------------------------- tidyverse 1.3.1 --</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>v ggplot2 3.4.1     v purrr   0.3.4
+v tibble  3.2.1     v dplyr   1.1.2
+v tidyr   1.2.0     v stringr 1.5.0
+v readr   2.1.2     v forcats 0.5.1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>-- Conflicts ------------------------------------------ tidyverse_conflicts() --
+x dplyr::filter() masks stats::filter()
+x dplyr::lag()    masks stats::lag()</code></pre>
 </div>
 </div>
 <section id="using-dplyr-functions-to-manipulate-and-summarise-data" class="level2" data-number="6.1">
@@ -735,32 +767,32 @@ Note
 <p>The five main dplyr functions are <code>select</code>, <code>filter</code>, <code>mutate</code>, <code>group_by</code>, and <code>summarise</code>.</p>
 <p>Let’s learn by example what each of these functions does:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">select</span>(Sepal.Length, Sepal.Width)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">filter</span>(Species<span class="sc">==</span><span class="st">"setosa"</span>)</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">filter</span>(Sepal.Length <span class="sc">&gt;</span> <span class="fl">7.5</span>)</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">arrange</span>(Sepal.Length)</span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="st">`</span><span class="at">Median Petal Width</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">median</span>(Petal.Width))</span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="st">`</span><span class="at">Mean</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">median</span>(Petal.Width), <span class="st">`</span><span class="at">SD</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sd</span>(Petal.Width))</span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">Sepal.Area =</span> Sepal.Length <span class="sc">*</span> Sepal.Width)</span>
-<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>iris2 <span class="ot">&lt;-</span> iris <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">logPetalLength =</span> <span class="fu">log</span>(Petal.Length))</span>
-<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>iris2 <span class="ot">&lt;-</span> iris <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">PetalLengthGrouped =</span> <span class="fu">ntile</span>(Petal.Length) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">select</span>(Sepal.Length, Sepal.Width)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">filter</span>(Species<span class="sc">==</span><span class="st">"setosa"</span>)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">filter</span>(Sepal.Length <span class="sc">&gt;</span> <span class="fl">7.5</span>)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">arrange</span>(Sepal.Length)</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="st">`</span><span class="at">Median Petal Width</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">median</span>(Petal.Width))</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="st">`</span><span class="at">Mean</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">median</span>(Petal.Width), <span class="st">`</span><span class="at">SD</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sd</span>(Petal.Width))</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">Sepal.Area =</span> Sepal.Length <span class="sc">*</span> Sepal.Width)</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>iris2 <span class="ot">&lt;-</span> iris <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">logPetalLength =</span> <span class="fu">log</span>(Petal.Length))</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>iris2 <span class="ot">&lt;-</span> iris <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">PetalLengthGrouped =</span> <span class="fu">ntile</span>(Petal.Length) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>So with <code>dplyr</code> we can take subsets of our data or our samples, split our samples up into groups, create new derived variables and make summary statistics.</p>
 <p>Using pipes you can chain functions together. Suppose you wanted the mean sepal length of <code>setosa</code> flowers:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">filter</span>(Species<span class="sc">==</span><span class="st">"setosa"</span>) <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="fu">mean</span>(Sepal.Length))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">filter</span>(Species<span class="sc">==</span><span class="st">"setosa"</span>) <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="fu">mean</span>(Sepal.Length))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>group_by</code> and <code>summarise</code> are often used together, to make summaries over groups.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">group_by</span>(Species) <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="fu">mean</span>(Sepal.Length), <span class="fu">mean</span>(Sepal.Width), <span class="at">n=</span><span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">group_by</span>(Species) <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="fu">mean</span>(Sepal.Length), <span class="fu">mean</span>(Sepal.Width), <span class="at">n=</span><span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="test-yourself-data-wrangling-and-summarising" class="level2" data-number="6.2">
@@ -772,7 +804,7 @@ Note
 <h1 data-number="7"><span class="header-section-number">7</span> Graphics</h1>
 <p>R has a simple built in system for making graphs but the outputs are not very good!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(Petal.Length <span class="sc">~</span> Species, <span class="at">data=</span>iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(Petal.Length <span class="sc">~</span> Species, <span class="at">data=</span>iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="day1_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -782,30 +814,30 @@ Note
 </div>
 <p>The ggplot() system is much more flexible, and produces publication quality outputs:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">aes</span>(<span class="at">x=</span>Sepal.Length, <span class="at">y=</span>Sepal.Width, <span class="at">color=</span>Species) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">aes</span>(<span class="at">x=</span>Sepal.Length, <span class="at">y=</span>Sepal.Width, <span class="at">color=</span>Species) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="day1_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x=</span>Species, <span class="at">y=</span>Petal.Length, <span class="at">fill=</span>Species) <span class="sc">+</span> </span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x=</span>Species, <span class="at">y=</span>Petal.Length, <span class="at">fill=</span>Species) <span class="sc">+</span> </span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="day1_files/figure-html/unnamed-chunk-31-2.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>We’ll see more ggplot in later sessions, but note the syntax, in partidular how a dataset is passed to the ggplot function, how we specify the linkage between the data and the plot, and how different elements are added to make the plot.</p>
+<p>We’ll see more ggplot in later sessions, but note the syntax, in particular how a dataset is passed to the ggplot function, how we specify the linkage between the data and the plot, and how different elements are added to make the plot.</p>
 </section>
 <section id="hypothesis-tests-and-linear-models" class="level1" data-number="8">
 <h1 data-number="8"><span class="header-section-number">8</span> Hypothesis tests and linear models</h1>
-<p>Descriptives are useful but our goal in science is usually to test hypotheses or understand the mechanisms behind our data generation.</p>
-<p>So, we might observe a difference in petal length between species in our sample, but we want to know if this reflects a real difference in average petal length in the population. That is, does petal length depend on species?</p>
+<p>Descriptives are useful but our goal in science is often to test hypotheses or understand the mechanisms behind our data generation.</p>
+<p>So, we might observe a difference in petal length between species in our sample, but we want to know if this reflects a real difference in average petal length in the population. That is, does petal length depend on species amobg iris flowers in general?</p>
 <p>First, we can generate a simple box plot as previously to explore this question:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris, <span class="fu">aes</span>(<span class="at">x=</span>Species, <span class="at">y=</span>Petal.Length, <span class="at">fill=</span>Species)) <span class="sc">+</span> </span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Species"</span>, <span class="at">y=</span><span class="st">"Petal Length"</span>) <span class="sc">+</span> </span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris, <span class="fu">aes</span>(<span class="at">x=</span>Species, <span class="at">y=</span>Petal.Length, <span class="at">fill=</span>Species)) <span class="sc">+</span> </span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Species"</span>, <span class="at">y=</span><span class="st">"Petal Length"</span>) <span class="sc">+</span> </span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="day1_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -813,11 +845,12 @@ Note
 <p>It looks like the two variables are related, but we would like to perform a hypothesis test to see if the difference is statistically significant, and to get an estimate (with confidence interval) for the difference.</p>
 <p>To get the coefficients (mean differences between groups) we can estimate a linear model:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>( Sepal.Length <span class="sc">~</span> Species, <span class="at">data=</span>iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>( Sepal.Length <span class="sc">~</span> Species, <span class="at">data=</span>iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>When you estimate a model R will not display any output, it is all stored in the model object that is created. Then you can access whatever output you want using other functions, eg:</p>
+<p>When you estimate a model R will not display any output. The results are all stored in the model object that is created. Then you can access whatever output you want using other functions, eg:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Base R functions</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -839,7 +872,7 @@ Residual standard error: 0.5148 on 147 degrees of freedom
 Multiple R-squared:  0.6187,    Adjusted R-squared:  0.6135 
 F-statistic: 119.3 on 2 and 147 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -850,55 +883,500 @@ Residuals 147 38.956   0.265
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
-</div>
-<p>You can use either the base function <code>confint</code> or the <code>tidy</code> function from the <code>broom</code> package (<code>broom</code> is installed with <code>tidyverse</code>) to get the confidence intervals for the mean differences:</p>
-<section id="test-yourself-1" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="test-yourself-1"><span class="header-section-number">8.1</span> Test yourself</h2>
-<ol type="1">
-<li>Can you estimate the linear model and display the summary in one line using pipes?</li>
-<li>How much of the output summary do you understand?</li>
-</ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Base R methods:</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                      2.5 %   97.5 %
 (Intercept)       4.8621258 5.149874
 Speciesversicolor 0.7265312 1.133469
 Speciesvirginica  1.3785312 1.785469</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tidyverse method:</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(model1, <span class="at">conf.int=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A tidyverse method:</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(model1, <span class="at">conf.int=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 7
+<pre><code># A tibble: 3 x 7
   term              estimate std.error statistic   p.value conf.low conf.high
   &lt;chr&gt;                &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
 1 (Intercept)          5.01     0.0728     68.8  1.13e-113    4.86       5.15
 2 Speciesversicolor    0.930    0.103       9.03 8.77e- 16    0.727      1.13
 3 Speciesvirginica     1.58     0.103      15.4  2.21e- 32    1.38       1.79</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Functions from the `gtsummary` package if you have it installed</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>gtsummary<span class="sc">::</span><span class="fu">tbl_regression</span>(model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div id="jahfsikylv" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+:where(#jahfsikylv) .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+:where(#jahfsikylv) .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#jahfsikylv) .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+:where(#jahfsikylv) .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+:where(#jahfsikylv) .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+:where(#jahfsikylv) .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#jahfsikylv) .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+:where(#jahfsikylv) .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+:where(#jahfsikylv) .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+:where(#jahfsikylv) .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+:where(#jahfsikylv) .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+:where(#jahfsikylv) .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+:where(#jahfsikylv) .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+:where(#jahfsikylv) .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+:where(#jahfsikylv) .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+:where(#jahfsikylv) .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+:where(#jahfsikylv) .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#jahfsikylv) .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+:where(#jahfsikylv) .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+:where(#jahfsikylv) .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#jahfsikylv) .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+:where(#jahfsikylv) .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+:where(#jahfsikylv) .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+:where(#jahfsikylv) .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#jahfsikylv) .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+:where(#jahfsikylv) .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+:where(#jahfsikylv) .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+:where(#jahfsikylv) .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#jahfsikylv) .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#jahfsikylv) .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#jahfsikylv) .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#jahfsikylv) .gt_left {
+  text-align: left;
+}
+
+:where(#jahfsikylv) .gt_center {
+  text-align: center;
+}
+
+:where(#jahfsikylv) .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+:where(#jahfsikylv) .gt_font_normal {
+  font-weight: normal;
+}
+
+:where(#jahfsikylv) .gt_font_bold {
+  font-weight: bold;
+}
+
+:where(#jahfsikylv) .gt_font_italic {
+  font-style: italic;
+}
+
+:where(#jahfsikylv) .gt_super {
+  font-size: 65%;
+}
+
+:where(#jahfsikylv) .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+:where(#jahfsikylv) .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+:where(#jahfsikylv) .gt_slash_mark {
+  font-size: 0.7em;
+  line-height: 0.7em;
+  vertical-align: 0.15em;
+}
+
+:where(#jahfsikylv) .gt_fraction_numerator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: 0.45em;
+}
+
+:where(#jahfsikylv) .gt_fraction_denominator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: -0.05em;
+}
+</style>
+<table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>Beta</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>95% CI</strong><sup class="gt_footnote_marks">1</sup></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>p-value</strong></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td class="gt_row gt_left">Species</td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td></tr>
+    <tr><td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">setosa</td>
+<td class="gt_row gt_center">—</td>
+<td class="gt_row gt_center">—</td>
+<td class="gt_row gt_center"></td></tr>
+    <tr><td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">versicolor</td>
+<td class="gt_row gt_center">0.93</td>
+<td class="gt_row gt_center">0.73, 1.1</td>
+<td class="gt_row gt_center">&lt;0.001</td></tr>
+    <tr><td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">virginica</td>
+<td class="gt_row gt_center">1.6</td>
+<td class="gt_row gt_center">1.4, 1.8</td>
+<td class="gt_row gt_center">&lt;0.001</td></tr>
+  </tbody>
+  
+  <tfoot class="gt_footnotes">
+    <tr>
+      <td class="gt_footnote" colspan="4"><sup class="gt_footnote_marks">1</sup> CI = Confidence Interval</td>
+    </tr>
+  </tfoot>
+</table>
 </div>
-<div class="callout callout-style-default callout-note callout-titled">
+</div>
+</div>
+<section id="test-yourself-1" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="test-yourself-1"><span class="header-section-number">8.1</span> Test yourself</h2>
+<ol type="1">
+<li>Can you estimate the linear model and display the summary in one line using pipes?</li>
+<li>Can you interpret the model summaries?</li>
+<li>Which model output do you prefer?</li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Note - you can run t-tests like this, since a t-test is equivalent to a linear model with two group categorical predictor.</p>
+<p>Note - you can run t-tests like this, since a t-test is equivalent to a linear model with two group categorical predictor. Linear models generalise many traditional statistical procedures.</p>
 </div>
 </div>
-<p>All pairwise comparisons using <code>emmeans</code> or t-tests for individual pairs with <code>filter</code> then <code>lm</code>?</p>
-<section id="more-complex-models" class="level3" data-number="8.1.1">
-<h3 data-number="8.1.1" class="anchored" data-anchor-id="more-complex-models"><span class="header-section-number">8.1.1</span> More complex models</h3>
+</section>
+<section id="further-work-we-might-consider-for-this-model-during-the-practical." class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="further-work-we-might-consider-for-this-model-during-the-practical."><span class="header-section-number">8.2</span> Further work we might consider for this model during the practical.</h2>
+<p>Generate all pairwise comparisons using <code>emmeans</code> or t-tests for individual pairs with <code>filter</code> then <code>lm</code>?</p>
+<p>Model diagnostics with the <code>performance</code> package.</p>
+<section id="more-complex-models" class="level3" data-number="8.2.1">
+<h3 data-number="8.2.1" class="anchored" data-anchor-id="more-complex-models"><span class="header-section-number">8.2.1</span> More complex models</h3>
 <p>Now. suppose we want to fit a more complex model, whereby sepal length depends on petal length, with the relationship allowed to vary by species.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First make a model with Sepal.Length depending on Species and Petal.Length</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>( Sepal.Length <span class="sc">~</span> Species <span class="sc">+</span> Petal.Length, <span class="at">data=</span>iris)</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First make a model with Sepal.Length depending on Species and Petal.Length</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>( Sepal.Length <span class="sc">~</span> Species <span class="sc">+</span> Petal.Length, <span class="at">data=</span>iris)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -921,10 +1399,10 @@ Residual standard error: 0.338 on 146 degrees of freedom
 Multiple R-squared:  0.8367,    Adjusted R-squared:  0.8334 
 F-statistic: 249.4 on 3 and 146 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now add the interaction term.  These two models are the same.</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">lm</span>( Sepal.Length <span class="sc">~</span> Species <span class="sc">+</span> Petal.Length <span class="sc">+</span> Species<span class="sc">:</span>Petal.Length, <span class="at">data=</span>iris)</span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">lm</span>( Sepal.Length <span class="sc">~</span> Species <span class="sc">*</span> Petal.Length, <span class="at">data=</span>iris)</span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now add the interaction term.  These two models are the same.</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">lm</span>( Sepal.Length <span class="sc">~</span> Species <span class="sc">+</span> Petal.Length <span class="sc">+</span> Species<span class="sc">:</span>Petal.Length, <span class="at">data=</span>iris)</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">lm</span>( Sepal.Length <span class="sc">~</span> Species <span class="sc">*</span> Petal.Length, <span class="at">data=</span>iris)</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -952,16 +1430,16 @@ F-statistic: 151.7 on 5 and 144 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <p>We can use <code>augment</code> from the <code>broom</code> package to add predicted values to our dataset, with confidence intervals.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># look carefully at the output from here:</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># look carefully at the output from here:</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'broom' was built under R version 4.2.3</code></pre>
+<pre><code>Warning: package 'broom' was built under R version 4.1.3</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>model3 <span class="sc">|&gt;</span> <span class="fu">augment</span>(<span class="at">interval=</span><span class="st">"confidence"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>model3 <span class="sc">|&gt;</span> <span class="fu">augment</span>(<span class="at">interval=</span><span class="st">"confidence"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 150 × 11
+<pre><code># A tibble: 150 x 11
    Sepal.Length Species Petal.Length .fitted .lower .upper  .resid   .hat .sigma
-          &lt;dbl&gt; &lt;fct&gt;          &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+          &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
  1          5.1 setosa           1.4    4.97   4.87   5.07  0.128  0.0226  0.337
  2          4.9 setosa           1.4    4.97   4.87   5.07 -0.0724 0.0226  0.338
  3          4.7 setosa           1.3    4.92   4.79   5.05 -0.218  0.0378  0.337
@@ -972,31 +1450,35 @@ F-statistic: 151.7 on 5 and 144 DF,  p-value: &lt; 2.2e-16</code></pre>
  8          5   setosa           1.5    5.03   4.93   5.12 -0.0266 0.0210  0.338
  9          4.4 setosa           1.4    4.97   4.87   5.07 -0.572  0.0226  0.334
 10          4.9 setosa           1.5    5.03   4.93   5.12 -0.127  0.0210  0.337
-# ℹ 140 more rows
-# ℹ 2 more variables: .cooksd &lt;dbl&gt;, .std.resid &lt;dbl&gt;</code></pre>
+# i 140 more rows
+# i 2 more variables: .cooksd &lt;dbl&gt;, .std.resid &lt;dbl&gt;</code></pre>
 </div>
 </div>
 <p>Finally we can use ggplot to show these predicted values and confidence intervals. Take care to understand how the output from each function (ie <code>lm</code>, <code>augment</code>) is piped into the next.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>( Sepal.Length <span class="sc">~</span> Species <span class="sc">*</span> Petal.Length, <span class="at">data=</span>iris) <span class="sc">|&gt;</span></span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>(<span class="at">interval=</span><span class="st">"confidence"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>Petal.Length, <span class="at">y=</span>Sepal.Length, <span class="at">color=</span>Species) <span class="sc">+</span> </span>
-<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">y=</span>.fitted,<span class="at">ymin=</span>.lower, <span class="at">ymax=</span>.upper), <span class="at">alpha=</span><span class="fl">0.1</span>) <span class="sc">+</span> </span>
-<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>.fitted),<span class="at">lwd=</span><span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>( Sepal.Length <span class="sc">~</span> Species <span class="sc">*</span> Petal.Length, <span class="at">data=</span>iris) <span class="sc">|&gt;</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>(<span class="at">interval=</span><span class="st">"confidence"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>Petal.Length, <span class="at">y=</span>Sepal.Length, <span class="at">color=</span>Species) <span class="sc">+</span> </span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">y=</span>.fitted,<span class="at">ymin=</span>.lower, <span class="at">ymax=</span>.upper), <span class="at">alpha=</span><span class="fl">0.1</span>) <span class="sc">+</span> </span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>.fitted),<span class="at">lwd=</span><span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="day1_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid" width="672"></p>
+<p><img src="day1_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Try changing the forumula to `Sepal.Length ~ Species + Petal.Length`</span></span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Which model has the better fit? (you can use anova(model2, model3) to compare models)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Try changing the forumula to `Sepal.Length ~ Species + Petal.Length`</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Which model has the better fit? (you can use anova(model2, model3) to compare models)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
 </section>
-<section id="more-detail-on-types-and-classes" class="level1" data-number="9">
-<h1 data-number="9"><span class="header-section-number">9</span> More detail on types and classes</h1>
+<section id="extra-material-below-here" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Extra material below here</h1>
+<p>Below this point is extra material that was cut from the main day 1 tutorial but I’ve kept in this document because it might be interesting. There are likely to be a few small mistakes here.</p>
+</section>
+<section id="more-detail-on-types-and-classes" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> More detail on types and classes</h1>
 <p>We saw two object of two different ‘classes’ earlier. These classes were ‘numeric’ and ‘character’. The class of an object defines what kind of information it holds, and how other functions act on it.</p>
 <p>There are four basic classes (modes) that you will commonly use and should be aware of. These correspond to the types of data you might have. The basic types are:</p>
 <ul>
@@ -1010,53 +1492,53 @@ F-statistic: 151.7 on 5 and 144 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li>‘data.frame’ – storing datasets</li>
 <li>‘lm’ – stores the all results of a linear regression model</li>
 </ul>
-<section id="character-strings" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="character-strings"><span class="header-section-number">9.1</span> Character strings</h2>
+<section id="character-strings" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="character-strings"><span class="header-section-number">10.1</span> Character strings</h2>
 <p>Character strings represent text rather than numbers. Strings are used to label categories in a dataset, to identify columns in a dataset, to make your outputs more readable. You also might find that part of your data has been entered as a string, for example patient identifiers or gene names in a database, or responses to open ended questions.</p>
 <p>Strings are identified in R (and in most other programming languages) by enclosing them in quotes. Single quotes and double quotes can be used (and are treated almost identically), but double quotes are preferred. For example try:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Hello"</span>)</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">'Hello'</span>)</span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="co"># What happens here?</span></span>
-<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(Hello)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Hello"</span>)</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">'Hello'</span>)</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="co"># What happens here?</span></span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(Hello)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>A common mistake in R is to forget to enclose strings in quotes. In which case R tries to interpret your input as an object name, leading to an error message if that name doesn’t exist.</p>
 </section>
-<section id="logicals" class="level2" data-number="9.2">
-<h2 data-number="9.2" class="anchored" data-anchor-id="logicals"><span class="header-section-number">9.2</span> Logicals</h2>
+<section id="logicals" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="logicals"><span class="header-section-number">10.2</span> Logicals</h2>
 <p>Logicals represent binary information in the form <code>TRUE</code> or <code>FALSE</code>. They most often arise as the result of a comparison, for example try:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span><span class="sc">&gt;</span><span class="dv">2</span></span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="st">"Hello"</span> <span class="sc">==</span> <span class="st">"hello"</span>  <span class="co"># note the double equals sign, this distinguishes assignment from comparison</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span><span class="sc">&gt;</span><span class="dv">2</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a><span class="st">"Hello"</span> <span class="sc">==</span> <span class="st">"hello"</span>  <span class="co"># note the double equals sign, this distinguishes assignment from comparison</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="converting-between-types" class="level2" data-number="9.3">
-<h2 data-number="9.3" class="anchored" data-anchor-id="converting-between-types"><span class="header-section-number">9.3</span> Converting between types</h2>
+<section id="converting-between-types" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="converting-between-types"><span class="header-section-number">10.3</span> Converting between types</h2>
 <p>Sometimes it is possible to convert an object from one class to another. For example, a number might be stored as a character string in your data, and you will need to convert it into a numeric before you can do any analysis with it. For example:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="st">"3"</span></span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>x<span class="sc">*</span><span class="dv">2</span> <span class="co"># What is the error message here?  What does it mean?</span></span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(x)</span>
-<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>y<span class="sc">*</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="st">"3"</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>x<span class="sc">*</span><span class="dv">2</span> <span class="co"># What is the error message here?  What does it mean?</span></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(x)</span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>y<span class="sc">*</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="missing-elements-in-vectors" class="level2" data-number="9.4">
-<h2 data-number="9.4" class="anchored" data-anchor-id="missing-elements-in-vectors"><span class="header-section-number">9.4</span> Missing elements in vectors</h2>
+<section id="missing-elements-in-vectors" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="missing-elements-in-vectors"><span class="header-section-number">10.4</span> Missing elements in vectors</h2>
 <p>Often your data will include missing values. R uses <code>NA</code> to represent missing values. For example the following creates a vector (a single variable, like a single column of a data frame) with a missing value in the fourth position:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>weights <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">21</span>,<span class="dv">32</span>,<span class="cn">NA</span>,<span class="dv">14</span>)</span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>weights</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>weights <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">21</span>,<span class="dv">32</span>,<span class="cn">NA</span>,<span class="dv">14</span>)</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>weights</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-warning callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Warning
 </div>
 </div>
@@ -1065,71 +1547,77 @@ Warning
 </div>
 </div>
 </section>
-<section id="exercise-1.-effect-of-missing-values" class="level2" data-number="9.5">
-<h2 data-number="9.5" class="anchored" data-anchor-id="exercise-1.-effect-of-missing-values"><span class="header-section-number">9.5</span> Exercise 1. Effect of missing values</h2>
+<section id="exercise-1.-effect-of-missing-values" class="level2" data-number="10.5">
+<h2 data-number="10.5" class="anchored" data-anchor-id="exercise-1.-effect-of-missing-values"><span class="header-section-number">10.5</span> Exercise 1. Effect of missing values</h2>
 <p>Try some other functions with myvector to see what impact the missing data point has.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(weights)</span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(weights)</span>
-<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>weights<span class="sc">&gt;</span><span class="dv">20</span></span>
-<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(weights) <span class="co"># what happens here?  Why?  Can you fix it?</span></span>
-<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a><span class="fu">is.na</span>(weights) <span class="co"># what does this do?</span></span>
-<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(weights)) <span class="co"># can you explain what this does?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(weights)</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(weights)</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>weights<span class="sc">&gt;</span><span class="dv">20</span></span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(weights) <span class="co"># what happens here?  Why?  Can you fix it?</span></span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a><span class="fu">is.na</span>(weights) <span class="co"># what does this do?</span></span>
+<span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-11"><a href="#cb61-11" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(weights)) <span class="co"># can you explain what this does?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
-<section id="more-descriptive-statistics" class="level1" data-number="10">
-<h1 data-number="10"><span class="header-section-number">10</span> More descriptive statistics</h1>
+<section id="more-descriptive-statistics" class="level1" data-number="11">
+<h1 data-number="11"><span class="header-section-number">11</span> More descriptive statistics</h1>
 <p>In this rest of this session we’ll use base and tidyverse functions to complete some common descriptive and analytic tasks using the iris dataset.</p>
-<section id="a-continuous-variable-stratified-by-a-grouping-variable-and-the-formula-interface" class="level2" data-number="10.1">
-<h2 data-number="10.1" class="anchored" data-anchor-id="a-continuous-variable-stratified-by-a-grouping-variable-and-the-formula-interface"><span class="header-section-number">10.1</span> A continuous variable stratified by a grouping variable, and the formula interface</h2>
+<section id="a-continuous-variable-stratified-by-a-grouping-variable-and-the-formula-interface" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="a-continuous-variable-stratified-by-a-grouping-variable-and-the-formula-interface"><span class="header-section-number">11.1</span> A continuous variable stratified by a grouping variable, and the formula interface</h2>
 <p>We already saw a way to get means over a categorical variable with Tidyverse:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">group_by</span>(Species) <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="fu">mean</span>(Sepal.Length))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">group_by</span>(Species) <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="fu">mean</span>(Sepal.Length))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>If we want more than one summary statistic for example, it’s easy with tidyverse (this is an example of a task that is difficult with base R):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">group_by</span>(Species) <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="fu">n</span>(),<span class="fu">mean</span>(Sepal.Length),<span class="fu">sd</span>(Sepal.Length))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">group_by</span>(Species) <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="fu">n</span>(),<span class="fu">mean</span>(Sepal.Length),<span class="fu">sd</span>(Sepal.Length))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>While dplyr is good for making summary statistics, but to make publication ready tables you can explore the <code>gtsummary</code> package.<br>
-https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
+<p>Note here that we can write the call in more than one line to make it easier to read:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> </span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Species) <span class="sc">|&gt;</span> </span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">n</span>(),</span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mean</span>(Sepal.Length),</span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sd</span>(Sepal.Length)</span>
+<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 x 4
+  Species    `n()` `mean(Sepal.Length)` `sd(Sepal.Length)`
+  &lt;chr&gt;      &lt;int&gt;                &lt;dbl&gt;              &lt;dbl&gt;
+1 setosa        50                 5.01              0.352
+2 versicolor    50                 5.94              0.516
+3 virginica     50                 6.59              0.636</code></pre>
+</div>
+</div>
+<p>dplyr is good for making summary statistics, but to make publication ready tables you can explore the <code>gtsummary</code> package.</p>
+<p>[https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html]</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'gtsummary' was built under R version 4.2.3</code></pre>
+<pre><code>Warning: package 'gtsummary' was built under R version 4.1.3</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>#BlackLivesMatter</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">tbl_summary</span>( <span class="at">by=</span>Species )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">tbl_summary</span>( <span class="at">by=</span>Species )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="oeybqsqkfg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#oeybqsqkfg table {
-  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+<div id="nfjwbplxgy" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#oeybqsqkfg thead, #oeybqsqkfg tbody, #oeybqsqkfg tfoot, #oeybqsqkfg tr, #oeybqsqkfg td, #oeybqsqkfg th {
-  border-style: none;
-}
-
-#oeybqsqkfg p {
-  margin: 0;
-  padding: 0;
-}
-
-#oeybqsqkfg .gt_table {
+:where(#nfjwbplxgy) .gt_table {
   display: table;
   border-collapse: collapse;
-  line-height: normal;
   margin-left: auto;
   margin-right: auto;
   color: #333333;
@@ -1152,36 +1640,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   border-left-color: #D3D3D3;
 }
 
-#oeybqsqkfg .gt_caption {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-#oeybqsqkfg .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#oeybqsqkfg .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 3px;
-  padding-bottom: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#oeybqsqkfg .gt_heading {
+:where(#nfjwbplxgy) .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1193,13 +1652,37 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   border-right-color: #D3D3D3;
 }
 
-#oeybqsqkfg .gt_bottom_border {
+:where(#nfjwbplxgy) .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+:where(#nfjwbplxgy) .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+:where(#nfjwbplxgy) .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#oeybqsqkfg .gt_col_headings {
+:where(#nfjwbplxgy) .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1214,7 +1697,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   border-right-color: #D3D3D3;
 }
 
-#oeybqsqkfg .gt_col_heading {
+:where(#nfjwbplxgy) .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1234,7 +1717,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   overflow-x: hidden;
 }
 
-#oeybqsqkfg .gt_column_spanner_outer {
+:where(#nfjwbplxgy) .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1246,15 +1729,15 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   padding-right: 4px;
 }
 
-#oeybqsqkfg .gt_column_spanner_outer:first-child {
+:where(#nfjwbplxgy) .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#oeybqsqkfg .gt_column_spanner_outer:last-child {
+:where(#nfjwbplxgy) .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#oeybqsqkfg .gt_column_spanner {
+:where(#nfjwbplxgy) .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1266,11 +1749,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   width: 100%;
 }
 
-#oeybqsqkfg .gt_spanner_row {
-  border-bottom-style: hidden;
-}
-
-#oeybqsqkfg .gt_group_heading {
+:where(#nfjwbplxgy) .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1293,10 +1772,9 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   border-right-width: 1px;
   border-right-color: #D3D3D3;
   vertical-align: middle;
-  text-align: left;
 }
 
-#oeybqsqkfg .gt_empty_group_heading {
+:where(#nfjwbplxgy) .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1311,15 +1789,15 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   vertical-align: middle;
 }
 
-#oeybqsqkfg .gt_from_md > :first-child {
+:where(#nfjwbplxgy) .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#oeybqsqkfg .gt_from_md > :last-child {
+:where(#nfjwbplxgy) .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#oeybqsqkfg .gt_row {
+:where(#nfjwbplxgy) .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1338,7 +1816,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   overflow-x: hidden;
 }
 
-#oeybqsqkfg .gt_stub {
+:where(#nfjwbplxgy) .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1351,7 +1829,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   padding-right: 5px;
 }
 
-#oeybqsqkfg .gt_stub_row_group {
+:where(#nfjwbplxgy) .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1365,15 +1843,11 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   vertical-align: top;
 }
 
-#oeybqsqkfg .gt_row_group_first td {
+:where(#nfjwbplxgy) .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#oeybqsqkfg .gt_row_group_first th {
-  border-top-width: 2px;
-}
-
-#oeybqsqkfg .gt_summary_row {
+:where(#nfjwbplxgy) .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1383,16 +1857,16 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   padding-right: 5px;
 }
 
-#oeybqsqkfg .gt_first_summary_row {
+:where(#nfjwbplxgy) .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#oeybqsqkfg .gt_first_summary_row.thick {
+:where(#nfjwbplxgy) .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#oeybqsqkfg .gt_last_summary_row {
+:where(#nfjwbplxgy) .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1402,7 +1876,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   border-bottom-color: #D3D3D3;
 }
 
-#oeybqsqkfg .gt_grand_summary_row {
+:where(#nfjwbplxgy) .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1412,7 +1886,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   padding-right: 5px;
 }
 
-#oeybqsqkfg .gt_first_grand_summary_row {
+:where(#nfjwbplxgy) .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1422,21 +1896,11 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   border-top-color: #D3D3D3;
 }
 
-#oeybqsqkfg .gt_last_grand_summary_row_top {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: double;
-  border-bottom-width: 6px;
-  border-bottom-color: #D3D3D3;
-}
-
-#oeybqsqkfg .gt_striped {
+:where(#nfjwbplxgy) .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#oeybqsqkfg .gt_table_body {
+:where(#nfjwbplxgy) .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1445,7 +1909,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   border-bottom-color: #D3D3D3;
 }
 
-#oeybqsqkfg .gt_footnotes {
+:where(#nfjwbplxgy) .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1459,16 +1923,16 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   border-right-color: #D3D3D3;
 }
 
-#oeybqsqkfg .gt_footnote {
+:where(#nfjwbplxgy) .gt_footnote {
   margin: 0px;
   font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
+  padding-left: 4px;
+  padding-right: 4px;
   padding-left: 5px;
   padding-right: 5px;
 }
 
-#oeybqsqkfg .gt_sourcenotes {
+:where(#nfjwbplxgy) .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1482,7 +1946,7 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   border-right-color: #D3D3D3;
 }
 
-#oeybqsqkfg .gt_sourcenote {
+:where(#nfjwbplxgy) .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1490,98 +1954,101 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
   padding-right: 5px;
 }
 
-#oeybqsqkfg .gt_left {
+:where(#nfjwbplxgy) .gt_left {
   text-align: left;
 }
 
-#oeybqsqkfg .gt_center {
+:where(#nfjwbplxgy) .gt_center {
   text-align: center;
 }
 
-#oeybqsqkfg .gt_right {
+:where(#nfjwbplxgy) .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#oeybqsqkfg .gt_font_normal {
+:where(#nfjwbplxgy) .gt_font_normal {
   font-weight: normal;
 }
 
-#oeybqsqkfg .gt_font_bold {
+:where(#nfjwbplxgy) .gt_font_bold {
   font-weight: bold;
 }
 
-#oeybqsqkfg .gt_font_italic {
+:where(#nfjwbplxgy) .gt_font_italic {
   font-style: italic;
 }
 
-#oeybqsqkfg .gt_super {
+:where(#nfjwbplxgy) .gt_super {
   font-size: 65%;
 }
 
-#oeybqsqkfg .gt_footnote_marks {
+:where(#nfjwbplxgy) .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
-  position: initial;
 }
 
-#oeybqsqkfg .gt_asterisk {
+:where(#nfjwbplxgy) .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#oeybqsqkfg .gt_indent_1 {
-  text-indent: 5px;
+:where(#nfjwbplxgy) .gt_slash_mark {
+  font-size: 0.7em;
+  line-height: 0.7em;
+  vertical-align: 0.15em;
 }
 
-#oeybqsqkfg .gt_indent_2 {
-  text-indent: 10px;
+:where(#nfjwbplxgy) .gt_fraction_numerator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: 0.45em;
 }
 
-#oeybqsqkfg .gt_indent_3 {
-  text-indent: 15px;
-}
-
-#oeybqsqkfg .gt_indent_4 {
-  text-indent: 20px;
-}
-
-#oeybqsqkfg .gt_indent_5 {
-  text-indent: 25px;
+:where(#nfjwbplxgy) .gt_fraction_denominator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: -0.05em;
 }
 </style>
-<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-  <thead>
-    
-    <tr class="gt_col_headings">
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="<strong>Characteristic</strong>"><strong>Characteristic</strong></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>setosa</strong>, N = 50<span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>"><strong>setosa</strong>, N = 50<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>versicolor</strong>, N = 50<span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>"><strong>versicolor</strong>, N = 50<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>virginica</strong>, N = 50<span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>"><strong>virginica</strong>, N = 50<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
+<table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>setosa</strong>, N = 50<sup class="gt_footnote_marks">1</sup></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>versicolor</strong>, N = 50<sup class="gt_footnote_marks">1</sup></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>virginica</strong>, N = 50<sup class="gt_footnote_marks">1</sup></th>
     </tr>
   </thead>
   <tbody class="gt_table_body">
-    <tr><td headers="label" class="gt_row gt_left">Sepal.Length</td>
-<td headers="stat_1" class="gt_row gt_center">5.00 (4.80, 5.20)</td>
-<td headers="stat_2" class="gt_row gt_center">5.90 (5.60, 6.30)</td>
-<td headers="stat_3" class="gt_row gt_center">6.50 (6.23, 6.90)</td></tr>
-    <tr><td headers="label" class="gt_row gt_left">Sepal.Width</td>
-<td headers="stat_1" class="gt_row gt_center">3.40 (3.20, 3.68)</td>
-<td headers="stat_2" class="gt_row gt_center">2.80 (2.53, 3.00)</td>
-<td headers="stat_3" class="gt_row gt_center">3.00 (2.80, 3.18)</td></tr>
-    <tr><td headers="label" class="gt_row gt_left">Petal.Length</td>
-<td headers="stat_1" class="gt_row gt_center">1.50 (1.40, 1.58)</td>
-<td headers="stat_2" class="gt_row gt_center">4.35 (4.00, 4.60)</td>
-<td headers="stat_3" class="gt_row gt_center">5.55 (5.10, 5.88)</td></tr>
-    <tr><td headers="label" class="gt_row gt_left">Petal.Width</td>
-<td headers="stat_1" class="gt_row gt_center">0.20 (0.20, 0.30)</td>
-<td headers="stat_2" class="gt_row gt_center">1.30 (1.20, 1.50)</td>
-<td headers="stat_3" class="gt_row gt_center">2.00 (1.80, 2.30)</td></tr>
+    <tr><td class="gt_row gt_left">X</td>
+<td class="gt_row gt_center">26 (13, 38)</td>
+<td class="gt_row gt_center">76 (63, 88)</td>
+<td class="gt_row gt_center">126 (113, 138)</td></tr>
+    <tr><td class="gt_row gt_left">Sepal.Length</td>
+<td class="gt_row gt_center">5.00 (4.80, 5.20)</td>
+<td class="gt_row gt_center">5.90 (5.60, 6.30)</td>
+<td class="gt_row gt_center">6.50 (6.23, 6.90)</td></tr>
+    <tr><td class="gt_row gt_left">Sepal.Width</td>
+<td class="gt_row gt_center">3.40 (3.20, 3.68)</td>
+<td class="gt_row gt_center">2.80 (2.52, 3.00)</td>
+<td class="gt_row gt_center">3.00 (2.80, 3.18)</td></tr>
+    <tr><td class="gt_row gt_left">Petal.Length</td>
+<td class="gt_row gt_center">1.50 (1.40, 1.58)</td>
+<td class="gt_row gt_center">4.35 (4.00, 4.60)</td>
+<td class="gt_row gt_center">5.55 (5.10, 5.88)</td></tr>
+    <tr><td class="gt_row gt_left">Petal.Width</td>
+<td class="gt_row gt_center">0.20 (0.20, 0.30)</td>
+<td class="gt_row gt_center">1.30 (1.20, 1.50)</td>
+<td class="gt_row gt_center">2.00 (1.80, 2.30)</td></tr>
   </tbody>
   
   <tfoot class="gt_footnotes">
     <tr>
-      <td class="gt_footnote" colspan="4"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span> Median (IQR)</td>
+      <td class="gt_footnote" colspan="4"><sup class="gt_footnote_marks">1</sup> Median (IQR)</td>
     </tr>
   </tfoot>
 </table>
@@ -1589,38 +2056,37 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
 </div>
 </div>
 </section>
-<section id="recoding-a-variable-into-groups" class="level2" data-number="10.2">
-<h2 data-number="10.2" class="anchored" data-anchor-id="recoding-a-variable-into-groups"><span class="header-section-number">10.2</span> Recoding a variable into groups</h2>
+<section id="recoding-a-variable-into-groups" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="recoding-a-variable-into-groups"><span class="header-section-number">11.2</span> Recoding a variable into groups</h2>
 <p>Suppose we want to classify flowers into three groups based on their petal length. We need to add another categorical variable to the dataset.</p>
 <p>What class should that new variable be?</p>
 <p>Base R has the function <code>cut</code> that divides continuous variables into groups. Tidyverse has a few extensions of this (weirdly in the ggplot2 package), including <code>cut_number</code> that can divide up a continuous variable into three equal groups, and allow us to add labels to them.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cut_number</span>(iris<span class="sc">$</span>Petal.Length, <span class="dv">3</span>, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"Short"</span>, <span class="st">"Medium"</span>, <span class="st">"Long"</span>) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cut_number</span>(iris<span class="sc">$</span>Petal.Length, <span class="dv">3</span>, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"Short"</span>, <span class="st">"Medium"</span>, <span class="st">"Long"</span>) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using tidyverse to create this variable and add it to the dataset:</span></span>
-<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>iris <span class="ot">&lt;-</span> iris <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">PetalLengthGrouped =</span> <span class="fu">cut_number</span>(Petal.Length, <span class="dv">3</span>, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"Short"</span>, <span class="st">"Medium"</span>, <span class="st">"Long"</span>) )) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using tidyverse to create this variable and add it to the dataset:</span></span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>iris <span class="ot">&lt;-</span> iris <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">PetalLengthGrouped =</span> <span class="fu">cut_number</span>(Petal.Length, <span class="dv">3</span>, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"Short"</span>, <span class="st">"Medium"</span>, <span class="st">"Long"</span>) )) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="tabulating-a-categorical-variable-over-groups" class="level2" data-number="10.3">
-<h2 data-number="10.3" class="anchored" data-anchor-id="tabulating-a-categorical-variable-over-groups"><span class="header-section-number">10.3</span> Tabulating a categorical variable over groups</h2>
+<section id="tabulating-a-categorical-variable-over-groups" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="tabulating-a-categorical-variable-over-groups"><span class="header-section-number">11.3</span> Tabulating a categorical variable over groups</h2>
 <p>For a categorical variable, a summary of frequency counts might be the most appropriate descriptive statistic. We can get this with the <code>table()</code> function. Suppose we wanted to know the distribution of species in our dataset.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(iris<span class="sc">$</span>Species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(iris<span class="sc">$</span>Species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The ‘table’ function can also generate cross-tabs, by specifying two or three variables.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(iris<span class="sc">$</span>Species, iris<span class="sc">$</span>PetalLengthGrouped) <span class="co"># Base R version</span></span>
-<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> janitor<span class="sc">::</span><span class="fu">tabyl</span>(Species, PetalLengthGrouped)  <span class="co">#  The tidyverse version using `tabyl` from the `janitor` package.</span></span>
-<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">group_by</span>(Species, PetalLengthGrouped) <span class="sc">|&gt;</span> <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(iris<span class="sc">$</span>Species, iris<span class="sc">$</span>PetalLengthGrouped) <span class="co"># Base R version</span></span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">|&gt;</span> <span class="fu">group_by</span>(Species, PetalLengthGrouped) <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Tables of counts are useful, but it might be more helpful to see the proportion of healthy trees by species. To get this we can pass the table we just made into the prop.table() function:</p>
+<p>Tables of counts are useful, but it might be more helpful to see the proportion of flowers with long petals by species. To get this we can pass the table we just made into the prop.table() function:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">&lt;-</span> <span class="fu">table</span>(iris<span class="sc">$</span>Species, iris<span class="sc">$</span>PetalLengthGrouped)</span>
-<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(table1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">&lt;-</span> <span class="fu">table</span>(iris<span class="sc">$</span>Species, iris<span class="sc">$</span>PetalLengthGrouped)</span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(table1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            
                   Short     Medium       Long
@@ -1631,12 +2097,15 @@ https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html</p>
 </div>
 <p>This is where pipes might be more intuitive:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(iris<span class="sc">$</span>Species, iris<span class="sc">$</span>PetalLengthGrouped) <span class="sc">|&gt;</span> <span class="fu">prop.table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(iris<span class="sc">$</span>Species, iris<span class="sc">$</span>PetalLengthGrouped) <span class="sc">|&gt;</span> <span class="fu">prop.table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The table above has calculated the ‘cell proportions’. If we want the row percentages we need to set the <code>margin</code> option in <code>prop.table()</code> appropriately. <code>margin=1</code> is the rows, <code>margin=2</code> is the columns. If you left out margins altogether, you’d get the cell proportions.</p>
 <p>We could round this (or any numeric) to 2 d.p. by passing the resulting proportion table into the <code>round()</code> function. and using the function <code>multiply_by</code> from the <code>magrittr</code> package (installed as part of tidyverse) we can turn our proportions into percentages:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'magrittr' was built under R version 4.1.3</code></pre>
+</div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'magrittr'</code></pre>
@@ -1651,10 +2120,10 @@ Attaching package: 'magrittr'</code></pre>
 
     extract</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(iris<span class="sc">$</span>Species, iris<span class="sc">$</span>PetalLengthGrouped) <span class="sc">|&gt;</span> </span>
-<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prop.table</span>(<span class="at">margin=</span><span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">multiply_by</span>(<span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="at">digits=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(iris<span class="sc">$</span>Species, iris<span class="sc">$</span>PetalLengthGrouped) <span class="sc">|&gt;</span> </span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prop.table</span>(<span class="at">margin=</span><span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">multiply_by</span>(<span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="at">digits=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            
              Short Medium Long
@@ -1697,23 +2166,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
-      }
-    }
-    return false;
-  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
+    target: function(trigger) {
+      return trigger.previousElementSibling;
     }
   });
   clipboard.on('success', function(e) {
@@ -1725,24 +2180,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
     setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -1778,128 +2216,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
       });
-    }
+      return popup.innerHTML;
+    });
   }
 });
 </script>
