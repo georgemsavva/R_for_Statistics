@@ -45,8 +45,6 @@ This course will introduce
 
 The aim is to become familiar with the R/RStudio environment and some common functions and workflows.  This will enable you to learn the specific functions that you need on your own or with further training.
 
-All of the commands for the worked examples and the exercises is in the file TutorialScript.R.  The commands for the worked examples are also typed out here.
-
 Powerpoint slides for today's session are here:
 
 * [Day 1 slides](day1.pptx)
@@ -193,10 +191,10 @@ I have created a script including all the analyses from this tutorial, in Tutori
 
 See:
 
-* [https://kdestasio.github.io/post/r_best_practices/]
-* [https://r4ds.had.co.nz/workflow-projects.html]
-* [https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects]
-* [https://rstats.wtf]
+* <https://kdestasio.github.io/post/r_best_practices/>
+* <https://r4ds.had.co.nz/workflow-projects.html>
+* <https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects>
+* <https://rstats.wtf>
 
 for more information on using projects and scripts
 
@@ -476,10 +474,10 @@ The two major packages of data wrangling functions are `data.table` and `tidyver
 Tidyverse is more widely used and so this is what we will focus on here.  If you become more familiar with R you might want to explore `data.table`.  
 
 ::: {.callout-note}
-I am only going to teach `tidyverse` methods because they are the most widely used.  See [https://wetlandscapes.com/blog/a-comparison-of-r-dialects/] for how to use base or data.table to perform the same options.
+I am only going to teach `tidyverse` methods because they are the most widely used.  See <https://wetlandscapes.com/blog/a-comparison-of-r-dialects/> for how to use base or data.table to perform the same options.
 :::
 
-Tidyverse is in fact a large collection of packages.  You can see all of the details here [https://www.tidyverse.org/packages/].  In this course we will use functions from the following packages:
+Tidyverse is in fact a large collection of packages.  You can see all of the details here <https://www.tidyverse.org/packages/>.  In this course we will use functions from the following packages:
 
 * **dplyr** for data manipulation
 * **ggplot2** for making graphics
@@ -558,9 +556,29 @@ iris |> filter(Species=="setosa") |> summarise(mean(Sepal.Length))
 iris |> group_by(Species) |> summarise(mean(Sepal.Length), mean(Sepal.Width), n=n())
 ```
 
+It can be more readable if you write the command above using more than one line:
+
+```{r }
+iris |> 
+  group_by(Species) |> 
+  summarise(
+    mean(Sepal.Length), 
+    mean(Sepal.Width), 
+    n=n()
+    )
+```
+
+
+Make sure you understand exactly what is happening with each of the commands above.
+
 ## Test yourself: data wrangling and summarising
 
-Can you use dplyr to find the mean of the sepal length for flowers with a petal length less than 2?
+Can you use dplyr to:
+
+1. Find the mean sepal length
+2. Filter the dataset to include only flowers with a petal length less than 2
+3. Find the mean of the sepal length for flowers with a petal length less than 2? (hint: use pipes to chain together the answers from questions 2 and 1.)
+4. Find the median and range for sepal width stratified across species? (hint: pipe together a `group_by` and a `summarise` call)
 
 # Graphics
 
@@ -571,7 +589,7 @@ boxplot(Petal.Length ~ Species, data=iris)
 ```
 
 :::{callout-note}
-Although this `boxplot` function isn't very useful, note the `~` syntax as this is used widely elsewhere.
+Although this `boxplot` function isn't very useful, note the `~` syntax as this is used widely elsewhere.  See the 'formula interface' section below for more information.
 :::
 
 The ggplot() system is much more flexible, and produces publication quality outputs:
@@ -812,7 +830,7 @@ iris |>
 
 dplyr is good for making summary statistics, but to make publication ready tables you can explore the `gtsummary` package.
 
-[https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html]
+<https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html>
 
 
 ```{r }
