@@ -1,7 +1,7 @@
 
 ---
-title: "Intro to R for statistics, Day 2"
-date: September 2023
+title: "Intro to R for statistics, Day 2/3"
+date: April 2024
 author: 
   - George Savva, QIB
   - Pirita Paajanen, JIC
@@ -20,31 +20,46 @@ Today's worksheet introduces you to a real dataset.
 
 The tasks you will cover are: 
 
-* reading data into R from an Excel file
-* checking and cleaning the data 
-* revision of some of statistics and graphing that we covered on the first day.
+* Reading data into R from an Excel file
+* Checking and cleaning the data 
+* Revision of some of statistics and graphing that we covered on the first day.
+* The importance of checking model validity
+
+You can attempt the worksheet by following the material on your own on day 2.
+
+On day 3 we will run through the work discussing any issues related to R or statistics that arise.
+
+:::{.callout-important title="Note for day 2" }
+
+Expect to spend about three hours on today's work in total.  You all have different levels of knowledge and experience with data analysis and programming, and there is hopefully something in the exercises that will stretch everyone no matter what their background!
+
+So make a good effort at the tutorial and the exercises, work together and use extra resources if needed (part of the skill is knowing where to go for help), but don't spend more than half a day on this unless you want to!
+
+:::
 
 ## The dataset
 
-The data are from a randomised clinical trial of a new rehabilition intervention (compared to standard post-stroke care) aimed at improving the walking speed of hospital patients. Better walking speed is a good indicator of general stroke recovery.
+The data are from a randomised clinical trial of a new rehabilition intervention (compared to standard care) aimed at improving the walking speed of people recovering from stroke. 
+
+Better walking speed is a good indicator of general stroke recovery.
 
 We have recorded:
 
 * The age and sex of each participant,
 * The treatment allocation,
 * The hospital department from which they were recruited and
-* Time they take to complete a walking task.
+* Time they take to complete a walking task after their treatment.
 
 Our research questions are:
 
-* Does the treatment improve walking speed compared to controls?
+* Does the new treatment improve walking speed compared to control treatment?
 * By how much does it improve, and how certain are we of this?
 
 The dataset can be found at [walkingspeed_day2.xlsx](./walkingspeed_day2.xlsx)
 
 * Powerpoint slides to support this material are at:
 
-[day3.pptx](./day3.pptx)
+[Graphing - day3.pptx](./day3.pptx)
 
 [day3_data_lm.pptx](./day3_data_lm.pptx)
 
@@ -66,7 +81,7 @@ Whatever the format your raw data there is likely to be a package to read it int
 
 Here we will import a dataset from Excel using the `readxl` package.  If you already installed `tidyverse` then you already have this package.  
 
-Once the library is installed we can use the function `readxl::read_excel()`, which reads data from an excel file.
+Once the package is installed we can use the function `readxl::read_excel()`, which reads data from an Excel file.
 
 ## Make sure the data looks OK and is in the right place on your computer
 
@@ -89,6 +104,7 @@ R and R packages are not as self-explanatory as other software, and so you shoul
 The `read_excel()` function has a few different options so first we should look at the help file:
   
 ```{r eval=FALSE}
+library(readxl)
 ?read_excel # where does the helpfile appear?
 ```
 
@@ -106,7 +122,7 @@ Many R packages also have vignettes or websites including simpler guides to thei
 
 Now we’ll load the data.  We want to use the ‘walking speed’ data from the walkingspeed.xlsx spreadsheet. 
 
-* Open the spreadsheet in Excel and find this sheet.  The data we want is in the sheet called 'day2'.
+5. Open the spreadsheet using Excel and find this sheet.  The data we want is in the sheet called 'day2'.
 
 From the `read_excel()` help file we can deduce the syntax to load this data into R:
   
@@ -115,9 +131,9 @@ library(readxl)
 walkingdat <- read_excel(path="walkingspeed_day2.xlsx", sheet="day2")
 ```
 
-This line assumes that the file ‘walkingspeed_day2.xlsx’ is in the current working directory (you can check what this is with `getwd()`.  The current working directory is shown just above the R console window.  You can see the files in the current working directory in the 'Files' tab on the bottom right of the RStudio window.  When you create or load a project RStudio will set the working directory to the root of the project directory.
+This line assumes that the file `walkingspeed_day2.xlsx` is in the current working directory (you can check what the current working directory is with `getwd()`.  The current working directory is also shown just above the R console window.  You can see the files in the current working directory in the 'Files' tab on the bottom right of the RStudio window.  When you create or load a project RStudio will set the working directory to the root of the project directory.
 
-This line calls the `read_excel()` function, with the arguments ‘path’, ‘sheet’ set.  The other arguments will be set to their default values, which you can see from the help file.  
+So this line calls the `read_excel()` function, with the arguments `path`, `sheet` set.  The other arguments will be set to their default values, which you can see from the help file.  
 
 We could have set the range of the data in the spreadsheet (I usually do this for safety), but `read_excel()` can figure it out automatically most of the time; by default it picks the biggest continuous chunk of data starting in the top left of the sheet.
 
@@ -143,23 +159,24 @@ Recall these functions from the day 1 notes.  We are checking that the variables
 
 This is an important aspect of any data analysis and we should not skip this step.
 
-```{r }
+```{r message=FALSE, warning=FALSE}
 library(tidyverse)
 summary(walkingdat)
 class(walkingdat$age)
-# hist(age)
 table(walkingdat$group)
 table(walkingdat$sex)
 table(walkingdat$department)
 ```
 
-You will have noticed that one of the numerical variables, age, has been loaded as character variable and not a numeric.  We cannot do anaysis with a character variable!
+## Converting between types
+
+You will have noticed that one of the numerical variables, age, has been loaded as character variable and not a numeric.  We cannot do a quantitative analysis with a character variable!
 
 Why do you think the variable is imported as character and not numeric?
 
-We can convert age to a numeric using `as.numeric`.
+We can convert age to a numeric using the function `as.numeric()`.
 
-```{r }
+```{r eval=FALSE}
 # Tidyverse version:
 walkingdat <- walkingdat |> mutate(age = as.numeric(age))
 
@@ -169,19 +186,22 @@ walkingdat$age <- as.numeric(walkingdat$age)
 
 What warning message did you get when you converted this variable?  What does it mean?
 
+## Checking the data
+
+We mustn't assume that all our data had been entered correctly.
 
 How might we check on the age and time variables to see if the distribution looks OK?
 
 We could make some descriptive statistics and basic plots!
 
-```{r }
+```{r eval=FALSE}
 hist(walkingdat$age)
 hist(walkingdat$time)
 range(walkingdat$time, na.rm=TRUE)
-range(walkingdat$time, na.rm = TRUE)
 
 ```
 
+What do you notice from here?
 
 ## Dealing with outliers
 
@@ -189,7 +209,7 @@ It looks like there are some unreasonably high and low values of walking time.
 
 We can make another graph of walking speed against age, this time on a logarithmic scale so both the extreme high and extreme low points are visible, to see what is going on.
 
-```{r }
+```{r eval=FALSE}
 
 ## ggplot2 version
 library(ggplot2)
@@ -201,7 +221,7 @@ plot(walkingdat$age, walkingdat$time, log="y")
 
 It seems there are some values for time that are likely to be technical errors.  We can remove these values (set them to missing) in a few different ways:
 
-```{r }
+```{r eval=FALSE}
 ## base R method
 walkingdat$time[walkingdat$time<0.1] <- NA
 walkingdat$time[walkingdat$time>100] <- NA
@@ -222,17 +242,28 @@ range(walkingdat$time, na.rm = TRUE)
 
 ```
 
-Now we have a cleaned dataset in our environment we can proceed with our visualisation and analysis:
+Now we have a cleaned dataset in our environment you can proceed with our visualization and analysis, using the functions you learned in day 1.
+
+If you had trouble with the cleaning exercise then use the version of the dataset found in the `cleaned` tab of the spreadsheet:
+
+```{r eval=FALSE}
+walkingdat <- read_excel(path="walkingspeed_day2.xlsx", sheet="cleaned")
+```
 
 # Analysis - Exercises
 
-Add commands to your script file to answer the following questions.  Add comments (lines beginning with `#` to help you remember what you did and why!).
+
+Add commands to your script file to answer the questions below.  
+
+Add comments (lines beginning with `#`) to help you remember which questions you are answering, what you did and why!.
 
 Some solutions are posted at the bottom of the page, but it will help you a lot to try to answer them on your own, by discussing with colleagues, or by looking up help online before using the solutions.
 
 If you don't understand the given solution, then please ask and we can go through it in the class.
 
 We will discuss the testing, modelling and graphing elements in more detail on day 3, but it would be helpful to attempt these today.
+
+---
 
 1. Structure of the dataset
     a. What are the names of the variables that comprise the `walkingdata` dataframe?
@@ -244,17 +275,13 @@ We will discuss the testing, modelling and graphing elements in more detail on d
     a. What is the age of the oldest patient? 
     a. Are the oldest and youngest patient male or female?
 
-1. Cross-tabulation
+1. Cross-tabulation (hint, use the `table` function)
     a. How many Male and Female patients are there?
     a. Is the sex ratio balanced between treatment groups?
     a. How many women are there of age under 50? How many men are there of age under 50?
 
 1.  Descriptive statistics using a subset of the data
     a. What is the average walking speed for men between 50 and 60 years of age?
-
-1.  Deriving new variables
-    a. Create a new column that will have the speed of walking, that is 1/time.
-    a. Create a new column that will have the time rounded up to nearest 10th of a second.
 
 1.  Graphing
     a. Consider what kind of graph you might make to illustrate the difference in walking speed between treatment groups, and try to make it using ggplot. Eg:
@@ -267,10 +294,14 @@ We will discuss the testing, modelling and graphing elements in more detail on d
 
 1.  Hypothesis Testing
     a. What is the difference in average walking speed between control patients and treated patients?
-    a. Is this difference statistically significant? Use t-test `t.test()` and Mann-Whitney tests `wilcox.test()` to examine the differences between the groups.  Look up the syntax for t.test() and wilcos.test() using the help system, and use them to check whether the time taken to complete the task varies by treatment status.  In each case use the version of the function that takes a `formula` agument. Remember the `formula` syntax from the `boxplot` and `lm` functions in day 1.
+    a. Is this difference statistically significant? Use t-test `t.test()` and Mann-Whitney tests `wilcox.test()` to examine the differences between the groups.  Look up the syntax for `t.test()` and `wilcox.test()` using the help system, and use them to check whether the time taken to complete the task varies by treatment status.  In each case use the version of the function that takes a `formula` agument. Remember the `formula` syntax from the `boxplot` and `lm` functions in day 1.
     a. Compare the p-values for each method.
     a. Consider the assumptions for a t-test, and whether they are met in this dataset.  
     a. Do you believe that treatment affects walking speed?
+
+1.  Deriving new variables
+    a. Create a new column that will have the speed of walking, that is 1/time.
+    a. Create a new column that will have the time rounded up to nearest 10th of a second.
 
 1.  Linear model diagnostics
     a. Estimate a linear model (with `lm`) to estimate/test the effect of treatment on task completion time.
@@ -294,34 +325,38 @@ The exercises will have many possible solutions, under each exercise we have lis
 
 If you answered the questions another way then that's fine, but do try to understand how the given solutions work.
 
+```{r eval=FALSE}
+knitr::opts_knit$set(eval=FALSE)
+```
+
 ### Structure of the dataset
 
-*What are the names of the variables that comprise the `walkingdat` dataframe?*
+What are the names of the variables that comprise the `walkingdat` dataframe?
 
-```{r }
+```{r eval=FALSE}
 library(tidyverse)
 
-# Eg
+# Eg you could use:
 str(walkingdat)
 names(walkingdat)
 summary(walkingdat)
 ```
 
-*What is the class of each?  What is the class of `walkingdat`?*
+What is the class of each?  What is the class of `walkingdat`? 
 
-```{r }
+```{r eval=FALSE}
 str(walkingdat)
 
 lapply(walkingdat, class)  #  'lapply' takes a list (first argument) and applies a function (second argument) to every element of that list.
 
-walkingdat |> map(class) # map is the tidyverse version of lapply.  It is in the 'purrr' package which is loaded when you library(tidyverse).
+walkingdat |> map(class) # map is the tidyverse version of lapply.  It is in the 'purrr' package which is loaded if you used library(tidyverse).
 
-class(walkingdat) # walkingdat is a dataframe, but it is also a `tbl` which is a datframe with a few tidyverse enhancements.
+class(walkingdat) # walkingdat is a dataframe, but since you used read_excel() to get it it is also a `tbl` which is a dataframe with a few tidyverse enhancements.
 ```
 
-#. How many columns and rows does `walkingdat` have?
+How many columns and rows does `walkingdat` have?
 
-```{r }
+```{r eval=FALSE}
 dim(walkingdat) # Get the dimension
 nrow(walkingdat) # Get the number of rows
 length(walkingdat) # The 'length' of a data frame is the numve
@@ -329,19 +364,18 @@ length(walkingdat) # The 'length' of a data frame is the numve
 
 ### Descriptive statistics
 
-*What is the age of youngest patient?*
+What is the age of youngest patient?
 
-```{r }
+```{r eval=FALSE}
 # look at the help for what na.rm does.  You'll see many of the summary statistics need this.
 min(walkingdat$age, na.rm=TRUE)
 walkingdat |> summarize(min(age, na.rm=TRUE))
-
 walkingdat |> select(age) |> min(na.rm=TRUE)
 ```
 
-*What is the age of the oldest patient?*
+What is the age of the oldest patient?
 
-```{r }
+```{r eval=FALSE}
 
 max(walkingdat$age)
 
@@ -355,23 +389,27 @@ summary(walkingdat)
 
 ```
 
-*Are the oldest and youngest patient male or female?*
+### Are the oldest and youngest patient male or female?
 
-```{r }
+```{r eval=FALSE}
 walkingdat |> filter(age==47)
 walkingdat |> filter(age==72)
 
-
 walkingdat[which.max(walkingdat$age), "sex"]
 walkingdat[which.min(walkingdat$age), "sex"]
+
+# head and tail show the start and end of a dataset.  
+walkingdat |> arrange(age) |> head()
+walkingdat |> arrange(age) |> tail()
+
 
 ```
 
 ### Cross-tabulation
 
-*How many Male and Female patient are there?*
+How many Male and Female patient are there?
 
-```{r }
+```{r eval=FALSE}
 walkingdat |> filter( sex =='F' ) |> count()
 walkingdat |> filter( sex =='M' ) |> count()
 
@@ -381,17 +419,17 @@ walkingdat |> group_by(sex) |> count()
 
 ```
 
-*Is the sex ratio balanced between treatment groups?*
+Is the sex ratio balanced between treatment groups?
 
-```{r }
+```{r eval=FALSE}
 walkingdat |> filter( group =='treat', sex =='M' ) |> count()
 walkingdat |> filter( group =='treat', sex =='F' ) |> count()
 
 ```
 
-*How many women are there of age under 50? How many men are there of age under 50?*
+How many women are there of age under 50? How many men are there of age under 50?
 
-```{r }
+```{r eval=FALSE}
 walkingdat |> filter(age < 50 , sex =='F' ) |>  count()
 walkingdat |> filter(age < 50 , sex =='M' ) |>  count()
 
@@ -401,9 +439,9 @@ table(walkingdat$sex, walkingdat$age<50)
 
 ### Descriptive statistics using a subset of the data
 
-*What is the average walking speed for men between 60 and 70 years of age?*
+What is the average walking speed for men between 60 and 70 years of age?
 
-```{r }
+```{r eval=FALSE}
 walkingdat |> filter(age >59, age <71,  sex =='M' )  |> 
   select(time) |> pull() |> mean()
 
@@ -415,132 +453,136 @@ walkingdat |> filter( age >59, age <71,  sex =='M' ) |>
 
 ### Deriving new variables
 
-*Create a new column that will have the speed of walking, that is 1/time.*
+Create a new column that will have the speed of walking, that is 1/time.
 
-```{r }
+```{r eval=FALSE}
 walkingdat <- walkingdat |> mutate(speed=1/as.numeric(time))
 
 ```
 
-*Create a new column that will have the time rounded to the nearest 10th of a second.*
+Create a new column that will have the time rounded to the nearest 10th of a second.
 
-```{r }
+```{r eval=FALSE}
 walkingdat <- walkingdat |> mutate(rounded=round(as.numeric(time), digits = 2))
-
 ```
 
 ### Graphing
 
-*Consider what kind of graph you might make to illustrate the difference in walking speed between treatment groups, and try to make it using ggplot.*
+Make a scatter plot of time vs age
+Make the colour of each point reflect the treatment group
 
-*Make a scatter plot of time vs age*
-*Make the colour of each point reflect the treatment group*
-
-```{r }
+```{r eval=FALSE}
 ggplot(data=walkingdat) +
   aes(x=age,y=time,colour=group) + 
   geom_point()
 ```
 
-*Make a box plot of time by sex, with a different coloured box per sex*
+Make a box plot of time by sex, with a different coloured box per sex
 
-```{r }
+```{r eval=FALSE}
 ggplot(data=walkingdat) +
   aes(x=sex,y=time,fill=sex) + 
   geom_boxplot()
 ```
 
-*Label the axes appropriately*
+Label the axes appropriately
 
+```{r eval=FALSE}
 ggplot(data=walkingdat) +
   aes(x=sex,y=time,fill=sex) + 
   geom_boxplot() + 
   labs(x="Sex", y="Time to complete task (s)")
+```
+Try a violin plot instead of a boxplot (with geom_violin).  Which do you prefer?*
 
-*Try a violin plot instead of a boxplot (with geom_violin).  Which do you prefer?*
-*Make any other adjustments you think are informative!*
-
-
+```{r eval=FALSE}
+ggplot(data=walkingdat) +
+  aes(x=sex,y=time,fill=sex) + 
+  geom_violin() + 
+  labs(x="Sex", y="Time to complete task (s)")
+```
 
 ### Hypothesis testing
 
-*What is the difference in task completion time between control patients and treated patients?*
+What is the difference in task completion time between control patients and treated patients?
+Is this difference statistically significant?
 
-```{r }
+
+```{r eval=FALSE}
+t.test( time ~ group , data=walkingdat)
+
 lm( time ~ group , data=walkingdat) |> broom::tidy()
 
 lm( time ~ group , data=walkingdat) |> summary()
 
-```
-
-*Is this difference statistically significant?*
-
-```{r }
 lm( time ~ group , data=walkingdat) |> anova()
 
 ```
 
-*Use t-test `t.test()` and Mann-Whitney tests `wilcox.test()` to examine the differences between the groups.*
+Use t-test `t.test()` and Mann-Whitney tests `wilcox.test()` to examine the differences between the groups.
 
-```{r }
+```{r eval=FALSE}
 t.test( time ~ group , data=walkingdat)
 wilcox.test( time ~ group , data=walkingdat)
 
 ```
 
-*. Consider the assumptions underlying the t-test, and whether they are met in this dataset*
+Consider the assumptions underlying the t-test, and whether they are met in this dataset
 
 The t-test and the linear model assume that the outcome variable is normally distributed within groups, which is not the case here.  So the results from these is probably wrong.
 
 The Mann-Whitney test (Wilcox test) does not make this assumption, and is more robust in this case.
 
-*Do you believe that treatment affects walking speed?*
+Do you believe that treatment affects walking speed?
 
-*Try the t-test or linear model using the speed variable that you created instead of the time variable that is in the dataset.*
-
+Try the t-test or linear model using the speed variable that you created instead of the time variable that is in the dataset.
 
 ### Diagnostics
 
-*Estimate a linear model (with `lm`) to estimate/test the effect of treatment on task completion time.*
+Estimate a linear model (with `lm`) to estimate/test the effect of treatment on task completion time.
 
-```{r }
+```{r eval=FALSE}
 mod1 <- lm(data=walkingdat , time ~ group)
 ```
 
-*Use `summary` to get the model coefficients and p-values*
-*Use `broom::tidy` to get the model coefficients and p-values*
+Use `summary` to get the model coefficients and p-values
 
-```{r }
+Use `broom::tidy` to get the model coefficients and p-values
+
+```{r eval=FALSE}
 mod1 |> summary()
 mod1 |> broom::tidy()
 ```
 
 
-*Compare the model results to the equivalent t-test*
-*Extend the model to include the effects of age and sex as potential covariates.*
+Compare the model results to the equivalent t-test
 
-```{r }
+Extend the model to include the effects of age and sex as potential covariates.
+
+```{r eval=FALSE}
 mod2 <- lm(data=walkingdat , time ~ group + age + sex)
 ```
 
-*Use `plot()` to explore the model diagnostics*
+Use `plot()` to explore the model diagnostics
 
-```{r }
+```{r eval=FALSE}
 ## You could plot model 1 or model 2.
 plot(mod1)
 ```
 
-*Use `performance::check_model` to explore the model diagnostics*
+Use `performance::check_model` to explore the model diagnostics
 
-```{r }
+```{r eval=FALSE}
 performance::check_model(mod1)
 ```
 
-*Now estimate a new model to compare the task completion speed between groups.*
-*Get the model coefficients and p-values*
-*Check the model diagnostics using `plot` or `performance::check_model`*
+Now estimate a new model to compare the task completion speed between groups.
 
-```{r }
+Get the model coefficients and p-values
+
+Check the model diagnostics using `plot` or `performance::check_model`
+
+```{r eval=FALSE}
 
 walkingdat$speed <- 1/walkingdat$time
 mod3 <- lm(data=walkingdat , speed ~ group + age + sex)
@@ -548,15 +590,16 @@ performance::check_model(mod3)
 
 ```
 
-    a. Why are the result from this model different?  How do you interpret the results?
-    a. Can you get the confidence intervals for the treatment effect (use the help for `broom::tidy`)
-    a. Use `model_summary` package to make a pretty model summary table
+Why are the result from this model different?  How do you interpret the results?
 
-```{r }
+Can you get the confidence intervals for the treatment effect (use the help for `broom::tidy`)
+
+Use `model_summary` package to make a pretty model summary table
+
+```{r eval=FALSE}
 modelsummary::modelsummary(mod3)
 
-## I didn't do very well!
-modelsummary::modelsummary(mod3 , 
+modelsummary::modelsummary(list("Speed model"=mod3,"First model"=mod1) , 
                            estimate="{estimate} [{conf.low}, {conf.high}] {stars}", 
                            coef_rename = c('(Intercept)'="Intercept", 
                                            'grouptreat'="Treatment", 

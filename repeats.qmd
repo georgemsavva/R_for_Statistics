@@ -45,7 +45,7 @@ Then you run this experiment three times, and only accept the result as true (re
 
 What are the error rates of this combined experimental procedure (the 2 of 3 strategy) as a whole?
 
-#### Implications for power (or type 2 error rate)
+### Implications for power (or type 2 error rate)
 
 First, let's work out the power. This is probability of detecting an effect if that effect was in fact there (a true positive). Each individual experiment has, independently, a power of 80%. You need at least two of the three to show statistical significance.
 
@@ -55,7 +55,7 @@ $0.8^3 + 3\times 0.8^2\times 0.2 = 0.896$
 
 So if H1 is true you have a 89.6% chance of getting a positive result using this procedure, corresponding to a Type 2 error rate of 10.4%. This is an improvement on the 20% type 2 error rate for the single trial with 80% power.
 
-#### Implications for size
+### Implications for size
 
 What about false positive rate? If there is no effect (H0 is true) and your size is 0.05, that is you require p\<0.05 in each individual trial, then the chance of a false positive for your two in three procedure is again easy to find:
 
@@ -67,7 +67,7 @@ So this looks great! With three repeats (using the 2 from 3 strategy) you have r
 
 But this has come at a cost of needing three times as much resource.
 
-#### Equivalent single experiment
+### Equivalent single experiment
 
 Was it worth it? How big would a single well-designed experiment have to be to achieve the same power and size? If your initial goal had been to design an experiment with power of 89.6% and size of 0.0075, what sample size would have been needed?
 
@@ -79,7 +79,7 @@ It turns out that this same improvement in error rates is achieved with almost e
 
 So by running one well designed experiment with twice the sample size instead of using three repeats, you will achieve the same error control with two thirds of the time and material you would otherwise have needed.
 
-#### Optional stopping
+### Optional stopping
 
 "But wait!" you retort. "I would obviously only conduct experiment 3 if experiments 1 and 2 were in conflict. So I will not often use all three repeats."
 
@@ -95,7 +95,7 @@ So, all things considered, this isn't an enormous improvement. In this case, whe
 
 So in this case at least, using the 2 of 3 trials is a isn't a terribly inefficient way to improve your Type 1 and Type 2 error rates. But the point does still stand that you get the same error rate control with 2N samples instead of needing the possibility of the third replicate, so long as you analyse them as one big experiment and not two smaller ones that may or may not agree.
 
-#### Underpowered studies
+### Underpowered studies
 
 All of the above supposed that the three individual independent experiments were each well designed to begin with. Suppose however that your initial experiment was underpowered, such that you only had a 50% chance of detecting a real effect at p\<0.05.
 
@@ -105,7 +105,7 @@ So your expected cost for the 2 of 3 strategy is 2.3*N, while your known cost fo
 
 If your experiment is even more poorly powered, say at 30%, then the power of the 2/3 strategy is 0.3\^3 + 3*0.3\^2*0.7 = 0.216. So you lose power compared to a single trial. To get the same effect with a single study you'd need 1.75\*N samples. Your probability of stopping early is around 0.75 (between 0.6 and 0.9), even though in a lot of cases you'd stop erroneously if the alternative hypothesis was true. So here the saving is 2.25 - 1.75 = 0.5N; again that's just over a fifth of your expected size under the 2/3 strategy.
 
-#### Reporting
+### Reporting
 
 So far I have only discussed error rates and statistical significance. The question of how you might report experimental results when you've used internal replication is complex.
 
@@ -149,7 +149,7 @@ Conversely there is nothing to suggest that that a bias built into in a single s
 
 For example, if we believe in a day-to-day variation in results that leads us to want to replicate across different days, then we can design a single blocked experiment and conduct it over multiple days, such that any 'day' effect is balanced over treatment conditions and a day-by-treatment effect might be estimated.
 
-#### Side notes and caveats
+### Side notes and caveats
 
 This is not to downplay the importance of biological replication. Biological replication is essential, and we should tend to emphasize biological replicates over technical replicates where possible. Where a source of variation exist, experiments should include replication across that source. But we should still always analyse our replicates together as part of a single experiment.
 
@@ -159,11 +159,11 @@ External independent replication of published findings is also important, adds g
 
 This does not apply to internal replication of computational pipelines, which I think is a good idea (advocated here <https://www.bitss.org/internal-replication-another-tool-for-the-reproducibility-toolkit/>)
 
-#### Discussion
+### Discussion
 
 Drilling into the statistical properties of a strategy that relies on internal replication of experiments and the possible reasons for their intuitive appeal leads to clear practical suggestions and highlights some potential misunderstandings regarding the meaning of replicability and even the role of experiments and what should be inferred from them.
 
-#### Summary:
+### Summary:
 
 A strategy of reporting an effect when two out of three independent trials rejects H0 at p\<0.05 has an overall type 1 error of 0.0075 (ie is equiv. to a single experiment reporting at p\<0.0075).
 
@@ -177,7 +177,7 @@ Studies are not inconsistent just because one reports a statistically significan
 
 Major sources of misunderstanding are the over-reliance on 'statistical significance' as the summary statistic for experimental results, which does not permit us to give more weight to larger trials compared to smaller ones, and the failure to consider type 2 errors as a source of apparent inconsistency between trials.
 
-#### Recommendations
+### Recommendations
 
 Internal replication of studies with identical conditions should be discouraged, where these would have been used, larger studies with more 'biological' replicates and stricter thresholds for error control can instead be safely recommended. These larger studies should be well designed, a good starting point for design would be using the proposed smaller studies as blocks within the larger design.
 
@@ -185,7 +185,7 @@ Where replicates have been made, we must not report findings from 'a representat
 
 Studies should be reported using estimates of differences along with the standard errors of differences or confidence intervals for differences, rather than relying on p-values.
 
-#### Existing literature (todo - fix this and add more)
+### Existing literature (todo - fix this and add more)
 
 There isn't much literature on the value or otherwise of internal replications of experiments. I have certainly never seen a publication that formally explores and advocates this.
 

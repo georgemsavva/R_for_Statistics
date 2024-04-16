@@ -31,6 +31,8 @@ website:
             href: workshopscript.Rmd
           - text: ggplot example
             href: flipbook.qmd
+          - text: iris data walkthough
+            href: irisScript.qmd
       - text: Statistics notes
         menu:
           - text: Don't group your data points
