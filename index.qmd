@@ -12,10 +12,11 @@ There are also some general notes on statistics that I have created for myself (
 
 * NBI/JIC MSc Introduction to R
     * [Day 1](day1.qmd)
-    * [Day 2 (PhD version)](day2.qmd)
-    * [Day 2 (MSc version)](day2MSc.qmd)
-    * [Day 3](day3.qmd)
+    * [Day 2/3 (PhD version)](day2.qmd)
+* How many samples do I need?
+    * [Course notes](sampleSize.qmd)
 * Statistics notes
+    * [A note on graphing](day3.qmd)
     * [Don't dichotomise your data](dichot.qmd)
     * [Simple alpha and beta diversity simulation](alphabeta.qmd)
     * [Selection bias (Berkson bias) in observational studies](berkson.qmd)

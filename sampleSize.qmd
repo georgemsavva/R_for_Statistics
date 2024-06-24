@@ -1,0 +1,21 @@
+---
+title: "How many samples do I need?"
+author: "George Savva"
+---
+
+These are the course materials for the one-day course on sample size considerations, delivered for the NBI training programme.
+
+Latest version is June 2024.
+
+The Powerpoint slides are here: 
+
+* [Sample Size Slides](powerAndSampleSizeJun2024.pptx)
+
+Exercise handout is here:
+
+* [Handout](powerHandoutJun2024.docx)
+
+Solutions to the exercises are here
+
+* [Solutions](powerSolutionsJun2024.qmd)
+

@@ -1,0 +1,16 @@
+---
+title: "calloutTest"
+author: "George"
+---
+
+This is a nice document
+
+:::{.callout-tip title="Important tip"}
+
+Always use a callout
+
+Never use a callout
+
+:::
+
+This is some more text.

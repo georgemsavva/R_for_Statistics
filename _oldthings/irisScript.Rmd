@@ -1,0 +1,370 @@
+## R course recap: analysis of the iris dataset.
+Load data from a csv file using `read.csv`
+
+```{r }
+iris <- read.csv("iris.csv")
+```
+
+Get some statistics on the structure of the dataset to make sure it's all read in OK.
+
+```{r }
+nrow(iris)
+str(iris)
+```
+
+Extract single variables (vectors) from the dataset
+
+```{r }
+iris$Sepal.Length
+```
+
+Note that R is case sensitive so this does not work:
+
+```{r }
+iris$sepal.length
+```
+
+Get individual elements if we want to.
+
+```{r }
+iris$Sepal.Length[1]
+```
+
+Get the 2nd, 4th and 6th elements (extract a subset by position)
+
+```{r }
+iris$Sepal.Length[c(2,4,6)]
+```
+
+Get the 10th to the 20th elements of the vector
+
+```{r }
+iris$Sepal.Length[10:20]
+```
+
+By default, `Species` is read as a string (because the option `stringsAsFactors` is set to FALSE by default).  
+So if we want to use `Species` as a categorical variable we have to convert it into a 'factor'.
+
+```{r }
+iris$Species <- factor(iris$Species)
+```
+
+We can use the default plotting system to make a quick plot, but it's a bit ugly!
+
+```{r }
+plot(iris, col=iris$Species)
+```
+
+Demonstration of using the base `hist` function if we want a quick histogram
+
+```{r }
+iris$Sepal.Width |> hist(breaks=20)
+```
+
+Summary does different things depending on what kind of object is passed to it.
+
+```{r }
+summary(iris)
+summary(iris$Sepal.Width)
+summary(iris$Species)
+```
+
+We can do a statistical test using two variables. 
+(Although this association is better tested using `lm` as below)
+
+```{r }
+cor.test(iris$Sepal.Length, iris$Petal.Width)
+```
+
+Find the minimum sepal width
+
+```{r }
+min(iris$Sepal.Width)
+```
+
+Tabulate the species to find the number of observations for each
+
+```{r }
+table(iris$Species)
+```
+
+
+## Graphing
+
+Make a histogram with red bars
+
+```{r }
+hist(iris$Sepal.Length, col="red")
+```
+
+To quickly demonstrate the formula interface we made a (not very nice) boxplot.
+
+```{r }
+boxplot( Petal.Length ~ Species , data=iris)
+```
+
+Could we have done this with the native pipe?  
+This doesn't work (because if the arguments are unnamed `iris` needs to be the second argument)
+
+```{r }
+iris |> boxplot(Petal.Length ~ Species)
+```
+
+But either of these two lines does work:
+
+```{r }
+iris |> boxplot(Petal.Length ~ Species , data=_)
+iris |> boxplot(data=_ , Petal.Length ~ Species )
+```
+
+We can make a much nice boxplot using ggplot2.
+Make sure you understand what each of these lines does!
+
+```{r }
+iris |> ggplot() + 
+  aes(x=Species , y=Petal.Length, fill=Species) + 
+  geom_boxplot() + 
+  ggtitle("Petal length by Species") + 
+  theme_bw() + 
+  scale_y_log10(breaks=c(1,2,3,4,5,6,7,8,9,10)) + 
+  labs(y="Petal length (cm)")
+```
+
+If we want to export the plot we can assign it to an object then save that object with `ggsave`:
+
+```{r }
+boxplot1 <- ggplot(iris) + 
+  aes(x=Species , y=Petal.Length, fill=Species) + 
+  geom_boxplot()
+ggsave("lengthboxplot.png",boxplot1, width=5, height=5, dpi="retina")
+```
+
+I was asked what would happen if we wanted to load data with no header.
+The best answer is 'try it and see'.  We make `iris2.csv` with no header row.
+When we tried to load it, the first row of values was assumed to be the header.
+
+```{r }
+iris2 <- read.csv("iris2.csv")
+head(iris2)
+```
+
+So we looked at the help file to check how to correctly load the data, and how to assign names if we wanted to.
+
+```{r }
+iris2 <- read.csv(file = "iris2.csv",
+                  header=FALSE,
+                  col.names = c("X", "PL", "PW", "SW", "SL", "Species"))
+head(iris2)
+```
+
+## Modelling
+Most of our statistical tests can be thought of in terms of statistical
+models.  Simple linear regression models are the simplest models, we can do most things by generalisaing these.
+
+In R, we use a formula to describe the model we want to estimate. 
+Here we want to model how the average of sepal width varies (statistically, not necessarily causally) with sepal length.
+
+```{r }
+lm(data=iris , Sepal.Width ~ Sepal.Length)
+```
+
+To do anything useful we need to make an `lm` object (here called model1)
+
+```{r }
+model1 <- lm(data=iris , Sepal.Width ~ Sepal.Length)
+```
+
+Now we extract the model summary
+
+```{r }
+summary(model1)
+```
+
+Get the `gtsummary` package if you don't have it already.
+(with `install.packages("gtsummary")`).  
+The `tbl_regression` function from this package makes a nicely formatted regression table.
+
+```{r }
+gtsummary::tbl_regression(model1)
+```
+
+We can also use `ggplot` to draw a linear model:
+Note how the slope and intercept of the `stat_smooth` line corresponds to the model summary output
+
+```{r }
+iris |> ggplot() + 
+  aes(x=Sepal.Length , 
+      y=Sepal.Width, 
+      ) + 
+  geom_point() +
+  theme_bw() +
+  stat_smooth(method="lm")
+```
+
+By adding colours we can see that our first model may not be the best, because
+there is clearly an effect of species on the outcome variable that we have
+ignored. So we should estimate a separate line for each species, but consider
+that we have changed the reserach question quite substantially:
+
+```{r }
+iris |> ggplot() + 
+  aes(x=Sepal.Length , 
+      y=Sepal.Width, 
+      shape=Species,
+      col=Species) + 
+  geom_point() +
+  theme_bw() +
+  stat_smooth(method="lm")
+```
+
+We can make linear models corresponding to more complex relationships!
+This is an advantage of using linear models instead of other 'ad hoc' statistical testing.
+This model corrects for the effect of species on sepal width:
+
+Entering just the main effect (as below) lead to a separate but parallel line for each species.  The slope (effect of sepal length) does not vary with species.
+
+```{r }
+model2 <- lm(data = iris , Sepal.Width ~ Sepal.Length + Species )
+summary(model2)
+```
+
+But we can add an *interaction term* to allow the effect of sepal length to vary by species
+These two models are the same.
+
+```{r }
+model4 <- lm(data = iris , Sepal.Width ~ Sepal.Length + Species + Sepal.Length:Species )
+model4 <- lm(data = iris , Sepal.Width ~ Sepal.Length * Species )
+summary(model4)
+```
+
+We can use the `emmeans` package to extract the slope at each level of `Species` from model 4.
+
+```{r }
+emmeans::emtrends(model4 , pairwise~Species , var="Sepal.Length")
+```
+
+The `ANOVA` function can be used to generate the old-fashioned ANOVA table corresponding to each model:
+
+```{r }
+anova(model4)
+```
+
+Or to test whether one model is a significantly better fit than another:
+
+```{r }
+anova(model1 , model2, model4)
+```
+
+Here we see model 4 is better than model 2, (and model 2 is better than model
+1). So there is good evidence that we should fit independent slopes for each species.
+
+## Some linear algebra
+
+I was asked about the maths underlying the linear regression.  
+Linear Algebra for linear regression is straightforward, and is explained here (https://xebia.com/blog/the-linear-algebra-behind-linear-regression/).  
+Most of you will not need to worry about this!
+You can calculate the coefficients by extracting the model matrix, then applying the following formula:
+
+```{r }
+X <- model.matrix(model2)
+b = solve(t(X)%*%X) %*% 
+  t(X) %*% 
+  iris$Sepal.Width
+b
+```
+
+Compare it to:
+
+```{r }
+coef(model2)
+```
+
+Get the residual error
+
+```{r }
+sigma <- ((X %*% b - iris$Sepal.Width) |> sd())*sqrt((149/146))
+sigma
+```
+
+compare it to:
+
+```{r }
+sigma(model2)
+```
+
+## Day 3 script - a bit more analysis, ANOVA and log-transformation 
+On day three we looked at a few different graphs:
+
+```{r }
+library(ggplot2)
+library(ggbeeswarm)
+```
+
+A box plot shows a great 'five point summary' for each distribution
+
+```{r }
+ggplot(iris) + aes(x=Species, y=Petal.Length, fill=Species) + 
+  geom_boxplot(outlier.colour = NA) + 
+  geom_beeswarm(size=1)
+```
+
+The log-scale graph suggested that a log-transformed model might be more appropriate
+
+```{r }
+ggplot(iris) + aes(x=Species, y=Petal.Length, fill=Species) + 
+  geom_boxplot(outlier.colour = NA) + 
+  geom_beeswarm(size=1) + 
+  scale_y_log10()
+```
+
+A 'dynamite' plot is less useful, but could be acceptable if you overlay the true data points.
+
+```{r }
+ggplot(iris) + aes(x=Species, y=Petal.Length, fill=Species) + 
+  stat_summary(geom="col") + 
+  stat_summary(geom="errorbar", width=0.5) + 
+  geom_beeswarm()
+```
+
+We can estimate a model corresponding to these graphs. The `1+` tells R to
+include an intercept term.  We don't need to explicity say this, but if we
+don't want the intercept then we need to use `0+`.
+
+```{r }
+model_petal_length_species <- lm(data=iris , Petal.Length ~ 1+Species)
+```
+
+This is an anova for the hypothesis that all the species differences are zero
+
+```{r }
+anova(model_petal_length_species)
+```
+
+The model summary shows the individual regression coefficients
+
+```{r }
+summary(model_petal_length_species)
+```
+
+We can get the pairwise contrasts with emmeans.
+
+```{r }
+emmeans::emmeans(model_petal_length_species , pairwise ~ Species)
+```
+
+We said the log-transformation might be needed.
+We can estimate a model for log(Petal.Length)
+
+```{r }
+model_petal_length_species_log <- 
+  lm(data=iris , log(Petal.Length) ~ Species)
+```
+
+Now `emmeans` reports ratios instead of differences.  Could make more sense
+biologically!
+
+```{r }
+emmeans::emmeans(model_petal_length_species_log , 
+                 pairwise ~ Species, type="response")
+```
+

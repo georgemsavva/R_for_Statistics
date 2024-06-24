@@ -103,7 +103,7 @@ The great strength of R is in its contributed packages, these are community writ
 
 Start RStudio.  It will detect your installation of R, and you should see a screen like this:
 
-![Figure:  RStudio Window](rstudio.png)
+![Figure:  RStudio Window](./rstudio.PNG)
 
 On the left is the console window, where you type commands and see output.  The windows on the right hold various useful tabs, including your data, graphs, help files, and your command history.
 
@@ -163,7 +163,7 @@ So instead we will type our commands into files called R *scripts* and run the c
 
 Using scripts mean we can develop complex analyses, and that when we come back to them later, eg if something changes in our data that means we need to redo everything, or we want to tweak something in our analysis because of a reviewer's comment, we can easily do this.  
 
-::: {.callout-tip title="Always use a project, and keep scripts tidy!}
+::: {.callout-tip title="Always use a project, and keep scripts tidy!"}
 
 It is good to keep a separate R script for each analysis that you do, such that each starts with the functions to load the required data, then do any cleaning or coding that is necessary, then to perform and report the data analysis.
 

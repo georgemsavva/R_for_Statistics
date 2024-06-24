@@ -15,7 +15,7 @@ This bias is likely to be an issue for many observational studies but is not wel
 
 The Wikipedia page for the phenonomenon is here:  <https://en.wikipedia.org/wiki/Berkson%27s_paradox>
 
-# Selection bias in observational studies
+--- 
 
 Suppose we are trying to understand the correlation between health and wealth.
 
@@ -79,7 +79,7 @@ In more than 50% of cases there is now a significant correlation in the sample e
 
 What are the implications of this for observational studies?
 
-What can we do about it?
+What can we do about it?  If we have sampling weights it is relatively easy to fix, but what if we don't?  Do we have to try to get them somehow?
 
 
 

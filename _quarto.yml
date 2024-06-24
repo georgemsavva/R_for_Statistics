@@ -11,7 +11,10 @@ project:
     walkingspeed_day2.xlsx
     day1.qmd
   title: "R and Statistics"    
-  
+
+execute: 
+  freeze: auto
+
 website:
   navbar: 
     title: "Statistics and R in Biology"  
@@ -23,19 +26,23 @@ website:
         menu:
           - text: NBI PhD Intro to R Day 1
             href: day1.qmd
-          - text: Day 2
+          - text: NBI PhD Intro to R Day 2/3
             href: day2.qmd
-          - text: Day 3
-            href: day3.qmd
           - text: JIC MSc Workshop (2021/2022)
             href: workshopscript.Rmd
           - text: ggplot example
             href: flipbook.qmd
-          - text: iris data walkthough
+          - text: Iris data walkthough
             href: irisScript.qmd
+      - text: How many samples do I need?
+        menu: 
+          - text: Course notes
+          - href: sampleSize.qmd
       - text: Statistics notes
         menu:
-          - text: Don't group your data points
+          - text: Notes on graphing
+            href: day3.qmd
+          - text: Do not group your data points
             href: dichot.qmd
           - text: Simple alpha and beta diversity simulation
             href: alphabeta.qmd

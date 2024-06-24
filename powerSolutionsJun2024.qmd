@@ -1,0 +1,309 @@
+---
+title: "Solutions and notes for power and sample size course exercises"
+author: "George Savva"
+date: "January 2023"
+format:
+  html:
+    self-contained: true
+--- 
+
+
+## Exercise 1
+
+The mortality rate in the treatment arm is is 34.9%.  In the control arm is is 43.4%.
+
+The estimate for treatment effect (risk difference) is -8.5% 
+
+The 95% confidence interval is -18.2 to +1.2 percentage points.  This means that the treatment might plausibly improve mortality by 18.2 or worsen it by 1.2 percentage points.
+
+Because the p-value is 0.06, at the confidence interval includes 0 (no treatment effect) the journal report is that there is no significant improvement.
+
+I would conclude there is a very good chance that the treatment is an improvement on the control, although this isn't definitively proven, and it doesn't increase survival by more than 20 percentage points.
+
+Personally I would choose the new treatment (all else equal)
+
+I would do whatever I could to get the new treatment.
+
+## Exercise 2
+
+If we recruit 10 patients and two have stool in their virus, then our estimate for the prevalence of virus in stool can be calculated by R as follows:
+
+```{r }
+binom.test(x=2,n=10)
+```
+
+The confidence interval is 0.03 (3%) to 0.56 (56%).  So this is the plausible range for the true value given the data.
+
+With 100 participants, if we observe 20 then our calculation would be calculated with:
+
+```{r }
+binom.test(x=20,n=100)
+```
+
+So 13% to 30%.
+
+We can tweak the sample size until we have a confidence interval that is 5% either side of the truth.  N=250 gets us pretty close:
+
+```{r }
+N=250
+binom.test(x=N*0.2 , n = N)
+```
+
+Note this is the number of samples that we need data for, we might find that 10% or so of the participants do not give us valid data.
+
+We can see that the sample size needed depends enormously on the precision we need for the estimate, and in this case we need to have some idea of what the answer is going to be.
+
+## Exercise 3:
+
+Here we can use the app to simulate some data
+
+https://georgemsavva.shinyapps.io/powerSimulator/
+
+or we can do it in code:
+
+```{r}
+
+# Make some assumptions
+controlMean = 500
+treatmentEffect = -20
+standardDeviation = 60
+
+# set our sample size
+N = 10
+
+# Simulate some data
+controlResults = rnorm(N , mean=controlMean, sd=standardDeviation)
+testResults    = rnorm(N , mean=controlMean+treatmentEffect, sd=standardDeviation)
+
+# Plot the data
+plot(y=c(controlResults , testResults), 
+     x=factor(rep(c("Control", "Test"), each=N)), 
+     ylab="iAUC", xlab="Group")
+
+points(y=c(controlResults , testResults), 
+       x=factor(rep(c("Control", "Test"), each=N)))
+
+# Run a t-test
+t.test(controlResults, testResults)
+```
+
+
+If we only had one person per group we couldn't conclude anything, since we wouldn't know if the difference is due to the person or due to the treatment.
+
+As we get more samples we can become more sure that any differences we see are because of the treatment.
+
+The estimate for effect will become more precise as we increase the sample size.  
+
+Using the app I can show that the width of the confidence interval will be about 40 units if there are approximately 60 participants in each group.
+
+If we simulate more than one experiment, we can see that the p-value varies every time we run it.  In reality we'll only run one experiment, and we want to make sure that the probability of getting a p-value of less than 0.05 is high (given the assumption that our effect is real).
+
+If we assume the true effect is 20 units, then to get 80% of trials significant we need about 150 participants per group.
+
+
+## Exercise 4
+
+A study has a power of 80% if, given that a true effect exists, there is an 80% chance it will detect it as a significant difference.
+
+This clearly depends on what the magnitude of the real effect is, how much variation there is etc.
+
+We don't learn a lot from studies that are underpowered.  In these cases it might be better to look at the effect sizes and confidence intervals, since conclusions based on p-values will be very unreliable.
+
+A study is underpowered if it is too small to be able to detect meaningul effect sizes.  For example, the ANDROMEDA-SHOCK study we looked at wasn't able to detect an effect size of 12.5% as statistically significant.  So it was underpowered for effects of that size or smaller.
+
+## Exercise 5
+
+The fault is ignoring the risk of errors, particularly false negatives, which because much more likely if the study size is small.
+
+Statement three should reas "If p>0.05 we don't have enough evidence to demonstrate an effect" or something like that.  It could well be that an effect is present but our study could not detect it.
+
+## Exercise 6
+
+To find the sample size needed (per group) to estimate the precision of the risk difference to +-10 percentage points, we can use the `precisely` library.  If you don't like code you can use the Shiny app (https://malcolmbarrett.shinyapps.io/precisely/)
+
+```{r }
+# If you don't have the 
+#install.packages("precisely")
+library(precisely)
+
+n_risk_difference(precision=0.2, 
+                  exposed = 0.4,
+                  unexposed = 0.2, 
+                  group_ratio = 1)
+```
+
+Now to find the possible precision with 15 patients per group:
+
+```{r }
+precisely::precision_risk_difference(n_exposed=15, 
+                                     exposed=0.4, 
+                                     unexposed=0.2,
+                                     group_ratio = 1)
+```
+
+So with only 15 per group (a sample size of 30) we would have a confidence interval for the risk difference of 0.64!  This is enormous in the context of trying to look for difference in the outcome from 20% to 40% recovery.
+
+## Exercise 7
+
+Following the `pwr.t.test` video, we can find the sample size needed to test whether our bread leads to an improvement in iAUC of at least 20 units.
+
+```{r }
+library(pwr)
+pwr.t.test( n=NULL , d = 20/60 , power=0.8 )
+```
+To find the smallest effect size detectable with 10 participants per group:
+
+```{r }
+
+pwr.t.test( n=10 , d = NULL , power=0.8 )
+
+
+```
+
+This gives us a Cohen's `d` of 1.3, which would correspond to a smallest detectable difference between treatments of about 78 units (given a standard deviation of 60 units)
+
+```{r }
+pwr.t.test( n=100 , d = NULL , power=0.8 )
+```
+
+With 100 participants per group we could detect a Cohen's d of 0.4 or a difference in iAUC of about 24 units.
+
+Note there is a simple correspondence between the sample size and the Cohen's d which will translate to every study of this design (simple two group parallel study).
+
+To find the power:
+
+```{r }
+pwr.t.test( n=10 , d=50/60 , power=NULL)
+```
+
+Making a power curve is a bit fiddly:
+
+```{r }
+# this line will extract the 'power' part of the output
+power = pwr.t.test( n=10:100 , # we can add a sequence instead of a single number here
+                    d=50/60 , 
+                    power=NULL)$power
+
+# now we can plot:
+plot(x=10:100 , 
+     y=power, 
+     type="o", 
+     xlab="Sample size (per group)", 
+     ylab="power (%)")
+
+# add some gridlines because I like gridlines
+grid()
+```
+
+## Exercise 8
+
+a) Mortality rates was 35% in the `no treatment` group.
+
+b) Suppose the smallest risk difference of interest is 10%.  (this is up to you as investigator!)
+
+c) 
+
+```{r }
+ES.h(0.45, 0.35)
+```
+This would correspond to an effect size of Cohorts H = 0.2
+
+d) 
+
+```{r }
+pwr.2p.test(h=0.2, n=NULL, power=0.8)
+```
+So we would need 392 patients per group.
+
+e) Suppose we knew we could expect 200 patients per group.  Then we would expect a minimum detectable effect size of:
+
+```{r }
+pwr.2p.test(h=NULL, n=200, power=0.8)
+```
+So the effect if 0.28, and the control rate is 35%, we can find the smallest detectable increase:
+
+```{r }
+ES.h(.35 + 0.14, 0.35)
+```
+
+So the smallest change detectable with 80% power is about 14%.  If the expected increase in treatment effect is smaller than this then the study needs to be bigger.
+
+## Exercise 9 
+
+1) For a paired t-test, we would use the `type="paired"` option.
+
+2) 
+
+```{r }
+pwr.t.test(n=NULL, d = 20 / (sqrt(2)*30), power = 0.8 , type="paired" )
+```
+
+We need ~40 participants, each of which will provide two measurements.
+
+In the previous study, we would have needed 142 samples per group!
+
+```{r }
+pwr.t.test(n=NULL, d = 20 / 60, power = 0.8  )
+```
+
+So pairing has helped a lot!
+
+3) Look at how the sample size depends on the critical threshold for p-value.
+
+```{r }
+pwr.t.test(n=NULL, d = 20 / (sqrt(2)*30), power = 0.8 ,sig.level = 0.01, type="paired" )
+pwr.t.test(n=NULL, d = 20 / (sqrt(2)*30), power = 0.8 ,sig.level = 0.001, type="paired" )
+```
+
+## Exercise 10
+
+### Design 1:
+
+```{r }
+pwr.t.test(n=NULL , d=20/30, power=0.8)
+```
+
+### Design 2:
+
+Change in concentration will have sd:
+
+```{r }
+sd_change = sqrt(2) * sqrt(1-0.6) * 30
+```
+So the sample size needed is:
+
+```{r }
+pwr.t.test(n=NULL , d=20/27, power=0.8)
+```
+
+Only slightly fewer than design 1 
+
+### Design 3:
+
+Given the ICC of 0.6, we would expect to explain 60% of variance by adjusting for the baseline value.  We can use the `Superpower` R package to find how this affects the sample size needed, or adjust the standard deviation directly and use the regular `pwr.t.test` function:
+
+```{r }
+library(Superpower)
+power_oneway_ancova(mu=c(0,20),n=NULL,n_cov=1,sd=30,r2=0.6, alpha_level = 0.05, beta_level = 0.2)
+pwr.t.test(n=NULL, d=20 / (sqrt(0.4)*30), power=0.8)
+```
+
+This suggests we only need 16 participants per group!
+
+So this is a much more powerful approach than using the change score.  How much sample size we can save depends on how well we can explain the outcome value with the baseline value, that is what is the ICC.
+
+### Design 4:  Cross-over study
+
+We saw in the last example that a cross-over trial where we use the same participant twice can be much more efficient:
+
+```{r }
+pwr.t.test(n=NULL, d=20 / sd_change, power=0.8, type="paired")
+```
+
+Here we would need 16 participants, but each would have to undergo two treatments and assessments.  This might not be feasible.
+
+## Exercise 11:
+
+To power an ANOVA is a little more complicated, because the hypothesis is more complex.  We have different effect sizes between different treatments, and we might be interested in the global p-value or in particular contrasts.
+
+The assumptions for the power calculation will be the same as the assumptions for any ANOVA.
