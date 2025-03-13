@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.6.39">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="George Savva">
 <meta name="dcterms.date" content="2023-10-02">
 
-<title>R and Statistics - Descriptive tables using base R, data.table and tidyverse</title>
+<title>Descriptive tables using base R, data.table and tidyverse – R and Statistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,7 +24,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -35,7 +35,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -71,17 +71,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-ddd961a2510921635943dfbbd19534c4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -90,6 +96,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -103,90 +110,98 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Statistics and R in Biology</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html" rel="" target=""><i class="bi bi-fa-home" role="img">
+    <a class="nav-link" href="./index.html"> <i class="bi bi-fa-home" role="img">
 </i> 
- <span class="menu-text">Home</span></a>
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-intro-to-r-for-statistics" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-intro-to-r-for-statistics" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Intro to R for Statistics</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-intro-to-r-for-statistics">    
         <li>
-    <a class="dropdown-item" href="./day1.html" rel="" target="">
+    <a class="dropdown-item" href="./day1.html">
  <span class="dropdown-text">NBI PhD Intro to R Day 1</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./day2.html" rel="" target="">
+    <a class="dropdown-item" href="./day2.html">
  <span class="dropdown-text">NBI PhD Intro to R Day 2/3</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./workshopscript.html" rel="" target="">
+    <a class="dropdown-item" href="./workshopscript.html">
  <span class="dropdown-text">JIC MSc Workshop (2021/2022)</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./flipbook.html" rel="" target="">
- <span class="dropdown-text">ggplot example</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./irisScript.html" rel="" target="">
+    <a class="dropdown-item" href="./irisScript.html">
  <span class="dropdown-text">Iris data walkthough</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-how-many-samples-do-i-need" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-how-many-samples-do-i-need" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">How many samples do I need?</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-how-many-samples-do-i-need">    
         <li class="dropdown-header">Course notes</li>
         <li>
-    <a class="dropdown-item" href="./sampleSize.html" rel="" target="">
+    <a class="dropdown-item" href="./sampleSize.html">
  <span class="dropdown-text">How many samples do I need?</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-statistics-notes" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-statistics-demonstrations" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Statistics demonstrations</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-statistics-demonstrations">    
+        <li class="dropdown-header">Box plots and rainclouds</li>
+        <li>
+    <a class="dropdown-item" href="./boxplotcatton.html">
+ <span class="dropdown-text">Comparing two groups</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-statistics-notes" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Statistics notes</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-statistics-notes">    
         <li>
-    <a class="dropdown-item" href="./day3.html" rel="" target="">
+    <a class="dropdown-item" href="./day3.html">
  <span class="dropdown-text">Notes on graphing</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./dichot.html" rel="" target="">
+    <a class="dropdown-item" href="./dichot.html">
  <span class="dropdown-text">Do not group your data points</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./alphabeta.html" rel="" target="">
+    <a class="dropdown-item" href="./alphabeta.html">
  <span class="dropdown-text">Simple alpha and beta diversity simulation</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./berkson.html" rel="" target="">
+    <a class="dropdown-item" href="./berkson.html">
  <span class="dropdown-text">Selection bias (Berkson bias) in observational studies</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./independentclusters.html" rel="" target="">
+    <a class="dropdown-item" href="./independentclusters.html">
  <span class="dropdown-text">Sampling from clustered data in observational studies</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./repeats.html" rel="" target="">
+    <a class="dropdown-item" href="./repeats.html">
  <span class="dropdown-text">Run bigger experiments instead of internal replications</span></a>
   </li>  
     </ul>
@@ -194,19 +209,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="mailto:george.savva@quadram.ac.uk" rel="" target=""><i class="bi bi-fa-envelope-o" role="img">
+    <a class="nav-link" href="mailto:george.savva@quadram.ac.uk"> <i class="bi bi-fa-envelope-o" role="img">
 </i> 
- <span class="menu-text">Contact me</span></a>
+<span class="menu-text">Contact me</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://github.com/georgemsavva" rel="" target=""><i class="bi bi-fa-github" role="img">
+    <a class="nav-link" href="https://github.com/georgemsavva"> <i class="bi bi-fa-github" role="img">
 </i> 
- <span class="menu-text">GitHub</span></a>
+<span class="menu-text">GitHub</span></a>
   </li>  
 </ul>
+          </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -266,7 +281,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header>
+
 
 <section id="limitations-of-base-r" class="level1">
 <h1>Limitations of “base” R</h1>
@@ -296,16 +313,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    height    sex
-1 198.9760   Male
-2 190.3905   Male
-3 196.5386   Male
-4 175.4974   Male
-5 190.5699 Female
-6 198.4649   Male</code></pre>
+1 178.5943 Female
+2 199.4212   Male
+3 162.9419 Female
+4 180.7637 Female
+5 198.8366   Male
+6 172.1753 Female</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(dat<span class="sc">$</span>height<span class="sc">~</span>dat<span class="sc">$</span>sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="datatabletidyverse_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="datatabletidyverse_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -316,8 +337,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>( height <span class="sc">~</span> sex , <span class="at">FUN=</span>mean, <span class="at">data=</span>dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     sex   height
-1 Female 179.3636
-2   Male 189.0895</code></pre>
+1 Female 179.5790
+2   Male 192.4219</code></pre>
 </div>
 </div>
 <p>Alternatively we could use <code>tapply</code>:</p>
@@ -325,7 +346,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>( dat<span class="sc">$</span>height, dat<span class="sc">$</span>sex , <span class="at">FUN=</span>mean )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Female     Male 
-179.3636 189.0895 </code></pre>
+179.5790 192.4219 </code></pre>
 </div>
 </div>
 <p>While this works in this simple case it is difficult to get a more complicated table. For example, there is no obvious way to get a table of means, standard deviations and counts (the standard table 1 in any biomedical paper) without using an external package.</p>
@@ -340,7 +361,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table) <span class="co"># Load the package</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'data.table' was built under R version 4.3.3</code></pre>
+<pre><code>Warning: package 'data.table' was built under R version 4.1.3</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setDT</span>(dat)          <span class="co"># Turn our "data frame" 'dat' into a "data table"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -350,19 +371,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>dat[ , <span class="fu">mean</span>(height), by<span class="ot">=</span>sex ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      sex       V1
-   &lt;char&gt;    &lt;num&gt;
-1:   Male 189.0895
-2: Female 179.3636</code></pre>
+1: Female 179.5790
+2:   Male 192.4219</code></pre>
 </div>
 </div>
 <p>Next, adding the counts and standard deviations:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>dat[ , .(<span class="at">Count=</span>.N, <span class="at">Mean=</span><span class="fu">mean</span>(height),<span class="at">SD=</span><span class="fu">sd</span>(height)), by<span class="ot">=</span>sex]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      sex Count     Mean       SD
-   &lt;char&gt; &lt;int&gt;    &lt;num&gt;    &lt;num&gt;
-1:   Male    48 189.0895 9.888607
-2: Female    52 179.3636 9.519805</code></pre>
+<pre><code>      sex Count     Mean        SD
+1: Female    47 179.5790 10.769553
+2:   Male    53 192.4219  9.644821</code></pre>
 </div>
 </div>
 <section id="breaking-down-the-data.table-syntax" class="level2">
@@ -380,6 +399,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><code>tidyverse</code> is a set of <code>R</code> packages that provide many functions for data manipulation and programming. In particular the <code>dplyr</code> library includes functions for data manipulation and summarisation. To use these we can load the <code>dplyr</code> library:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'dplyr' was built under R version 4.1.3</code></pre>
+</div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'dplyr'</code></pre>
@@ -403,24 +425,24 @@ Attaching package: 'dplyr'</code></pre>
 <p>Then get our results table the <code>tidyverse</code> way:</p>
 <p>First just the means</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="fu">mean</span>(height))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="fu">mean</span>(height))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 2
+<pre><code># A tibble: 2 x 2
   sex    `mean(height)`
   &lt;chr&gt;           &lt;dbl&gt;
-1 Female           179.
-2 Male             189.</code></pre>
+1 Female           180.
+2 Male             192.</code></pre>
 </div>
 </div>
 <p>Now with the counts and standard deviations:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">N=</span><span class="fu">n</span>(),<span class="fu">mean</span>(height), <span class="fu">sd</span>(height))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">N=</span><span class="fu">n</span>(),<span class="fu">mean</span>(height), <span class="fu">sd</span>(height))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 4
+<pre><code># A tibble: 2 x 4
   sex        N `mean(height)` `sd(height)`
   &lt;chr&gt;  &lt;int&gt;          &lt;dbl&gt;        &lt;dbl&gt;
-1 Female    52           179.         9.52
-2 Male      48           189.         9.89</code></pre>
+1 Female    47           180.        10.8 
+2 Male      53           192.         9.64</code></pre>
 </div>
 </div>
 <section id="the-tidyverse-dplyr-syntax" class="level2">
@@ -434,30 +456,17 @@ Attaching package: 'dplyr'</code></pre>
 <h1>Using <code>gtsummary</code></h1>
 <p>Finally to illustrate a package meant specifically for nicely formatted data tabulations, the <code>tbl_summary</code> function from the <code>gtsummary</code> package can create tables of descriptives. <code>gtsummary</code> is built on the <code>gt</code> package, a part of the tidyverse which provides visual formatting for tables, analogous to <code>ggplot2</code> for graphs.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_summary</span>(dat, <span class="at">by=</span>sex, <span class="at">statistic=</span><span class="fu">list</span>(height<span class="sc">~</span><span class="st">"{mean} ({sd})"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_summary</span>(dat, <span class="at">by=</span>sex, <span class="at">statistic=</span><span class="fu">list</span>(height<span class="sc">~</span><span class="st">"{mean} ({sd})"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
-<div id="kutuplgrsx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#kutuplgrsx table {
-  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+<div id="jrinwgoazq" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#kutuplgrsx thead, #kutuplgrsx tbody, #kutuplgrsx tfoot, #kutuplgrsx tr, #kutuplgrsx td, #kutuplgrsx th {
-  border-style: none;
-}
-
-#kutuplgrsx p {
-  margin: 0;
-  padding: 0;
-}
-
-#kutuplgrsx .gt_table {
+#jrinwgoazq .gt_table {
   display: table;
   border-collapse: collapse;
-  line-height: normal;
   margin-left: auto;
   margin-right: auto;
   color: #333333;
@@ -480,36 +489,7 @@ Attaching package: 'dplyr'</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#kutuplgrsx .gt_caption {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-#kutuplgrsx .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#kutuplgrsx .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 3px;
-  padding-bottom: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#kutuplgrsx .gt_heading {
+#jrinwgoazq .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -521,13 +501,37 @@ Attaching package: 'dplyr'</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#kutuplgrsx .gt_bottom_border {
+#jrinwgoazq .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#jrinwgoazq .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#jrinwgoazq .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#kutuplgrsx .gt_col_headings {
+#jrinwgoazq .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -542,7 +546,7 @@ Attaching package: 'dplyr'</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#kutuplgrsx .gt_col_heading {
+#jrinwgoazq .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -562,7 +566,7 @@ Attaching package: 'dplyr'</code></pre>
   overflow-x: hidden;
 }
 
-#kutuplgrsx .gt_column_spanner_outer {
+#jrinwgoazq .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -574,15 +578,15 @@ Attaching package: 'dplyr'</code></pre>
   padding-right: 4px;
 }
 
-#kutuplgrsx .gt_column_spanner_outer:first-child {
+#jrinwgoazq .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#kutuplgrsx .gt_column_spanner_outer:last-child {
+#jrinwgoazq .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#kutuplgrsx .gt_column_spanner {
+#jrinwgoazq .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -594,11 +598,7 @@ Attaching package: 'dplyr'</code></pre>
   width: 100%;
 }
 
-#kutuplgrsx .gt_spanner_row {
-  border-bottom-style: hidden;
-}
-
-#kutuplgrsx .gt_group_heading {
+#jrinwgoazq .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -621,10 +621,9 @@ Attaching package: 'dplyr'</code></pre>
   border-right-width: 1px;
   border-right-color: #D3D3D3;
   vertical-align: middle;
-  text-align: left;
 }
 
-#kutuplgrsx .gt_empty_group_heading {
+#jrinwgoazq .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -639,15 +638,15 @@ Attaching package: 'dplyr'</code></pre>
   vertical-align: middle;
 }
 
-#kutuplgrsx .gt_from_md > :first-child {
+#jrinwgoazq .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#kutuplgrsx .gt_from_md > :last-child {
+#jrinwgoazq .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#kutuplgrsx .gt_row {
+#jrinwgoazq .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -666,7 +665,7 @@ Attaching package: 'dplyr'</code></pre>
   overflow-x: hidden;
 }
 
-#kutuplgrsx .gt_stub {
+#jrinwgoazq .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -679,7 +678,7 @@ Attaching package: 'dplyr'</code></pre>
   padding-right: 5px;
 }
 
-#kutuplgrsx .gt_stub_row_group {
+#jrinwgoazq .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -693,15 +692,11 @@ Attaching package: 'dplyr'</code></pre>
   vertical-align: top;
 }
 
-#kutuplgrsx .gt_row_group_first td {
+#jrinwgoazq .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#kutuplgrsx .gt_row_group_first th {
-  border-top-width: 2px;
-}
-
-#kutuplgrsx .gt_summary_row {
+#jrinwgoazq .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -711,16 +706,16 @@ Attaching package: 'dplyr'</code></pre>
   padding-right: 5px;
 }
 
-#kutuplgrsx .gt_first_summary_row {
+#jrinwgoazq .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#kutuplgrsx .gt_first_summary_row.thick {
+#jrinwgoazq .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#kutuplgrsx .gt_last_summary_row {
+#jrinwgoazq .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -730,7 +725,7 @@ Attaching package: 'dplyr'</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#kutuplgrsx .gt_grand_summary_row {
+#jrinwgoazq .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -740,7 +735,7 @@ Attaching package: 'dplyr'</code></pre>
   padding-right: 5px;
 }
 
-#kutuplgrsx .gt_first_grand_summary_row {
+#jrinwgoazq .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -750,21 +745,11 @@ Attaching package: 'dplyr'</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#kutuplgrsx .gt_last_grand_summary_row_top {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: double;
-  border-bottom-width: 6px;
-  border-bottom-color: #D3D3D3;
-}
-
-#kutuplgrsx .gt_striped {
+#jrinwgoazq .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#kutuplgrsx .gt_table_body {
+#jrinwgoazq .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -773,7 +758,7 @@ Attaching package: 'dplyr'</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#kutuplgrsx .gt_footnotes {
+#jrinwgoazq .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -787,16 +772,16 @@ Attaching package: 'dplyr'</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#kutuplgrsx .gt_footnote {
+#jrinwgoazq .gt_footnote {
   margin: 0px;
   font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
+  padding-left: 4px;
+  padding-right: 4px;
   padding-left: 5px;
   padding-right: 5px;
 }
 
-#kutuplgrsx .gt_sourcenotes {
+#jrinwgoazq .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -810,7 +795,7 @@ Attaching package: 'dplyr'</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#kutuplgrsx .gt_sourcenote {
+#jrinwgoazq .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -818,86 +803,88 @@ Attaching package: 'dplyr'</code></pre>
   padding-right: 5px;
 }
 
-#kutuplgrsx .gt_left {
+#jrinwgoazq .gt_left {
   text-align: left;
 }
 
-#kutuplgrsx .gt_center {
+#jrinwgoazq .gt_center {
   text-align: center;
 }
 
-#kutuplgrsx .gt_right {
+#jrinwgoazq .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#kutuplgrsx .gt_font_normal {
+#jrinwgoazq .gt_font_normal {
   font-weight: normal;
 }
 
-#kutuplgrsx .gt_font_bold {
+#jrinwgoazq .gt_font_bold {
   font-weight: bold;
 }
 
-#kutuplgrsx .gt_font_italic {
+#jrinwgoazq .gt_font_italic {
   font-style: italic;
 }
 
-#kutuplgrsx .gt_super {
+#jrinwgoazq .gt_super {
   font-size: 65%;
 }
 
-#kutuplgrsx .gt_footnote_marks {
+#jrinwgoazq .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
-  position: initial;
 }
 
-#kutuplgrsx .gt_asterisk {
+#jrinwgoazq .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#kutuplgrsx .gt_indent_1 {
-  text-indent: 5px;
+#jrinwgoazq .gt_slash_mark {
+  font-size: 0.7em;
+  line-height: 0.7em;
+  vertical-align: 0.15em;
 }
 
-#kutuplgrsx .gt_indent_2 {
-  text-indent: 10px;
+#jrinwgoazq .gt_fraction_numerator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: 0.45em;
 }
 
-#kutuplgrsx .gt_indent_3 {
-  text-indent: 15px;
-}
-
-#kutuplgrsx .gt_indent_4 {
-  text-indent: 20px;
-}
-
-#kutuplgrsx .gt_indent_5 {
-  text-indent: 25px;
+#jrinwgoazq .gt_fraction_denominator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: -0.05em;
 }
 </style>
-<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-  <thead>
-    <tr class="gt_col_headings">
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="<strong>Characteristic</strong>"><strong>Characteristic</strong></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>Female</strong>, N = 52<span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>"><strong>Female</strong>, N = 52<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>Male</strong>, N = 48<span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>"><strong>Male</strong>, N = 48<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
-    </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr><td headers="label" class="gt_row gt_left">height</td>
-<td headers="stat_1" class="gt_row gt_center">179 (10)</td>
-<td headers="stat_2" class="gt_row gt_center">189 (10)</td></tr>
-  </tbody>
-  
-  <tfoot class="gt_footnotes">
-    <tr>
-      <td class="gt_footnote" colspan="3"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span> Mean (SD)</td>
-    </tr>
-  </tfoot>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<thead class="gt_col_headings">
+<tr class="header">
+<th class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th"><strong>Characteristic</strong></th>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th"><strong>Female</strong>, N = 47<sup>1</sup></th>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th"><strong>Male</strong>, N = 53<sup>1</sup></th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left">height</td>
+<td class="gt_row gt_center">180 (11)</td>
+<td class="gt_row gt_center">192 (10)</td>
+</tr>
+</tbody><tfoot class="gt_footnotes">
+<tr class="odd">
+<td colspan="3" class="gt_footnote"><sup>1</sup> Mean (SD)</td>
+</tr>
+</tfoot>
+
 </table>
+
 </div>
 </div>
 </div>
@@ -954,18 +941,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -997,11 +973,48 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1011,8 +1024,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1024,7 +1046,129 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1068,6 +1212,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1093,6 +1238,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1153,6 +1324,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 

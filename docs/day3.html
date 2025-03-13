@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.6.39">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="George Savva">
 <meta name="dcterms.date" content="2022-04-01">
 
-<title>R and Statistics - Intro to R day 3 - Notes on Graphing</title>
+<title>Intro to R day 3 - Notes on Graphing – R and Statistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,7 +24,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -35,7 +35,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -71,17 +71,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-ddd961a2510921635943dfbbd19534c4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -90,6 +96,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -103,90 +110,98 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Statistics and R in Biology</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html" rel="" target=""><i class="bi bi-fa-home" role="img">
+    <a class="nav-link" href="./index.html"> <i class="bi bi-fa-home" role="img">
 </i> 
- <span class="menu-text">Home</span></a>
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-intro-to-r-for-statistics" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-intro-to-r-for-statistics" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Intro to R for Statistics</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-intro-to-r-for-statistics">    
         <li>
-    <a class="dropdown-item" href="./day1.html" rel="" target="">
+    <a class="dropdown-item" href="./day1.html">
  <span class="dropdown-text">NBI PhD Intro to R Day 1</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./day2.html" rel="" target="">
+    <a class="dropdown-item" href="./day2.html">
  <span class="dropdown-text">NBI PhD Intro to R Day 2/3</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./workshopscript.html" rel="" target="">
+    <a class="dropdown-item" href="./workshopscript.html">
  <span class="dropdown-text">JIC MSc Workshop (2021/2022)</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./flipbook.html" rel="" target="">
- <span class="dropdown-text">ggplot example</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./irisScript.html" rel="" target="">
+    <a class="dropdown-item" href="./irisScript.html">
  <span class="dropdown-text">Iris data walkthough</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-how-many-samples-do-i-need" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-how-many-samples-do-i-need" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">How many samples do I need?</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-how-many-samples-do-i-need">    
         <li class="dropdown-header">Course notes</li>
         <li>
-    <a class="dropdown-item" href="./sampleSize.html" rel="" target="">
+    <a class="dropdown-item" href="./sampleSize.html">
  <span class="dropdown-text">How many samples do I need?</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-statistics-notes" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-statistics-demonstrations" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Statistics demonstrations</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-statistics-demonstrations">    
+        <li class="dropdown-header">Box plots and rainclouds</li>
+        <li>
+    <a class="dropdown-item" href="./boxplotcatton.html">
+ <span class="dropdown-text">Comparing two groups</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-statistics-notes" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Statistics notes</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-statistics-notes">    
         <li>
-    <a class="dropdown-item" href="./day3.html" rel="" target="">
+    <a class="dropdown-item" href="./day3.html">
  <span class="dropdown-text">Notes on graphing</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./dichot.html" rel="" target="">
+    <a class="dropdown-item" href="./dichot.html">
  <span class="dropdown-text">Do not group your data points</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./alphabeta.html" rel="" target="">
+    <a class="dropdown-item" href="./alphabeta.html">
  <span class="dropdown-text">Simple alpha and beta diversity simulation</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./berkson.html" rel="" target="">
+    <a class="dropdown-item" href="./berkson.html">
  <span class="dropdown-text">Selection bias (Berkson bias) in observational studies</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./independentclusters.html" rel="" target="">
+    <a class="dropdown-item" href="./independentclusters.html">
  <span class="dropdown-text">Sampling from clustered data in observational studies</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./repeats.html" rel="" target="">
+    <a class="dropdown-item" href="./repeats.html">
  <span class="dropdown-text">Run bigger experiments instead of internal replications</span></a>
   </li>  
     </ul>
@@ -194,19 +209,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="mailto:george.savva@quadram.ac.uk" rel="" target=""><i class="bi bi-fa-envelope-o" role="img">
+    <a class="nav-link" href="mailto:george.savva@quadram.ac.uk"> <i class="bi bi-fa-envelope-o" role="img">
 </i> 
- <span class="menu-text">Contact me</span></a>
+<span class="menu-text">Contact me</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://github.com/georgemsavva" rel="" target=""><i class="bi bi-fa-github" role="img">
+    <a class="nav-link" href="https://github.com/georgemsavva"> <i class="bi bi-fa-github" role="img">
 </i> 
- <span class="menu-text">GitHub</span></a>
+<span class="menu-text">GitHub</span></a>
   </li>  
 </ul>
+          </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -262,7 +277,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header>
+
 
 <p>Plotting data is an essential part of data analysis and reporting. Your plots communicate your results, and a good plot can be the difference between a successful and unsuccessful communication.</p>
 <p>In this session we’ll think about how to plot your data, what makes a good vs a bad plot, and illustrate some concepts for plotting using R.</p>
@@ -339,7 +356,11 @@ Some uses for graphics (click to expand)
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">geom=</span><span class="st">"errorbar"</span>, <span class="at">width=</span><span class="fl">0.2</span>) <span class="sc">+</span> </span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()<span class="sc">+</span> <span class="fu">stat_compare_means</span>(<span class="at">label.y =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="day3_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="day3_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>On the face of it, it looks like the outcome is higher in group 2 than group 1. If this is all you see then this is surely the conclusion you would come to.</p>
@@ -351,7 +372,11 @@ Some uses for graphics (click to expand)
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="day3_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="day3_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Quite differently? At least with this second visualisation we can see the data and draw our conclusions about what is going on directly.</p>
@@ -370,7 +395,11 @@ Some uses for graphics (click to expand)
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>walkingdata<span class="sc">$</span>time[walkingdata<span class="sc">$</span>time<span class="sc">&lt;</span><span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(walkingdata, <span class="at">columns=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="day3_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="day3_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Note I’m not wasting a lot of time making this graph pretty. It’s for me only, I don’t care what it looks like, I just want to see the data as quickly and as effectively as possible. I’ve also left patient ID in here as a variable, there’s no harm doing this, and it might show me if any data errors have occurred.</p>
@@ -385,27 +414,14 @@ Some uses for graphics (click to expand)
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data=</span>walkingdata, <span class="fu">log</span>(time) <span class="sc">~</span> group <span class="sc">+</span> sex <span class="sc">+</span> age <span class="sc">+</span> department)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>gtsummary<span class="sc">::</span><span class="fu">tbl_regression</span>(model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
-<div id="falthzlcin" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#falthzlcin table {
-  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#falthzlcin thead, #falthzlcin tbody, #falthzlcin tfoot, #falthzlcin tr, #falthzlcin td, #falthzlcin th {
-  border-style: none;
-}
-
-#falthzlcin p {
-  margin: 0;
-  padding: 0;
+<div id="falthzlcin" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
 #falthzlcin .gt_table {
   display: table;
   border-collapse: collapse;
-  line-height: normal;
   margin-left: auto;
   margin-right: auto;
   color: #333333;
@@ -428,9 +444,16 @@ Some uses for graphics (click to expand)
   border-left-color: #D3D3D3;
 }
 
-#falthzlcin .gt_caption {
-  padding-top: 4px;
-  padding-bottom: 4px;
+#falthzlcin .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
 }
 
 #falthzlcin .gt_title {
@@ -449,24 +472,12 @@ Some uses for graphics (click to expand)
   color: #333333;
   font-size: 85%;
   font-weight: initial;
-  padding-top: 3px;
-  padding-bottom: 5px;
+  padding-top: 0;
+  padding-bottom: 6px;
   padding-left: 5px;
   padding-right: 5px;
   border-top-color: #FFFFFF;
   border-top-width: 0;
-}
-
-#falthzlcin .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
 }
 
 #falthzlcin .gt_bottom_border {
@@ -542,10 +553,6 @@ Some uses for graphics (click to expand)
   width: 100%;
 }
 
-#falthzlcin .gt_spanner_row {
-  border-bottom-style: hidden;
-}
-
 #falthzlcin .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
@@ -569,7 +576,6 @@ Some uses for graphics (click to expand)
   border-right-width: 1px;
   border-right-color: #D3D3D3;
   vertical-align: middle;
-  text-align: left;
 }
 
 #falthzlcin .gt_empty_group_heading {
@@ -645,10 +651,6 @@ Some uses for graphics (click to expand)
   border-top-width: 2px;
 }
 
-#falthzlcin .gt_row_group_first th {
-  border-top-width: 2px;
-}
-
 #falthzlcin .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
@@ -698,16 +700,6 @@ Some uses for graphics (click to expand)
   border-top-color: #D3D3D3;
 }
 
-#falthzlcin .gt_last_grand_summary_row_top {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: double;
-  border-bottom-width: 6px;
-  border-bottom-color: #D3D3D3;
-}
-
 #falthzlcin .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
@@ -738,8 +730,8 @@ Some uses for graphics (click to expand)
 #falthzlcin .gt_footnote {
   margin: 0px;
   font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
+  padding-left: 4px;
+  padding-right: 4px;
   padding-left: 5px;
   padding-right: 5px;
 }
@@ -796,9 +788,10 @@ Some uses for graphics (click to expand)
 }
 
 #falthzlcin .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
-  position: initial;
 }
 
 #falthzlcin .gt_asterisk {
@@ -806,92 +799,115 @@ Some uses for graphics (click to expand)
   vertical-align: 0;
 }
 
-#falthzlcin .gt_indent_1 {
-  text-indent: 5px;
+#falthzlcin .gt_slash_mark {
+  font-size: 0.7em;
+  line-height: 0.7em;
+  vertical-align: 0.15em;
 }
 
-#falthzlcin .gt_indent_2 {
-  text-indent: 10px;
+#falthzlcin .gt_fraction_numerator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: 0.45em;
 }
 
-#falthzlcin .gt_indent_3 {
-  text-indent: 15px;
-}
-
-#falthzlcin .gt_indent_4 {
-  text-indent: 20px;
-}
-
-#falthzlcin .gt_indent_5 {
-  text-indent: 25px;
+#falthzlcin .gt_fraction_denominator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: -0.05em;
 }
 </style>
-<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-  <thead>
-    <tr class="gt_col_headings">
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="<strong>Characteristic</strong>"><strong>Characteristic</strong></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>Beta</strong>"><strong>Beta</strong></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>95% CI</strong><span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>"><strong>95% CI</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>p-value</strong>"><strong>p-value</strong></th>
-    </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr><td headers="label" class="gt_row gt_left">group</td>
-<td headers="estimate" class="gt_row gt_center"><br></td>
-<td headers="ci" class="gt_row gt_center"><br></td>
-<td headers="p.value" class="gt_row gt_center"><br></td></tr>
-    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;control</td>
-<td headers="estimate" class="gt_row gt_center">—</td>
-<td headers="ci" class="gt_row gt_center">—</td>
-<td headers="p.value" class="gt_row gt_center"><br></td></tr>
-    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;treat</td>
-<td headers="estimate" class="gt_row gt_center">-0.18</td>
-<td headers="ci" class="gt_row gt_center">-0.30, -0.07</td>
-<td headers="p.value" class="gt_row gt_center">0.003</td></tr>
-    <tr><td headers="label" class="gt_row gt_left">sex</td>
-<td headers="estimate" class="gt_row gt_center"><br></td>
-<td headers="ci" class="gt_row gt_center"><br></td>
-<td headers="p.value" class="gt_row gt_center"><br></td></tr>
-    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;F</td>
-<td headers="estimate" class="gt_row gt_center">—</td>
-<td headers="ci" class="gt_row gt_center">—</td>
-<td headers="p.value" class="gt_row gt_center"><br></td></tr>
-    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;M</td>
-<td headers="estimate" class="gt_row gt_center">0.04</td>
-<td headers="ci" class="gt_row gt_center">-0.10, 0.19</td>
-<td headers="p.value" class="gt_row gt_center">0.6</td></tr>
-    <tr><td headers="label" class="gt_row gt_left">age</td>
-<td headers="estimate" class="gt_row gt_center">0.01</td>
-<td headers="ci" class="gt_row gt_center">0.00, 0.03</td>
-<td headers="p.value" class="gt_row gt_center">0.021</td></tr>
-    <tr><td headers="label" class="gt_row gt_left">department</td>
-<td headers="estimate" class="gt_row gt_center"><br></td>
-<td headers="ci" class="gt_row gt_center"><br></td>
-<td headers="p.value" class="gt_row gt_center"><br></td></tr>
-    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;1</td>
-<td headers="estimate" class="gt_row gt_center">—</td>
-<td headers="ci" class="gt_row gt_center">—</td>
-<td headers="p.value" class="gt_row gt_center"><br></td></tr>
-    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;2</td>
-<td headers="estimate" class="gt_row gt_center">0.11</td>
-<td headers="ci" class="gt_row gt_center">-0.07, 0.28</td>
-<td headers="p.value" class="gt_row gt_center">0.2</td></tr>
-    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;3</td>
-<td headers="estimate" class="gt_row gt_center">-0.09</td>
-<td headers="ci" class="gt_row gt_center">-0.26, 0.07</td>
-<td headers="p.value" class="gt_row gt_center">0.3</td></tr>
-    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;4</td>
-<td headers="estimate" class="gt_row gt_center">-0.06</td>
-<td headers="ci" class="gt_row gt_center">-0.23, 0.12</td>
-<td headers="p.value" class="gt_row gt_center">0.5</td></tr>
-  </tbody>
-  
-  <tfoot class="gt_footnotes">
-    <tr>
-      <td class="gt_footnote" colspan="4"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span> CI = Confidence Interval</td>
-    </tr>
-  </tfoot>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<thead class="gt_col_headings">
+<tr class="header">
+<th class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th"><strong>Characteristic</strong></th>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th"><strong>Beta</strong></th>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th"><strong>95% CI</strong><sup>1</sup></th>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th"><strong>p-value</strong></th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left">group</td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">control</td>
+<td class="gt_row gt_center">—</td>
+<td class="gt_row gt_center">—</td>
+<td class="gt_row gt_center"></td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">treat</td>
+<td class="gt_row gt_center">-0.18</td>
+<td class="gt_row gt_center">-0.30, -0.07</td>
+<td class="gt_row gt_center">0.003</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left">sex</td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">F</td>
+<td class="gt_row gt_center">—</td>
+<td class="gt_row gt_center">—</td>
+<td class="gt_row gt_center"></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">M</td>
+<td class="gt_row gt_center">0.04</td>
+<td class="gt_row gt_center">-0.10, 0.19</td>
+<td class="gt_row gt_center">0.6</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left">age</td>
+<td class="gt_row gt_center">0.01</td>
+<td class="gt_row gt_center">0.00, 0.03</td>
+<td class="gt_row gt_center">0.021</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left">department</td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">1</td>
+<td class="gt_row gt_center">—</td>
+<td class="gt_row gt_center">—</td>
+<td class="gt_row gt_center"></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">2</td>
+<td class="gt_row gt_center">0.11</td>
+<td class="gt_row gt_center">-0.07, 0.28</td>
+<td class="gt_row gt_center">0.2</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">3</td>
+<td class="gt_row gt_center">-0.09</td>
+<td class="gt_row gt_center">-0.26, 0.07</td>
+<td class="gt_row gt_center">0.3</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">4</td>
+<td class="gt_row gt_center">-0.06</td>
+<td class="gt_row gt_center">-0.23, 0.12</td>
+<td class="gt_row gt_center">0.5</td>
+</tr>
+</tbody><tfoot class="gt_footnotes">
+<tr class="odd">
+<td colspan="4" class="gt_footnote"><sup>1</sup> CI = Confidence Interval</td>
+</tr>
+</tfoot>
+
 </table>
+
 </div>
 </div>
 </div>
@@ -926,7 +942,11 @@ Intervals are back-transformed from the log scale </code></pre>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_compare_means</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="day3_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="day3_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>or better, but still not so informative:</p>
@@ -942,7 +962,11 @@ Intervals are back-transformed from the log scale </code></pre>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">label =</span> <span class="st">"p.signif"</span>,</span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">comparisons=</span><span class="fu">list</span>(<span class="fu">c</span>(<span class="st">"treated"</span>, <span class="st">"control"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="day3_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="day3_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Could you say what the treatment effect is by looking at this graph? How sure would you be about it? Also, how would you represent a model other than a simple comparison of means (for example, the multiple linear regression model that we estimated). By confusing the descriptive with the inferential graph we are limiting our ability to conduct the appropriate statistical analysis.</p>
@@ -955,9 +979,6 @@ Intervals are back-transformed from the log scale </code></pre>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(walkingdata, <span class="at">x=</span>group, <span class="at">y=</span>logtime, <span class="at">idx=</span><span class="fu">c</span>(<span class="st">"control"</span>, <span class="st">"treat"</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean_diff</span>() <span class="sc">|&gt;</span> </span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dabest_plot</span>(<span class="at">swarm_label=</span><span class="st">"log(time)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="day3_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
-</div>
 </div>
 <p>Note that this plot allows us to see the distributions of the data in both groups, but crucially also an estimate of the difference between the groups and the uncertainty around that. A downside is that we cannot accommodate the adjustment for sex or department that was included in the model.</p>
 <p>If we did want to show the adjusted estimates, and compare estimates with each other as well as a null hypothesis, then we could use a forest plot. For example, suppose we wanted to compare several groups, say walking speed over department, then a visualisation like this might be useful.</p>
@@ -970,16 +991,16 @@ Intervals are back-transformed from the log scale </code></pre>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>td <span class="ot">&lt;-</span> <span class="fu">tidy</span>(em2, <span class="at">conf.int =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>td</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 11
+<pre><code># A tibble: 6 x 11
   term       contrast  null.value ratio std.error    df conf.low conf.high  null
   &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
-1 department departme…          0 0.897    0.0797   124    0.712      1.13     1
-2 department departme…          0 1.10     0.0933   124    0.881      1.37     1
-3 department departme…          0 1.06     0.0933   124    0.843      1.33     1
-4 department departme…          0 1.23     0.100    124    0.991      1.52     1
-5 department departme…          0 1.18     0.102    124    0.944      1.48     1
-6 department departme…          0 0.964    0.0798   124    0.777      1.20     1
-# ℹ 2 more variables: statistic &lt;dbl&gt;, adj.p.value &lt;dbl&gt;</code></pre>
+1 department departme~          0 0.897    0.0797   124    0.712      1.13     1
+2 department departme~          0 1.10     0.0933   124    0.881      1.37     1
+3 department departme~          0 1.06     0.0933   124    0.843      1.33     1
+4 department departme~          0 1.23     0.100    124    0.991      1.52     1
+5 department departme~          0 1.18     0.102    124    0.944      1.48     1
+6 department departme~          0 0.964    0.0798   124    0.777      1.20     1
+# i 2 more variables: statistic &lt;dbl&gt;, adj.p.value &lt;dbl&gt;</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(td) <span class="sc">+</span> </span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x=</span>contrast, <span class="at">y=</span>ratio, <span class="at">ymax=</span>conf.high, <span class="at">ymin=</span>conf.low) <span class="sc">+</span> </span>
@@ -989,7 +1010,11 @@ Intervals are back-transformed from the log scale </code></pre>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">"Ratio of average walking task times with Tukey adjusted 95% confidence intervals"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="day3_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="day3_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>What might improve this graph here? Perhaps an annotation for which side of the graph corresponds to faster and which to slower. It is possible to work it out, but if you can avoid that cognitive load for your readers then that would be better!</p>
@@ -1020,7 +1045,6 @@ Intervals are back-transformed from the log scale </code></pre>
 <h2 class="anchored" data-anchor-id="plotting-with-ggplot">Plotting with ggplot</h2>
 <ul>
 <li>Slides on ggplot including links to other tutorials are here: <a href="./day3.pptx">Graphing - day3.pptx</a></li>
-<li>A flipbook showing a graph built with ggplot elements is here: <a href="./flipbook.html">Example ggplot</a></li>
 </ul>
 
 
@@ -1063,18 +1087,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1106,11 +1119,48 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1120,8 +1170,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1133,7 +1192,129 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1177,6 +1358,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1202,6 +1384,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1262,6 +1470,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 
