@@ -33,7 +33,7 @@ Before we dive in and import it, we need to make sure our data is in a sensible 
 
 1. Open RStudio and open the project you created in day 1 (if not already opened).
 
-2. Then, save the example data [`plantGrowth.xlsx`](`plantGrowth.xlsx`) for this tutorial into your project folder.  Check that it has appeared in the 'files' pane in RStudio.
+2. Then, save the example data [`plantGrowth.xlsx`](plantGrowth.xlsx) for this tutorial into your project folder.  Check that it has appeared in the 'files' pane in RStudio.
 
 3. Start a new script file that will include  the commands we need to import, visualise and analyse the data.  Make sure you save the script file.
 
