@@ -19,3 +19,7 @@ Solutions to the exercises are here
 
 * [Solutions](powerSolutionsJun2024.qmd)
 
+Link to sample size simulator app
+
+* [Sample size example app](https://georgemsavva.shinyapps.io/powerSimulator/)
+

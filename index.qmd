@@ -13,6 +13,7 @@ There are also some general notes on statistics that I have created for myself (
 * NBI/JIC MSc Introduction to R
     * [Day 1](day1.qmd)
     * [Day 2/3 (PhD version)](day2.qmd)
+    * [Day 3 (MSc version)](day3msc.qmd)
 * How many samples do I need?
     * [Course notes](sampleSize.qmd)
 * Statistics notes
@@ -25,12 +26,9 @@ There are also some general notes on statistics that I have created for myself (
 * Notes on using R
     * [Tidyverse, data.table and others for making descriptive tables](datatabletidyverse.qmd)
     * [Using packages, functions and pipes](praise.qmd)
-    * [Using ggplot2](flipbook.html)
     * [An analysis of the Iris dataset](irisScript.qmd)
 
 Older stuff
 
 * JIC MSc Workshop (2021/2022)
     * [Tutorial](workshopscript.html)
-    
-    

@@ -511,7 +511,7 @@ plot(mod1)
 *Use `performance::check_model` to explore the model diagnostics*
 
 ```{r }
-performance::check_model(mod1)
+#performance::check_model(mod1)
 ```
 
 *Now estimate a new model to compare the task completion speed between groups.*
@@ -522,7 +522,10 @@ performance::check_model(mod1)
 
 walkingdat$speed <- 1/walkingdat$time
 mod3 <- lm(data=walkingdat , speed ~ group + age + sex)
-performance::check_model(mod3)
+par(mfrow=c(2,2))
+plot(mod3)
+par(mfrow=c(1,1))
+#performance::check_model(mod3)
 
 ```
 

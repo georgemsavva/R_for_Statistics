@@ -1,0 +1,73 @@
+---
+title: "Import and analyse data from Excel"
+author: "George Savva"
+date: "October 2025"
+always_allow_html: true
+output:
+  html_document:
+    df_print: paged
+    theme: cosmo
+    toc: yes
+    toc_depth: 2
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+```
+
+In this practical we'll load data from an Excel spreadsheet, and practice making summary statistics, graphs and tables.
+
+# Loading data from Excel
+
+# Using `readxl` to read data from Excel files
+
+So before we can do any analysis we need to import data.  We do this in code like everything else in R.
+
+To read Excel files we use the package called `readxl`.  If you already installed `tidyverse` then you already have this package.  
+
+Once the library is installed we can use the function `read_excel()`, which reads data from an excel file.
+
+## Make sure the data looks OK and is in the right place on your computer
+
+Before we dive in and import it, we need to make sure our data is in a sensible place.
+
+1. Open RStudio and open the project you created in day 1 (if not already opened).
+
+2. Then, save the example data [`plantGrowth.xlsx`](`plantGrowth.xlsx`) for this tutorial into your project folder.  Check that it has appeared in the 'files' pane in RStudio.
+
+3. Start a new script file that will include  the commands we need to import, visualise and analyse the data.  Make sure you save the script file.
+
+4. Now open the dataset in Excel and explore the file so that you understand what is there.
+
+### Read the help!
+
+We are nearly ready to import our data.  But remember that before using a new function its always good to read its documentation.  The `read_excel()` function has a few different options so first we should look at the help file:
+  
+```{r eval=FALSE}
+?read_excel
+```
+
+Note from the help file that `read_excel()` can extract data from different sheets and ranges of an Excel workbook, can use or ignore column names, and allows you to specify the type of data (numeric, dates, text etc) if you want to, or leave it to R to guess.
+
+Many R packages also have vignettes or websites including simpler guides to their use in specific cases.  `readxl` has a website that you might find helpful:  [https://readxl.tidyverse.org/](https://readxl.tidyverse.org/)
+
+From the `read_excel()` help file we can deduce the syntax to load this data into R:
+  
+```{r }
+library(readxl)
+plantdata <- read_excel(path="plantGrowth.xlsx", sheet="results")
+```
+
+Now we can use the functions we learned on day 1 to explore the data, check it has loaded OK and do some simple graphing and analysis.
+
+# Exercises
+
+In your script file, write the R code to:
+
+1. Count the number of rows in the dataset
+2. Tabulate the number of plants in each group
+3. Find the average plant weight across treatment groups
+4. Make a suitable graph showing the distribution of weights across groups
+5. Perform a statistical test of whether the treatments affect the plant weight
+
+

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.39">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -71,10 +71,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-ddd961a2510921635943dfbbd19534c4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -146,6 +146,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">JIC MSc Workshop (2021/2022)</span></a>
   </li>  
         <li>
+    <a class="dropdown-item" href="./day3msc.html">
+ <span class="dropdown-text">JIC MSc Plant Growth Example (2025)</span></a>
+  </li>  
+        <li>
     <a class="dropdown-item" href="./irisScript.html">
  <span class="dropdown-text">Iris data walkthough</span></a>
   </li>  
@@ -160,18 +164,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li>
     <a class="dropdown-item" href="./sampleSize.html">
  <span class="dropdown-text">How many samples do I need?</span></a>
-  </li>  
-    </ul>
-  </li>
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-statistics-demonstrations" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Statistics demonstrations</span>
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-statistics-demonstrations">    
-        <li class="dropdown-header">Box plots and rainclouds</li>
-        <li>
-    <a class="dropdown-item" href="./boxplotcatton.html">
- <span class="dropdown-text">Comparing two groups</span></a>
   </li>  
     </ul>
   </li>
@@ -313,12 +305,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    height    sex
-1 178.5943 Female
-2 199.4212   Male
-3 162.9419 Female
-4 180.7637 Female
-5 198.8366   Male
-6 172.1753 Female</code></pre>
+1 202.6168   Male
+2 189.1209   Male
+3 189.6766   Male
+4 175.0141 Female
+5 184.4425 Female
+6 172.5497 Female</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(dat<span class="sc">$</span>height<span class="sc">~</span>dat<span class="sc">$</span>sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -337,8 +329,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>( height <span class="sc">~</span> sex , <span class="at">FUN=</span>mean, <span class="at">data=</span>dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     sex   height
-1 Female 179.5790
-2   Male 192.4219</code></pre>
+1 Female 179.1283
+2   Male 191.0083</code></pre>
 </div>
 </div>
 <p>Alternatively we could use <code>tapply</code>:</p>
@@ -346,7 +338,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>( dat<span class="sc">$</span>height, dat<span class="sc">$</span>sex , <span class="at">FUN=</span>mean )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Female     Male 
-179.5790 192.4219 </code></pre>
+179.1283 191.0083 </code></pre>
 </div>
 </div>
 <p>While this works in this simple case it is difficult to get a more complicated table. For example, there is no obvious way to get a table of means, standard deviations and counts (the standard table 1 in any biomedical paper) without using an external package.</p>
@@ -361,7 +353,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table) <span class="co"># Load the package</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'data.table' was built under R version 4.1.3</code></pre>
+<pre><code>Warning: package 'data.table' was built under R version 4.3.3</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setDT</span>(dat)          <span class="co"># Turn our "data frame" 'dat' into a "data table"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -371,8 +363,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>dat[ , <span class="fu">mean</span>(height), by<span class="ot">=</span>sex ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      sex       V1
-1: Female 179.5790
-2:   Male 192.4219</code></pre>
+   &lt;char&gt;    &lt;num&gt;
+1:   Male 191.0083
+2: Female 179.1283</code></pre>
 </div>
 </div>
 <p>Next, adding the counts and standard deviations:</p>
@@ -380,8 +373,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>dat[ , .(<span class="at">Count=</span>.N, <span class="at">Mean=</span><span class="fu">mean</span>(height),<span class="at">SD=</span><span class="fu">sd</span>(height)), by<span class="ot">=</span>sex]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      sex Count     Mean        SD
-1: Female    47 179.5790 10.769553
-2:   Male    53 192.4219  9.644821</code></pre>
+   &lt;char&gt; &lt;int&gt;    &lt;num&gt;     &lt;num&gt;
+1:   Male    56 191.0083 10.751836
+2: Female    44 179.1283  9.081369</code></pre>
 </div>
 </div>
 <section id="breaking-down-the-data.table-syntax" class="level2">
@@ -399,9 +393,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><code>tidyverse</code> is a set of <code>R</code> packages that provide many functions for data manipulation and programming. In particular the <code>dplyr</code> library includes functions for data manipulation and summarisation. To use these we can load the <code>dplyr</code> library:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'dplyr' was built under R version 4.1.3</code></pre>
-</div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'dplyr'</code></pre>
@@ -425,24 +416,24 @@ Attaching package: 'dplyr'</code></pre>
 <p>Then get our results table the <code>tidyverse</code> way:</p>
 <p>First just the means</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="fu">mean</span>(height))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="fu">mean</span>(height))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 x 2
+<pre><code># A tibble: 2 × 2
   sex    `mean(height)`
   &lt;chr&gt;           &lt;dbl&gt;
-1 Female           180.
-2 Male             192.</code></pre>
+1 Female           179.
+2 Male             191.</code></pre>
 </div>
 </div>
 <p>Now with the counts and standard deviations:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">N=</span><span class="fu">n</span>(),<span class="fu">mean</span>(height), <span class="fu">sd</span>(height))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">N=</span><span class="fu">n</span>(),<span class="fu">mean</span>(height), <span class="fu">sd</span>(height))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 x 4
+<pre><code># A tibble: 2 × 4
   sex        N `mean(height)` `sd(height)`
   &lt;chr&gt;  &lt;int&gt;          &lt;dbl&gt;        &lt;dbl&gt;
-1 Female    47           180.        10.8 
-2 Male      53           192.         9.64</code></pre>
+1 Female    44           179.         9.08
+2 Male      56           191.        10.8 </code></pre>
 </div>
 </div>
 <section id="the-tidyverse-dplyr-syntax" class="level2">
@@ -456,17 +447,29 @@ Attaching package: 'dplyr'</code></pre>
 <h1>Using <code>gtsummary</code></h1>
 <p>Finally to illustrate a package meant specifically for nicely formatted data tabulations, the <code>tbl_summary</code> function from the <code>gtsummary</code> package can create tables of descriptives. <code>gtsummary</code> is built on the <code>gt</code> package, a part of the tidyverse which provides visual formatting for tables, analogous to <code>ggplot2</code> for graphs.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_summary</span>(dat, <span class="at">by=</span>sex, <span class="at">statistic=</span><span class="fu">list</span>(height<span class="sc">~</span><span class="st">"{mean} ({sd})"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_summary</span>(dat, <span class="at">by=</span>sex, <span class="at">statistic=</span><span class="fu">list</span>(height<span class="sc">~</span><span class="st">"{mean} ({sd})"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="jrinwgoazq" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+<div id="tgbgzqasrz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#tgbgzqasrz table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-#jrinwgoazq .gt_table {
+#tgbgzqasrz thead, #tgbgzqasrz tbody, #tgbgzqasrz tfoot, #tgbgzqasrz tr, #tgbgzqasrz td, #tgbgzqasrz th {
+  border-style: none;
+}
+
+#tgbgzqasrz p {
+  margin: 0;
+  padding: 0;
+}
+
+#tgbgzqasrz .gt_table {
   display: table;
   border-collapse: collapse;
+  line-height: normal;
   margin-left: auto;
   margin-right: auto;
   color: #333333;
@@ -489,19 +492,12 @@ Attaching package: 'dplyr'</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#jrinwgoazq .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
+#tgbgzqasrz .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
-#jrinwgoazq .gt_title {
+#tgbgzqasrz .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -513,25 +509,37 @@ Attaching package: 'dplyr'</code></pre>
   border-bottom-width: 0;
 }
 
-#jrinwgoazq .gt_subtitle {
+#tgbgzqasrz .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
-  padding-top: 0;
-  padding-bottom: 6px;
+  padding-top: 3px;
+  padding-bottom: 5px;
   padding-left: 5px;
   padding-right: 5px;
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
 
-#jrinwgoazq .gt_bottom_border {
+#tgbgzqasrz .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#tgbgzqasrz .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#jrinwgoazq .gt_col_headings {
+#tgbgzqasrz .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -546,7 +554,7 @@ Attaching package: 'dplyr'</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#jrinwgoazq .gt_col_heading {
+#tgbgzqasrz .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -566,7 +574,7 @@ Attaching package: 'dplyr'</code></pre>
   overflow-x: hidden;
 }
 
-#jrinwgoazq .gt_column_spanner_outer {
+#tgbgzqasrz .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -578,15 +586,15 @@ Attaching package: 'dplyr'</code></pre>
   padding-right: 4px;
 }
 
-#jrinwgoazq .gt_column_spanner_outer:first-child {
+#tgbgzqasrz .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#jrinwgoazq .gt_column_spanner_outer:last-child {
+#tgbgzqasrz .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#jrinwgoazq .gt_column_spanner {
+#tgbgzqasrz .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -598,7 +606,11 @@ Attaching package: 'dplyr'</code></pre>
   width: 100%;
 }
 
-#jrinwgoazq .gt_group_heading {
+#tgbgzqasrz .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#tgbgzqasrz .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -621,9 +633,10 @@ Attaching package: 'dplyr'</code></pre>
   border-right-width: 1px;
   border-right-color: #D3D3D3;
   vertical-align: middle;
+  text-align: left;
 }
 
-#jrinwgoazq .gt_empty_group_heading {
+#tgbgzqasrz .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -638,15 +651,15 @@ Attaching package: 'dplyr'</code></pre>
   vertical-align: middle;
 }
 
-#jrinwgoazq .gt_from_md > :first-child {
+#tgbgzqasrz .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#jrinwgoazq .gt_from_md > :last-child {
+#tgbgzqasrz .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#jrinwgoazq .gt_row {
+#tgbgzqasrz .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -665,7 +678,7 @@ Attaching package: 'dplyr'</code></pre>
   overflow-x: hidden;
 }
 
-#jrinwgoazq .gt_stub {
+#tgbgzqasrz .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -678,7 +691,7 @@ Attaching package: 'dplyr'</code></pre>
   padding-right: 5px;
 }
 
-#jrinwgoazq .gt_stub_row_group {
+#tgbgzqasrz .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -692,11 +705,15 @@ Attaching package: 'dplyr'</code></pre>
   vertical-align: top;
 }
 
-#jrinwgoazq .gt_row_group_first td {
+#tgbgzqasrz .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#jrinwgoazq .gt_summary_row {
+#tgbgzqasrz .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#tgbgzqasrz .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -706,16 +723,16 @@ Attaching package: 'dplyr'</code></pre>
   padding-right: 5px;
 }
 
-#jrinwgoazq .gt_first_summary_row {
+#tgbgzqasrz .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#jrinwgoazq .gt_first_summary_row.thick {
+#tgbgzqasrz .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#jrinwgoazq .gt_last_summary_row {
+#tgbgzqasrz .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -725,7 +742,7 @@ Attaching package: 'dplyr'</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#jrinwgoazq .gt_grand_summary_row {
+#tgbgzqasrz .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -735,7 +752,7 @@ Attaching package: 'dplyr'</code></pre>
   padding-right: 5px;
 }
 
-#jrinwgoazq .gt_first_grand_summary_row {
+#tgbgzqasrz .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -745,11 +762,21 @@ Attaching package: 'dplyr'</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#jrinwgoazq .gt_striped {
+#tgbgzqasrz .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#tgbgzqasrz .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#jrinwgoazq .gt_table_body {
+#tgbgzqasrz .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -758,7 +785,7 @@ Attaching package: 'dplyr'</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#jrinwgoazq .gt_footnotes {
+#tgbgzqasrz .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -772,30 +799,8 @@ Attaching package: 'dplyr'</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#jrinwgoazq .gt_footnote {
+#tgbgzqasrz .gt_footnote {
   margin: 0px;
-  font-size: 90%;
-  padding-left: 4px;
-  padding-right: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#jrinwgoazq .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#jrinwgoazq .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -803,83 +808,120 @@ Attaching package: 'dplyr'</code></pre>
   padding-right: 5px;
 }
 
-#jrinwgoazq .gt_left {
+#tgbgzqasrz .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#tgbgzqasrz .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#tgbgzqasrz .gt_left {
   text-align: left;
 }
 
-#jrinwgoazq .gt_center {
+#tgbgzqasrz .gt_center {
   text-align: center;
 }
 
-#jrinwgoazq .gt_right {
+#tgbgzqasrz .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#jrinwgoazq .gt_font_normal {
+#tgbgzqasrz .gt_font_normal {
   font-weight: normal;
 }
 
-#jrinwgoazq .gt_font_bold {
+#tgbgzqasrz .gt_font_bold {
   font-weight: bold;
 }
 
-#jrinwgoazq .gt_font_italic {
+#tgbgzqasrz .gt_font_italic {
   font-style: italic;
 }
 
-#jrinwgoazq .gt_super {
+#tgbgzqasrz .gt_super {
   font-size: 65%;
 }
 
-#jrinwgoazq .gt_footnote_marks {
-  font-style: italic;
-  font-weight: normal;
+#tgbgzqasrz .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
+  position: initial;
 }
 
-#jrinwgoazq .gt_asterisk {
+#tgbgzqasrz .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#jrinwgoazq .gt_slash_mark {
-  font-size: 0.7em;
-  line-height: 0.7em;
-  vertical-align: 0.15em;
+#tgbgzqasrz .gt_indent_1 {
+  text-indent: 5px;
 }
 
-#jrinwgoazq .gt_fraction_numerator {
-  font-size: 0.6em;
-  line-height: 0.6em;
-  vertical-align: 0.45em;
+#tgbgzqasrz .gt_indent_2 {
+  text-indent: 10px;
 }
 
-#jrinwgoazq .gt_fraction_denominator {
-  font-size: 0.6em;
-  line-height: 0.6em;
-  vertical-align: -0.05em;
+#tgbgzqasrz .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#tgbgzqasrz .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#tgbgzqasrz .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#tgbgzqasrz .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#tgbgzqasrz div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
 }
 </style>
 
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true">
-<thead class="gt_col_headings">
-<tr class="header">
-<th class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th"><strong>Characteristic</strong></th>
-<th class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th"><strong>Female</strong>, N = 47<sup>1</sup></th>
-<th class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th"><strong>Male</strong>, N = 53<sup>1</sup></th>
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header gt_col_headings">
+<th id="label" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"><strong>Characteristic</strong></th>
+<th id="stat_1" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>Female</strong><br> N = 44<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
+<th id="stat_2" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>Male</strong><br> N = 56<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
 </tr>
 </thead>
 <tbody class="gt_table_body">
 <tr class="odd">
-<td class="gt_row gt_left">height</td>
-<td class="gt_row gt_center">180 (11)</td>
-<td class="gt_row gt_center">192 (10)</td>
+<td class="gt_row gt_left" headers="label">height</td>
+<td class="gt_row gt_center" headers="stat_1">179 (9)</td>
+<td class="gt_row gt_center" headers="stat_2">191 (11)</td>
 </tr>
 </tbody><tfoot class="gt_footnotes">
-<tr class="odd">
-<td colspan="3" class="gt_footnote"><sup>1</sup> Mean (SD)</td>
+<tr class="even">
+<td colspan="3" class="gt_footnote"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> Mean (SD)</td>
 </tr>
 </tfoot>
 
@@ -988,6 +1030,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -1098,6 +1142,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
+      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

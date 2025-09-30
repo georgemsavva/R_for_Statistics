@@ -30,8 +30,8 @@ website:
             href: day2.qmd
           - text: JIC MSc Workshop (2021/2022)
             href: workshopscript.Rmd
-          - text: ggplot example
-            href: flipbook.qmd
+          - text: JIC MSc Plant Growth Example (2025)
+            href: day3msc.qmd
           - text: Iris data walkthough
             href: irisScript.qmd
       - text: How many samples do I need?

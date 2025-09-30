@@ -251,5 +251,5 @@ Many of these points are embodied in this nice tutorial from Cedric Scherer, whe
 ## Plotting with ggplot
 
 * Slides on ggplot including links to other tutorials are here:  [Graphing - day3.pptx](./day3.pptx)
-* A flipbook showing a graph built with ggplot elements is here:  [Example ggplot](flipbook.qmd)
+
 
