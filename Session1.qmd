@@ -1,0 +1,130 @@
+---
+title: "Session1"
+format: html
+engine: knitr
+webr: 
+  show-startup-message: false    # Disable displaying status of webR initialization
+  packages: ['ggplot2', 'ggpubr','easystats','report','ggbeeswarm'] # Install R packages on document open
+filters:
+  - webr
+---
+
+```{webr-r}
+#| echo: false
+#| message: false
+#| warning: false
+library(ggplot2)
+library(ggpubr)
+library(report)
+library(ggbeeswarm)
+```
+
+## Exercise
+
+Here we simulate a simple experiment with two groups of mice and a single outcome measure.
+
+We set the 'true' average values of our outcome measure
+
+Using simulations like this can help us to think through experiments, plan analyses and ultimately run sample size calculations.
+
+
+
+```{webr-r}
+#| warning: false
+
+set.seed(1)
+
+N1=5
+N2=3
+mean = c("Control"=50,
+         "Treated"=50)
+
+# Make group labels
+group = c( rep("Control",N1) , rep("Treated",N2) ) |> factor(levels=c("Control","Treated"))
+
+# Simulate richness
+richness = rnbinom(N1+N2, mu=mean[group],size=1)
+
+# Turn into a dataset
+dat = data.frame(group,richness)
+
+
+
+# Make a graph and add a test with a p-value
+ggplot(dat, aes(x=group,y=richness)) +  
+  stat_summary(geom="col",col="black",fill="red",width=0.6, fun.data = "mean_se") + 
+  stat_summary(geom="errorbar" , width=.30, fun.data = "mean_se") + 
+  stat_compare_means(comparisons = list(1:2), method="t.test") + 
+  
+  theme_bw()
+
+```
+
+While this presentation of results (p-value and dynamite plot) is often used, it is extremely limiting.  It is more useful to present data point individually (perhaps with summary statistics) and then to make inferences about the estimated  mean difference between groups:
+
+```{webr-r}
+
+ggplot(dat, aes(x=group,y=richness)) +  
+  ggbeeswarm::geom_beeswarm(pch=4) + 
+  stat_summary(geom="errorbar" , width=.30, fun.data = "mean_se") +
+  stat_summary(geom="point" , width=.30, fun.data = "mean_se") + 
+  stat_compare_means(comparisons = list(1:2), method="t.test") + 
+  theme_bw()
+
+
+report_sample(dat , by="group")
+
+t.test(data=dat , richness ~ group) |> report::report_parameters()
+
+lm(data=dat , richness ~ group) |> parameters::parameters() |> plot()
+
+```
+
+## Accuracy and precision
+
+Suppose we conduct a research study to estimate the effect of our supplement on the alpha diversity.
+
+Each instance of our study will produce an estimate for the effect, which is (hopefully!) close to the truth.
+
+Suppose it was possible to repeat the study many times, you would produce a different effect estimate from each one.
+
+The study is *unbiased* if the mean average value of those repeats is equal to the true value. That is, while there will be some chance variation the estimate will not be systematically too high or too low.
+
+Any bias in the study would cause the study estimate to be systematically wrong in either direction.  There are many sources of bias.  For example we know that healthier people tend to more willing to participate in research than the population (selection bias), or people who are treated with placebos might report better symptoms than those who are not (plaebo effect).  These can lead to systematically wrong conclusions about populations or the efficacy of treatments.
+
+The precision of the study refers to how similar the estimates from repeated runs would be.  A precise estimates have small standard errors and narrow confidence intervals.  But it is possible to be very precisely wrong (if there is bias), or to miscalculate the precision of your study.
+
+Precision is largely determined by the level of variation between in your experimental units, your measurements, and by the sample size.  Increasing sample size and reducing sources of variation will increase precision.
+
+
+```{webr-r}
+
+N=10
+truth = 10
+biasedEstimates = rnorm(N,truth+3,0.5)
+impreciseEstimates = rnorm(N,truth,2)
+biasedAndImprecise = rnorm(N,truth+3,2)
+goodEstimates = rnorm(N,truth,0.5)
+
+rbind(goodEstimates,biasedAndImprecise,impreciseEstimates,biasedEstimates) |> 
+  as.data.frame.table() |>
+  setNames(c("Type","Var","Estimate")) |>
+  ggplot(aes(x=Type,y=Estimate)) + 
+  geom_beeswarm() + 
+  geom_hline(yintercept=truth,lty="dotted") + 
+  coord_flip() + 
+  theme_bw() + 
+  labs(y="Estimates", x=NULL) + 
+  scale_x_discrete(labels=c("biasedEstimates"="Biased Estimates",
+                            "impreciseEstimates"="Imprecise Estimates",
+                            "biasedAndImprecise"="Biased and Imprecise",
+                            "goodEstimates"="Precise and unbiased (good!)")) + 
+  annotate(geom="text",label="True effect size",x=0.5,y=truth)
+
+
+```
+
+Our goal in experimental design is to answer your research questions with low bias *and* high precision, so that your estimates are consistently close to the truth!  On the whole bias is more problematic than imprecision, because the latter can be calculated, reported, and overcome using larger studies.  Bias is much more difficult to detect, and can become compounded by larger samples or repeated studies if the same biases are present each time.
+
+To deal with sources of bias and variance, we have to understand how they arise, and how to reduce or remove their effects on our estimates.
+

@@ -1,0 +1,23 @@
+---
+title: "webr"
+format: html
+engine: knitr
+webr: 
+  show-startup-message: true    # Disable displaying status of webR initialization
+  packages: ['SCCS'] # Install R packages on document open
+filters:
+  - webr
+---
+
+You can run R code directly in the browser here: 
+
+```{webr-r}
+
+library(SCCS)
+
+ssm<-samplesize(eexpo=1.12, risk=30,astart=0,aend=1095,p=1,alpha=0.05,power=0.8)
+ssm
+
+```
+
+

@@ -1,0 +1,15 @@
+{
+  "hash": "140d6cb2899fd18ee51d7a5805100ea7",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"webr\"\nformat: html\nengine: knitr\nwebr: \n  show-startup-message: true    # Disable displaying status of webR initialization\n  packages: ['SCCS'] # Install R packages on document open\nfilters:\n  - webr\n---\n\n\n\nYou can run R code directly in the browser here: \n\n```{webr-r}\n\nlibrary(SCCS)\n\nssm<-samplesize(eexpo=1.12, risk=30,astart=0,aend=1095,p=1,alpha=0.05,power=0.8)\nssm\n\n```\n\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
