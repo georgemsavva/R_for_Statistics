@@ -1,0 +1,122 @@
+---
+title: "Session4"
+format: html
+engine: knitr
+webr: 
+  show-startup-message: false    # Disable displaying status of webR initialization
+  packages: ['ggplot2', 'ggpubr','easystats','report','ggbeeswarm'] # Install R packages on document open
+filters:
+  - webr
+---
+
+```{webr-r}
+#| echo: false
+#| message: false
+#| warning: false
+library(ggplot2)
+library(ggpubr)
+library(report)
+library(ggbeeswarm)
+```
+
+
+Slides for session 4 (analysis) are here: 
+
+* [Session 4 slides](gibasession4.pptx)
+
+## Analysis of a blocked randomised study
+
+### Introduction
+
+The code below simulates a parallel group randomised controlled trial conducted in men and women.
+
+There were 40 participants in total, 20 men and 20 women.
+
+There was a blocked randomisation, so that men and women were balanced across groups (10 each per treatment group)
+
+The blocking was performed because we know that men have typically higher responses than women.
+
+
+```{webr-r}
+library(ggplot2)
+library(ggbeeswarm)
+library(patchwork)
+
+# Define the groups
+treatment = c("Treat", "Control")
+sex = c("Male","Female")
+
+# Here we set up the dataset with 10 copies of each combination of treatment and sex
+dat <- expand.grid( treatment=treatment , sex=sex,rep=1:10)
+
+# True treatment effect = 1
+# True sex effect = 2
+# Normally distributed indidividual variation with sd=1
+
+set.seed(200) # Setting the seed fixes the response
+
+# Now generate the response (y) with the known treatment effect, sex effect and random variation
+dat <- transform(dat, y = 10 + (treatment=="Treat") + 2*(sex=="Male") + rnorm(nrow(dat)))
+
+```
+
+Remember the experimental design equation for this study is:
+
+`Outcome = Treatment + Sex + Error`
+
+Below we show why it is important to respect this equation in our analysis phase as well as our design phase.
+
+Since we have a two group study with a continuous outcome, we might be tempted to apply a two-groups t-test to compare the responses:
+
+```{webr-r}
+# The first graph 
+graph1 = ggplot(dat) + 
+  aes(x=treatment, y=y) + 
+  geom_beeswarm(aes(shape=sex)) + 
+  theme_bw()+ 
+  stat_summary(geom="errorbar",width=.5,fun.data = "mean_se") + 
+  scale_y_continuous(limits=c(8,15)) + 
+  ggpubr::stat_compare_means(method="t.test",comparisons=list(1:2))  + 
+  labs(x="Treatment", y="Response",shape="Sex")
+```
+
+While there is some evidence of the difference between groups (that we know is there!), it is not statistically significant.  We have type-2 error in this case (false negative).  This is caused by the high variation within each treatment group overwhelming the signal from the treatment.
+
+But if we stratify the data by sex, we explain much of that variation.  The signal is much more obvious, and is statistically significant in both groups despite there being half the participants in each!
+
+```{webr-r}
+graph1 + (graph1 + facet_wrap(~sex) ) + plot_layout(guides="collect")
+```
+
+The linear model corresponding to the unpaired t-test is given below. Note the residual error in the output and the standard error for the effect of treatment.
+
+```{web-r}
+lm(data=dat , y ~ treatment) |> summary()
+```
+
+Next we'll try the model that corresponds to the design equation.  We have explained far more variance (smaller residual error), and so have a m.
+
+```{web-r}
+lm(data=dat , y ~ treatment + sex) |> summary()
+```
+
+Although this dataset was picked to illustrate the point, we can find the power of the study with each analytical approach by replicating the study many times, and finding what proportion of p-values is less than 0.05.
+
+```{webr-r}
+
+oneRep <- function(){
+  dat <- transform(dat, y = 10 + (treatment=="Treat") + 2*(sex=="Male") + rnorm(nrow(dat)))
+  model1_p <- lm(data=dat , y ~ treatment) |> summary() |> coef())["treatmentControl","Pr(>|t|)"]
+  model2_p <- lm(data=dat , y ~ treatment + sex) |> summary() |> coef())["treatmentControl","Pr(>|t|)"]
+  c(model1_p,model2_p)
+}
+
+replicate(1000,oneRep()) |> t() |> as.data.frame()|> lapply(\(x) mean(x<0.05))
+
+```
+
+Here, using the design equation to set up the analysis model leads to a much more powerful design, by explaining the variance associated with the identified factors.  It also means that the assumptions underlying the regression model, in particular normal random errors, more likely to be met.
+
+```{web-r}
+lm(data=dat , y ~ treatment + sex) |> report::report_model()
+```

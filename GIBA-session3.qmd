@@ -1,0 +1,124 @@
+---
+title: "Session3"
+format: html
+engine: knitr
+webr: 
+  show-startup-message: false    # Disable displaying status of webR initialization
+  packages: ['ggplot2', 'ggpubr','easystats','report','ggbeeswarm','pwr'] # Install R packages on document open
+filters:
+  - webr
+---
+
+```{webr-r}
+#| echo: false
+#| message: false
+#| warning: false
+library(ggplot2)
+library(ggpubr)
+library(report)
+library(ggbeeswarm)
+```
+
+
+Slides for session 3 (sample size) are here: 
+
+* [Session 3 slides](gibasession3.pptx)
+
+## How big should our mouse study be
+
+We are interested in the number of mice needed to test the effect of supplement on fecal alpha diversity.
+
+We will use a simple parallel group study to investigate this.
+
+We believe from prior work that the within-group standard deviation for mouse alpha diversity is 1.
+
+Use the pwr function to answer the following questions:
+
+ 1. Suppose we wanted our experiment to reliably detect an effect of 0.5 units, should it exist.  How many mice would we need?
+ 2. If we could only afford to use ten mice per group, what would be the smallest effect size that we could detect?
+ 3. What is the power to detect a difference of 0.5 units, given that we only have ten mice per group.
+ 4. Remember we might not get data from all ten mice that were included.  If only 80% are expected to survive and give usable data, would would the power be?
+ 5. How many mice would Mead's resource equation suggest that we use?
+ 6. What would be the smallest detectable effect with this number?
+
+```{r }
+
+# Reminder that the syntax for power is:
+# pwr(..)
+
+```
+
+## Sample size for a proportion
+
+Suppose we are interested in comparing an event incidence rate between two independent groups.  
+
+We expect in our model that 50% of the participants will develop the outcome.  We expect our intervention will lower this by 10 percentage points.  How many participants would we need to be able to detect this difference?
+
+```{webr-r}
+
+library(pwr)
+
+h = ES.h(0.5,0.4)
+pwr.2p.test(h , n=NULL, power=0.9)
+
+```
+## Extracting the data from an existing study to make a sample size calculation
+
+We can use information from previous studies to inform our sample size calculations.
+
+If a previous study has been undertaken with a similar outcome measure and in a similar population to our planned study, then we might expect that the variation in the measures between and within people will be similar.
+
+We might also get clues about the likely size of any effects
+
+However, we need to be careful when using published effect sizes, as these are likely to be biased by the *winners curse*.
+
+Because effects are more likely to be published if they happen to be statistically significant, the effects from published studies are typically too high.  Replication studies have consistently shown that published effects, even when replicated, can be up to 85% too high.
+
+Here we'll consider conducting a replication of an existing study, and what the sample size of a replication should be. 
+
+
+```{webr-r}
+
+#eyedat <- 
+
+```
+
+## Effective sample size with clustered data
+
+Consider an observational study in which retinal thickness is compared between patients with or without rheumatoid arthritis.
+
+Patients are to be randomly sampled from their respective populations, and each patient has a measurement taken in their left and their right eye.
+
+How should we analyse this data, what are the implications if of using the wrong model, and what are the implications for power and sample size?  How much extra information do we get from measuring the second eye in each participant?
+
+First we'll set up the simulation study:
+
+```{webr-r}
+
+N=20      # Study size per group
+rho=0.5   # Intra-class correlation between left and right eye
+sigma=10  # Standard deviation of individual eyes
+mean=100  # Grand mean
+effect=10 # True effect of RA on RNFL
+eyes = c("L","R")
+groups = c("Disease","Control")
+
+sd_between = sigma*sqrt(rho)
+sd_within = sigma*sqrt(1-rho)
+
+dat <- expand.grid(patient=1:(2*N), eye=eyes,group=groups)
+dat$group <- rep(groups,each=2*N)
+
+patientEffects = rnorm(2*N,0,sd_between)
+
+dat <- transform(dat , y = mean + patientEffects[patient] + effect*(group=="Disease") + rnorm(nrow(dat),0,sd_within))
+
+```
+
+It is valuable to plot the data to check the extent of the correlation between the eyes
+
+```{webr-r}
+
+ggplot(dat ) + aes(x=eye , y=y) + geom_point() + geom_line(aes(group=patient))
+
+```

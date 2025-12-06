@@ -52,6 +52,19 @@ website:
             href: independentclusters.qmd
           - text: Run bigger experiments instead of internal replications
             href: repeats.qmd
+      - text: Web-r notebook
+        menu: 
+          - text: WebR book
+            href: webr.qmd
+      - text: GIBA experimental design course
+        menu: 
+          - text: Part 1
+            href: GIBA-session1.qmd
+          - text: Part 3
+            href: GIBA-session3.qmd
+          - text: Part 4
+            href: GIBA-session4.qmd
+
 
     right:
       - text: "Contact me"

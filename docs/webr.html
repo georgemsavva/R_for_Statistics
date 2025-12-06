@@ -344,7 +344,7 @@ iframe.qwebr-output-code-browse {
 // Document level settings ----
 
 // Determine if we need to install R packages
-globalThis.qwebrInstallRPackagesList = ['SCCS'];
+globalThis.qwebrInstallRPackagesList = ['ggplot2'];
 
 // Specify possible locations to search for the repository
 globalThis.qwebrPackageRepoURLS = ['https://repo.r-wasm.org/'];
@@ -366,7 +366,7 @@ globalThis.qwebrCustomizedWebROptions = {
 };
 
 // Store cell data
-globalThis.qwebrCellDetails = [{"options":{"context":"interactive","editor-max-height":"","classes":"","output":"true","warning":"true","label":"unnamed-chunk-1","comment":"","editor-font-scale":"1","fig-height":5,"fig-width":7,"message":"true","fig-cap":"","dpi":72,"editor-quick-suggestions":"false","results":"markup","editor-word-wrap":"true","autorun":"false","read-only":"false","out-width":"700px","out-height":""},"id":1,"code":"library(SCCS)\n\nssm<-samplesize(eexpo=1.12, risk=30,astart=0,aend=1095,p=1,alpha=0.05,power=0.8)\nssm"}];
+globalThis.qwebrCellDetails = [{"code":"library(ggplot2)\n\ndata.frame(x=rnorm(100),y=rnorm(100)) |>\n  ggplot() + aes(x,y) + geom_point()","options":{"message":"true","read-only":"false","context":"interactive","out-height":"","fig-height":5,"editor-word-wrap":"true","label":"unnamed-chunk-1","autorun":"false","results":"markup","output":"true","fig-cap":"","editor-quick-suggestions":"false","dpi":72,"out-width":"700px","editor-font-scale":"1","warning":"true","comment":"","fig-width":7,"editor-max-height":"","classes":""},"id":1}];
 
 </script>
 <script type="module">
@@ -1712,6 +1712,36 @@ globalThis.qwebrExecuteCode = async function (
         <li>
     <a class="dropdown-item" href="./repeats.html">
  <span class="dropdown-text">Run bigger experiments instead of internal replications</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-web-r-notebook" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Web-r notebook</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-web-r-notebook">    
+        <li>
+    <a class="dropdown-item" href="./webr.html">
+ <span class="dropdown-text">WebR book</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-giba-experimental-design-course" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">GIBA experimental design course</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-giba-experimental-design-course">    
+        <li>
+    <a class="dropdown-item" href="./GIBA-session1.html">
+ <span class="dropdown-text">Part 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./GIBA-session3.html">
+ <span class="dropdown-text">Part 3</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./GIBA-session4.html">
+ <span class="dropdown-text">Part 4</span></a>
   </li>  
     </ul>
   </li>
