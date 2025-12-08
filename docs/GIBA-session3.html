@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Session3 – R and Statistics</title>
+<title>Sample Size – R and Statistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -73,6 +73,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -400,7 +403,7 @@ globalThis.qwebrCustomizedWebROptions = {
 };
 
 // Store cell data
-globalThis.qwebrCellDetails = [{"id":1,"options":{"context":"interactive","message":"false","editor-font-scale":"1","editor-quick-suggestions":"false","editor-word-wrap":"true","output":"true","out-width":"700px","results":"markup","comment":"","fig-width":7,"echo":"false","label":"unnamed-chunk-1","out-height":"","fig-height":5,"dpi":72,"warning":"false","autorun":"false","classes":"","editor-max-height":"","read-only":"false","fig-cap":""},"code":"library(ggplot2)\nlibrary(ggpubr)\nlibrary(report)\nlibrary(ggbeeswarm)"},{"id":2,"options":{"context":"interactive","message":"true","editor-font-scale":"1","editor-quick-suggestions":"false","editor-word-wrap":"true","output":"true","out-width":"700px","results":"markup","comment":"","fig-width":7,"label":"unnamed-chunk-2","out-height":"","fig-height":5,"dpi":72,"warning":"true","autorun":"false","classes":"","editor-max-height":"","read-only":"false","fig-cap":""},"code":"library(pwr)\n\nh = ES.h(0.5,0.4)\npwr.2p.test(h , n=NULL, power=0.9)"},{"id":3,"options":{"context":"interactive","message":"true","editor-font-scale":"1","editor-quick-suggestions":"false","editor-word-wrap":"true","output":"true","out-width":"700px","results":"markup","comment":"","fig-width":7,"label":"unnamed-chunk-3","out-height":"","fig-height":5,"dpi":72,"warning":"true","autorun":"false","classes":"","editor-max-height":"","read-only":"false","fig-cap":""},"code":"#eyedat <- "},{"id":4,"options":{"context":"interactive","message":"true","editor-font-scale":"1","editor-quick-suggestions":"false","editor-word-wrap":"true","output":"true","out-width":"700px","results":"markup","comment":"","fig-width":7,"label":"unnamed-chunk-4","out-height":"","fig-height":5,"dpi":72,"warning":"true","autorun":"false","classes":"","editor-max-height":"","read-only":"false","fig-cap":""},"code":"N=20      # Study size per group\nrho=0.5   # Intra-class correlation between left and right eye\nsigma=10  # Standard deviation of individual eyes\nmean=100  # Grand mean\neffect=10 # True effect of RA on RNFL\neyes = c(\"L\",\"R\")\ngroups = c(\"Disease\",\"Control\")\n\nsd_between = sigma*sqrt(rho)\nsd_within = sigma*sqrt(1-rho)\n\ndat <- expand.grid(patient=1:(2*N), eye=eyes,group=groups)\ndat$group <- rep(groups,each=2*N)\n\npatientEffects = rnorm(2*N,0,sd_between)\n\ndat <- transform(dat , y = mean + patientEffects[patient] + effect*(group==\"Disease\") + rnorm(nrow(dat),0,sd_within))"},{"id":5,"options":{"context":"interactive","message":"true","editor-font-scale":"1","editor-quick-suggestions":"false","editor-word-wrap":"true","output":"true","out-width":"700px","results":"markup","comment":"","fig-width":7,"label":"unnamed-chunk-5","out-height":"","fig-height":5,"dpi":72,"warning":"true","autorun":"false","classes":"","editor-max-height":"","read-only":"false","fig-cap":""},"code":"ggplot(dat ) + aes(x=eye , y=y) + geom_point() + geom_line(aes(group=patient))"}];
+globalThis.qwebrCellDetails = [{"options":{"fig-height":5,"classes":"","fig-width":7,"fig-cap":"","results":"markup","warning":"false","echo":"false","out-width":"700px","editor-quick-suggestions":"false","out-height":"","comment":"","message":"false","editor-max-height":"","label":"unnamed-chunk-1","output":"true","read-only":"false","dpi":72,"autorun":"true","editor-word-wrap":"true","context":"interactive","editor-font-scale":"1"},"id":1,"code":"library(ggplot2)\nlibrary(ggpubr)\nlibrary(report)\nlibrary(ggbeeswarm)"},{"options":{"fig-height":5,"classes":"","fig-width":7,"fig-cap":"","results":"markup","warning":"true","out-width":"700px","editor-quick-suggestions":"false","out-height":"","comment":"","message":"true","editor-max-height":"","label":"unnamed-chunk-2","output":"true","read-only":"false","dpi":72,"autorun":"false","editor-word-wrap":"true","context":"interactive","editor-font-scale":"1"},"id":2,"code":"# Use this space if you like but remember it isn't saved!"},{"options":{"fig-height":5,"classes":"","fig-width":7,"fig-cap":"","results":"markup","warning":"true","out-width":"700px","editor-quick-suggestions":"false","out-height":"","comment":"","message":"true","editor-max-height":"","label":"unnamed-chunk-3","output":"true","read-only":"false","dpi":72,"autorun":"false","editor-word-wrap":"true","context":"interactive","editor-font-scale":"1"},"id":3,"code":"binom.test(x = 2,n=10)"},{"options":{"fig-height":5,"classes":"","fig-width":7,"fig-cap":"","results":"markup","warning":"false","out-width":"700px","editor-quick-suggestions":"false","out-height":"","comment":"","message":"true","editor-max-height":"","label":"unnamed-chunk-4","output":"true","read-only":"false","dpi":72,"autorun":"false","editor-word-wrap":"true","context":"interactive","editor-font-scale":"1"},"id":4,"code":"set.seed(1) # choose your own seed so that we each get a different instance of this study\n\nN=10  # number per group\nN1=N # sample size for group 1\nN2=N # sample size for group 2\nsd=10 # within-group standard deviation\n\n# true mean values in each group\nmean = c(\"Control\"=50,\n         \"Treated\"=50+10)\n\n# Make group labels\ngroup = c( rep(\"Control\",N1) , rep(\"Treated\",N2) ) |> factor(levels=c(\"Control\",\"Treated\"))\n\n# Run the experiment diversity, assume it has a normal distribution with standard deviation\nrichness = rnorm(N1+N2, mean=mean[group],sd=sd)\n\n# Turn this into a dataset\ndat = data.frame(group,richness)\n\n# List the first few rows\nhead(dat)"},{"options":{"fig-height":5,"classes":"","fig-width":7,"fig-cap":"","results":"markup","warning":"true","out-width":"700px","editor-quick-suggestions":"false","out-height":"","comment":"","message":"true","editor-max-height":"","label":"unnamed-chunk-5","output":"true","read-only":"false","dpi":72,"autorun":"false","editor-word-wrap":"true","context":"interactive","editor-font-scale":"1"},"id":5,"code":"ggplot(dat, aes(x=group,y=richness)) +  \n  ggbeeswarm::geom_beeswarm(pch=4) + \n  stat_summary(geom=\"errorbar\" , width=.30, fun.data = \"mean_se\") +\n  stat_summary(geom=\"point\" , fun.data = \"mean_se\") + \n  stat_compare_means(comparisons = list(1:2), method=\"t.test\") + \n  theme_bw()"},{"options":{"fig-height":5,"classes":"","fig-width":7,"fig-cap":"","results":"markup","warning":"true","out-width":"700px","editor-quick-suggestions":"false","out-height":"","comment":"","message":"true","editor-max-height":"","label":"unnamed-chunk-6","output":"true","read-only":"false","dpi":72,"autorun":"false","editor-word-wrap":"true","context":"interactive","editor-font-scale":"1"},"id":6,"code":"report_sample(dat , by=\"group\")\n\ncat(\"\\n### t-test ### \\n\")\n\nt.test(data=dat, richness ~ group)\n\ncat(\"\\n### t-test report ### \\n\\n\")\n\nt.test(data=dat, richness ~ group) |> report()\n\n# This is very slightly different to the t-test, but close enough!\nlm(data=dat, richness ~ group) |> parameters::parameters() |> plot()\n"},{"options":{"fig-height":5,"classes":"","fig-width":7,"fig-cap":"","results":"markup","warning":"false","out-width":"700px","editor-quick-suggestions":"false","out-height":"","comment":"","message":"true","editor-max-height":"","label":"unnamed-chunk-7","output":"true","read-only":"false","dpi":72,"autorun":"false","editor-word-wrap":"true","context":"interactive","editor-font-scale":"1"},"id":7,"code":"oneRep <- function(sampleSize=10,effect=10,sd=10){\n  \n  N=sampleSize  # number per group\n  N1=N # sample size for group 1\n  N2=N # sample size for group 2\n  \n  sd=sd\n  \n  # true mean values in each group\n  mean = c(\"Control\"=50,\n           \"Treated\"=50+effect)\n  \n  # Make group labels\n  group = c( rep(\"Control\",N1) , rep(\"Treated\",N2) ) |> factor(levels=c(\"Control\",\"Treated\"))\n  \n  # Run the experiment diversity, assume it has a normal distribution with standard deviation\n  richness = rnorm(N1+N2, mean =mean[group],sd = sd)\n  \n  # Turn this into a dataset\n  dat = data.frame(group,richness)\n  \n  # List the first few rows\n  test=t.test(data=dat , richness ~ group)\n  \n  # Now return the p-value, the estimate (b), and the confidence interval\n  c(\"p\"=test$p.value,\n    \"b\"=as.numeric(diff(test$estimate)),\n    \"CI\"=-rev(test$conf.int)\n    )\n}\n\noneRep()"},{"options":{"fig-height":5,"classes":"","fig-width":7,"fig-cap":"","results":"markup","warning":"true","out-width":"700px","editor-quick-suggestions":"false","out-height":"","comment":"","message":"true","editor-max-height":"","label":"unnamed-chunk-8","output":"true","read-only":"false","dpi":72,"autorun":"false","editor-word-wrap":"true","context":"interactive","editor-font-scale":"1"},"id":8,"code":"replicate(5, oneRep() , simplify = TRUE) |> t() |> data.frame()"},{"options":{"fig-height":5,"classes":"","fig-width":7,"fig-cap":"","results":"markup","warning":"true","out-width":"700px","editor-quick-suggestions":"false","out-height":"","comment":"","message":"true","editor-max-height":"","label":"unnamed-chunk-9","output":"true","read-only":"false","dpi":72,"autorun":"false","editor-word-wrap":"true","context":"interactive","editor-font-scale":"1"},"id":9,"code":"Nsim=20\nreps <- replicate(Nsim, oneRep(10,10,10) , simplify = TRUE) |> t() |> data.frame()\nreps$ber=1:nrow(reps)\n\n# Make a histogram of the p-values\nhist(reps$p,breaks=20)\n\n# What proportion of results are 'significant'\nmean(reps$p<0.05)\n\n# Forest plot of the effects \nggplot(reps) + \n  aes(x=ber,y=b,ymin=CI1,ymax=CI2,col=p<0.05) + \n  geom_pointrange() + \n  coord_flip() + \n  geom_hline(yintercept=0) + \n  scale_x_continuous(breaks=1:Nsim) + \n  geom_hline(yintercept=10,linetype=\"dotted\")"},{"options":{"fig-height":5,"classes":"","fig-width":7,"fig-cap":"","results":"markup","warning":"true","out-width":"700px","editor-quick-suggestions":"false","out-height":"","comment":"","message":"true","editor-max-height":"","label":"unnamed-chunk-10","output":"true","read-only":"false","dpi":72,"autorun":"false","editor-word-wrap":"true","context":"interactive","editor-font-scale":"1"},"id":10,"code":"# Simulate a new batch of simulations\nreps <- replicate(Nsim, oneRep(10,10,10) , simplify = TRUE) |> t() |> data.frame()\n\n# Calculate the 'cumulative' estimates of effect as we add studies\nreps<-within(reps, {\n  ber<-1:nrow(reps)\n  precision<-(abs(CI2-CI1)/4)^(-2)\n  cumprecision<-cumsum(precision)\n  cummean<-cumsum(b)/1:nrow(reps)\n  cumCI_upper<-cummean+2*cumprecision^(-0.5)\n  cumCI_lower<-cummean-2*cumprecision^(-0.5)\n})\n\n# Plot the cumulative results\nggplot(reps) + \n  aes(x=ber,y=cummean,ymin=cumCI_lower,ymax=cumCI_upper) + \n  geom_pointrange() + \n  coord_flip() + \n  geom_hline(yintercept=0) + \n  scale_x_continuous(breaks=1:Nsim) + \n  geom_hline(yintercept=10,linetype=\"dotted\") + \n  ggtitle(\"'Meta-analysis' of replicated studies\")"},{"options":{"fig-height":5,"classes":"","fig-width":7,"fig-cap":"","results":"markup","warning":"true","out-width":"700px","editor-quick-suggestions":"false","out-height":"","comment":"","message":"true","editor-max-height":"","label":"unnamed-chunk-11","output":"true","read-only":"false","dpi":72,"autorun":"false","editor-word-wrap":"true","context":"interactive","editor-font-scale":"1"},"id":11,"code":"library(pwr)\n\nh = ES.h(0.5,0.4)\npwr.2p.test(h , n=NULL, power=0.9)"},{"options":{"fig-height":5,"classes":"","fig-width":7,"fig-cap":"","results":"markup","warning":"true","out-width":"700px","editor-quick-suggestions":"false","out-height":"","comment":"","message":"true","editor-max-height":"","label":"unnamed-chunk-12","output":"true","read-only":"false","dpi":72,"autorun":"false","editor-word-wrap":"true","context":"interactive","editor-font-scale":"1"},"id":12,"code":"N=20      # Study size per group\nrho=0.5   # Intra-class correlation between left and right eye\nsigma=10  # Standard deviation of individual eyes\nmean=100  # Grand mean\neffect=10 # True effect of RA on RNFL\neyes = c(\"L\",\"R\")\ngroups = c(\"Disease\",\"Control\")\n\n# Find the standard deviation between and within samples based on the overall SD and the ICC\nsd_between = sigma*sqrt(rho)\nsd_within = sigma*sqrt(1-rho)\n\ndat <- expand.grid(eye=eyes,patient=1:(2*N))\ndat$group <- rep(groups,each=2*N)\n\npatientEffects = rnorm(2*N,0,sd_between)\n\ndat <- transform(dat , rnfl = mean + patientEffects[patient] + effect*(group==\"Disease\") + rnorm(nrow(dat),0,sd_within))"},{"options":{"fig-height":5,"classes":"","fig-width":7,"fig-cap":"","results":"markup","warning":"true","out-width":"700px","editor-quick-suggestions":"false","out-height":"","comment":"","message":"true","editor-max-height":"","label":"unnamed-chunk-13","output":"true","read-only":"false","dpi":72,"autorun":"false","editor-word-wrap":"true","context":"interactive","editor-font-scale":"1"},"id":13,"code":"ggplot(dat ) + aes(x=eye , y=rnfl) + \n  geom_point() + \n  geom_line(aes(group=patient)) + \n  facet_wrap(~group)"},{"options":{"fig-height":5,"classes":"","fig-width":7,"fig-cap":"","results":"markup","warning":"true","out-width":"700px","editor-quick-suggestions":"false","out-height":"","comment":"","message":"true","editor-max-height":"","label":"unnamed-chunk-14","output":"true","read-only":"false","dpi":72,"autorun":"false","editor-word-wrap":"true","context":"interactive","editor-font-scale":"1"},"id":14,"code":"ggplot(dat ) + aes(x=group , y=rnfl) + \n  ggbeeswarm::geom_beeswarm() + \n  ggpubr::stat_compare_means(method=\"t.test\",comparisons = list(1:2))\n  "},{"options":{"fig-height":5,"classes":"","fig-width":7,"fig-cap":"","results":"markup","warning":"true","out-width":"700px","editor-quick-suggestions":"false","out-height":"","comment":"","message":"true","editor-max-height":"","label":"unnamed-chunk-15","output":"true","read-only":"false","dpi":72,"autorun":"false","editor-word-wrap":"true","context":"interactive","editor-font-scale":"1"},"id":15,"code":"aggregate(dat , rnfl ~ patient + group, mean) |>\nggplot() + aes(x=group , y=rnfl) + \n  ggbeeswarm::geom_beeswarm() + \n  ggpubr::stat_compare_means(method=\"t.test\",comparisons = list(1:2))"},{"options":{"fig-height":5,"classes":"","fig-width":7,"fig-cap":"","results":"markup","warning":"true","out-width":"700px","editor-quick-suggestions":"false","out-height":"","comment":"","message":"true","editor-max-height":"","label":"unnamed-chunk-16","output":"true","read-only":"false","dpi":72,"autorun":"false","editor-word-wrap":"true","context":"interactive","editor-font-scale":"1"},"id":16,"code":"dat |> subset(eye==\"L\") |> report::report_sample(by = \"group\",select = \"rnfl\")\n\naggregate(dat , rnfl ~ patient + group, mean) |> report::report_sample(by = \"group\",select = \"rnfl\")"},{"options":{"fig-height":5,"classes":"","fig-width":7,"fig-cap":"","results":"markup","warning":"true","out-width":"700px","editor-quick-suggestions":"false","out-height":"","comment":"","message":"true","editor-max-height":"","label":"unnamed-chunk-17","output":"true","read-only":"false","dpi":72,"autorun":"false","editor-word-wrap":"true","context":"interactive","editor-font-scale":"1"},"id":17,"code":"neff <- function(n,m,icc){\n  m / (1+(m-1)*icc)\n}\n\ndat <- expand.grid(m=1:5,icc=c(0.1,0.3,0.5))\ndat$neff <- neff(1,dat$m,dat$icc)\n\nggplot(dat) + aes(x=m,y=neff,linetype=factor(icc)) + geom_point() + geom_line() + \n  labs(x=\"Number of mice per cage\",y=\"Effective sample size\",linetype=\"ICC\") +\n  ggtitle(\"Effective sample size per cluster when treatments allocated on a per-cluster basis\")\n"},{"options":{"fig-height":5,"classes":"","fig-width":7,"fig-cap":"","results":"markup","warning":"true","out-width":"700px","editor-quick-suggestions":"false","out-height":"","comment":"","message":"true","editor-max-height":"","label":"unnamed-chunk-18","output":"true","read-only":"false","dpi":72,"autorun":"false","editor-word-wrap":"true","context":"interactive","editor-font-scale":"1"},"id":18,"code":"N=20      # Study size per group\nrho=0.5   # Intra-class correlation between left and right eye\nsigma=10  # Standard deviation of individual eyes\nmean=100  # Grand mean\neffect=10 # True effect of RA on RNFL\neyes = c(\"L\",\"R\")\ngroups = c(\"Disease\",\"Control\")\n\n# Find the standard deviation between and within samples based on the overall SD and the ICC\nsd_between = sigma*sqrt(rho)\nsd_within = sigma*sqrt(1-rho)\n\ndat <- expand.grid(eye=eyes,patient=1:N)\n\n### Now we have the group randomised *within* the individual\ndat$group <- replicate(N,sample(groups),simplify = FALSE) |> Reduce(f=c)\n\npatientEffects = rnorm(2*N,0,sd_between)\n\ndat <- transform(dat , rnfl = mean + patientEffects[patient] + effect*(group==\"Disease\") + rnorm(nrow(dat),0,sd_within))"},{"options":{"fig-height":5,"classes":"","fig-width":7,"fig-cap":"","results":"markup","warning":"true","out-width":"700px","editor-quick-suggestions":"false","out-height":"","comment":"","message":"true","editor-max-height":"","label":"unnamed-chunk-19","output":"true","read-only":"false","dpi":72,"autorun":"false","editor-word-wrap":"true","context":"interactive","editor-font-scale":"1"},"id":19,"code":"graph=ggplot(dat ) + aes(x=group , y=rnfl) + \n  geom_point()\n\nlibrary(patchwork)\ngraph + (graph + geom_line(aes(group=patient)))"}];
 
 </script>
 <script type="module">
@@ -1654,6 +1657,35 @@ globalThis.qwebrExecuteCode = async function (
 
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -1767,15 +1799,11 @@ globalThis.qwebrExecuteCode = async function (
     <ul class="dropdown-menu" aria-labelledby="nav-menu-giba-experimental-design-course">    
         <li>
     <a class="dropdown-item" href="./GIBA-session1.html">
- <span class="dropdown-text">Part 1</span></a>
+ <span class="dropdown-text">Part 1/2</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./GIBA-session3.html">
  <span class="dropdown-text">Part 3</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./GIBA-session4.html">
- <span class="dropdown-text">Part 4</span></a>
   </li>  
     </ul>
   </li>
@@ -1807,10 +1835,19 @@ globalThis.qwebrExecuteCode = async function (
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#how-big-should-our-mouse-study-be" id="toc-how-big-should-our-mouse-study-be" class="nav-link active" data-scroll-target="#how-big-should-our-mouse-study-be">How big should our mouse study be</a></li>
-  <li><a href="#sample-size-for-a-proportion" id="toc-sample-size-for-a-proportion" class="nav-link" data-scroll-target="#sample-size-for-a-proportion">Sample size for a proportion</a></li>
-  <li><a href="#extracting-the-data-from-an-existing-study-to-make-a-sample-size-calculation" id="toc-extracting-the-data-from-an-existing-study-to-make-a-sample-size-calculation" class="nav-link" data-scroll-target="#extracting-the-data-from-an-existing-study-to-make-a-sample-size-calculation">Extracting the data from an existing study to make a sample size calculation</a></li>
-  <li><a href="#effective-sample-size-with-clustered-data" id="toc-effective-sample-size-with-clustered-data" class="nav-link" data-scroll-target="#effective-sample-size-with-clustered-data">Effective sample size with clustered data</a></li>
+  <li><a href="#exercise-1.-interpretation-of-a-clinical-study" id="toc-exercise-1.-interpretation-of-a-clinical-study" class="nav-link active" data-scroll-target="#exercise-1.-interpretation-of-a-clinical-study">Exercise 1. Interpretation of a clinical study</a></li>
+  <li><a href="#exercise-2.-how-big-should-a-study-to-estimate-a-proportion-be" id="toc-exercise-2.-how-big-should-a-study-to-estimate-a-proportion-be" class="nav-link" data-scroll-target="#exercise-2.-how-big-should-a-study-to-estimate-a-proportion-be">Exercise 2. How big should a study to estimate a proportion be?</a></li>
+  <li><a href="#exercise-3.-how-big-should-a-study-to-estimate-a-mean-difference-be" id="toc-exercise-3.-how-big-should-a-study-to-estimate-a-mean-difference-be" class="nav-link" data-scroll-target="#exercise-3.-how-big-should-a-study-to-estimate-a-mean-difference-be">Exercise 3. How big should a study to estimate a mean difference be?</a>
+  <ul class="collapse">
+  <li><a href="#reproducibility-of-the-study-implication-for-power" id="toc-reproducibility-of-the-study-implication-for-power" class="nav-link" data-scroll-target="#reproducibility-of-the-study-implication-for-power">Reproducibility of the study, implication for power</a></li>
+  <li><a href="#implications-for-running-a-study-many-times" id="toc-implications-for-running-a-study-many-times" class="nav-link" data-scroll-target="#implications-for-running-a-study-many-times">Implications for ‘running a study many times’</a></li>
+  </ul></li>
+  <li><a href="#exercise-4---what-is-statistical-power" id="toc-exercise-4---what-is-statistical-power" class="nav-link" data-scroll-target="#exercise-4---what-is-statistical-power">Exercise 4 - What is statistical power?</a></li>
+  <li><a href="#exercise-5-logic-of-statistical-inference" id="toc-exercise-5-logic-of-statistical-inference" class="nav-link" data-scroll-target="#exercise-5-logic-of-statistical-inference">Exercise 5 – Logic of statistical inference</a></li>
+  <li><a href="#exercise-6.-using-the-pwr-package-to-find-sample-size-analytically" id="toc-exercise-6.-using-the-pwr-package-to-find-sample-size-analytically" class="nav-link" data-scroll-target="#exercise-6.-using-the-pwr-package-to-find-sample-size-analytically">Exercise 6. Using the pwr package to find sample size analytically</a></li>
+  <li><a href="#exercise-8.-sample-size-for-comparing-two-proportions" id="toc-exercise-8.-sample-size-for-comparing-two-proportions" class="nav-link" data-scroll-target="#exercise-8.-sample-size-for-comparing-two-proportions">Exercise 8. Sample size for comparing two proportions</a></li>
+  <li><a href="#worked-example-effective-sample-size-with-clustered-data" id="toc-worked-example-effective-sample-size-with-clustered-data" class="nav-link" data-scroll-target="#worked-example-effective-sample-size-with-clustered-data">Worked Example: Effective sample size with clustered data</a></li>
+  <li><a href="#randomising-treatments-within-clusters" id="toc-randomising-treatments-within-clusters" class="nav-link" data-scroll-target="#randomising-treatments-within-clusters">Randomising treatments <em>within</em> clusters</a></li>
   </ul>
 </nav>
     </div>
@@ -2103,7 +2140,7 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Session3</h1>
+<h1 class="title">Sample Size</h1>
 </div>
 
 
@@ -2122,13 +2159,121 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 
 <div id="qwebr-insertion-location-1"></div>
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
-<p>Slides for session 3 (sample size) are here:</p>
+<p>Slides for the afternoon session on sample size are here:</p>
 <ul>
 <li><a href="gibasession3.pptx">Session 3 slides</a></li>
 </ul>
-<section id="how-big-should-our-mouse-study-be" class="level2">
-<h2 class="anchored" data-anchor-id="how-big-should-our-mouse-study-be">How big should our mouse study be</h2>
+<section id="exercise-1.-interpretation-of-a-clinical-study" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-1.-interpretation-of-a-clinical-study">Exercise 1. Interpretation of a clinical study</h2>
+<p>Consider the following abstract reporting a clinical trial of reducing mortality by peripheral perfusion compared to lactate among patients in intensive care with septic shock.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/andromeda.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Graphical Abstract"><img src="images/andromeda.png" class="img-fluid figure-img" alt="Graphical Abstract"></a></p>
+<figcaption>Graphical Abstract</figcaption>
+</figure>
+</div>
+<ol type="a">
+<li>What was the mortality rate in the treatment arm? In the control arm?</li>
+<li>What was the estimate for treatment effect?</li>
+<li>What was its confidence interval? (check our understand of 95% CI)</li>
+<li>What conclusion did the authors/journal draw? Why?</li>
+<li>What conclusions do you draw from this trial?</li>
+<li>If you or a loved one was in septic shock, which treatment would you prefer?</li>
+<li>Would you allow yourself to be randomised to these treatments in a future trial?</li>
+</ol>
+<div id="qwebr-insertion-location-2"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</section>
+<section id="exercise-2.-how-big-should-a-study-to-estimate-a-proportion-be" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-2.-how-big-should-a-study-to-estimate-a-proportion-be">Exercise 2. How big should a study to estimate a proportion be?</h2>
+<p>Consider a study to estimate the prevalence of detectable virus in the stoll samples of COVID patients.</p>
+<p>We can think about the sample size required in terms of the precision that the study needs to have</p>
+<p>Suppose we recruited 10 patients, and found two positive samples. We can use <code>binom.test</code> in R to find the estimate and its 95% confidence interval.</p>
+<div id="qwebr-insertion-location-3"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>Adapt the code to answer the following questions (leave notes in the code box if you like but remember these won’t be saved):</p>
+<ol type="a">
+<li>What would be the confidence interval if we recruited 100 participants and found 20 positive samples?</li>
+<li>Suppose we expect the prevalence to be about 20%. How many samples will we need to estimate the prevalence to within +-5 percentage points.</li>
+<li>What if the prevalence was only 10%?</li>
+<li>How many samples should we collect for this study?</li>
+<li>Based on this study, what do we need to think about when deciding on a sample size?</li>
+</ol>
+</section>
+<section id="exercise-3.-how-big-should-a-study-to-estimate-a-mean-difference-be" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-3.-how-big-should-a-study-to-estimate-a-mean-difference-be">Exercise 3. How big should a study to estimate a mean difference be?</h2>
 <p>We are interested in the number of mice needed to test the effect of supplement on fecal alpha diversity.</p>
+<p>First we’ll explore replications of a single study, to revise our understanding of hypothesis tests, think about the interpretation of p-values and meaning of statistical power.</p>
+<p>This first code block simulates a study, and generates a dataset. Choose any number for the seed, this will ensure that we all get independent runs of the experiment!</p>
+<p>Look at the assumptions we need to make to simulate the dataset.</p>
+<div id="qwebr-insertion-location-4"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>Next we can make beeswarm graph with a t-test to compare means:</p>
+<div id="qwebr-insertion-location-5"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>Calculate the mean and standard deviation by group, run a t-test.</p>
+<p>Lets stop here to make sure that we completely understand the t-test result.</p>
+<div id="qwebr-insertion-location-6"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>Lets pause here to answer the following questions:</p>
+<ol type="a">
+<li>How precise was the your initial effect estimate with 10 mice per group?</li>
+<li>How does this change with increasing sample size?</li>
+</ol>
+<section id="reproducibility-of-the-study-implication-for-power" class="level3">
+<h3 class="anchored" data-anchor-id="reproducibility-of-the-study-implication-for-power">Reproducibility of the study, implication for power</h3>
+<p>To understand what the <em>sampling distribution</em> of our estimator is, and to better understand the likely reproducibility of this study, we can run a large number of simulations:</p>
+<div id="qwebr-insertion-location-7"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<div id="qwebr-insertion-location-8"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<div id="qwebr-insertion-location-9"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>Questions for discussion:</p>
+<ol type="a">
+<li>How reliable was the p-value across experiments?</li>
+<li>Did the experiments agree or disagree with respect to the efficacy of the treatment?</li>
+<li>How many mice would be ‘enough’ to reliably detect the effect that we introduced?</li>
+<li>How many mice would be enough to make a power of 80% ?</li>
+<li>How does this change if we change the size of the effect?</li>
+<li>How does this change if the mice become more variable?</li>
+</ol>
+</section>
+<section id="implications-for-running-a-study-many-times" class="level3">
+<h3 class="anchored" data-anchor-id="implications-for-running-a-study-many-times">Implications for ‘running a study many times’</h3>
+<p>As we’ve seen, p-values are not reliable. It is expected that given the same study design, sometimes you’ll get a significant difference and sometimes not.</p>
+<p>This is a consequence of the variability of the experimental units, and does not represent a failure of the system or changing conditions in</p>
+<p>So there is little value in repeating a study (say) three times and hoping for agreement.</p>
+<p>If we had that resource then, it would be better to create one larger study, with blocks if necessary.</p>
+<p>The graph below shows how the precision would increase if we had pooled results from repeats instead of trying to interpret each individually.</p>
+<div id="qwebr-insertion-location-10"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</section>
+</section>
+<section id="exercise-4---what-is-statistical-power" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-4---what-is-statistical-power">Exercise 4 - What is statistical power?</h2>
+<p>Check our understanding of the following terms</p>
+<ol type="a">
+<li>What does it mean if an experiment has a power of, say, 80%?</li>
+<li>What is an ‘under-powered’ study?</li>
+<li>What would you learn from an underpowered study?</li>
+<li>How would you know if a study that you are reading was under-powered?</li>
+</ol>
+</section>
+<section id="exercise-5-logic-of-statistical-inference" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-5-logic-of-statistical-inference">Exercise 5 – Logic of statistical inference</h2>
+<p>Why do scientists ignore sample size issues?</p>
+<p>In my experience, we often have this paradigm for our statistical analyses:</p>
+<ol type="1">
+<li>Do experiment</li>
+<li>Do analysis</li>
+<li>If p&gt;0.05 – we have proved there is no effect,</li>
+<li>if p&lt;0.05 – we have proved there is an effect</li>
+</ol>
+<p>What’s wrong with this logic? Can you correct it?</p>
+</section>
+<section id="exercise-6.-using-the-pwr-package-to-find-sample-size-analytically" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-6.-using-the-pwr-package-to-find-sample-size-analytically">Exercise 6. Using the pwr package to find sample size analytically</h2>
 <p>We will use a simple parallel group study to investigate this.</p>
 <p>We believe from prior work that the within-group standard deviation for mouse alpha diversity is 1.</p>
 <p>Use the pwr function to answer the following questions:</p>
@@ -2142,38 +2287,84 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 </ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reminder that the syntax for power is:</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># pwr(..)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># pwr.t.test(n = NULL, d = NULL, sig.level = 0.05, power = NULL, </span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#    type = c("two.sample", "one.sample", "paired"),</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#    alternative = c("two.sided", "less", "greater"))</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># You need to include all but one of: n,d,sig.level and power.</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># eg:</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># library(pwr)</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># pwr.t.test(n=NULL, d=0.5, power=0.8, sd=0.05)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="sample-size-for-a-proportion" class="level2">
-<h2 class="anchored" data-anchor-id="sample-size-for-a-proportion">Sample size for a proportion</h2>
+<section id="exercise-8.-sample-size-for-comparing-two-proportions" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-8.-sample-size-for-comparing-two-proportions">Exercise 8. Sample size for comparing two proportions</h2>
 <p>Suppose we are interested in comparing an event incidence rate between two independent groups.</p>
-<p>We expect in our model that 50% of the participants will develop the outcome. We expect our intervention will lower this by 10 percentage points. How many participants would we need to be able to detect this difference?</p>
-<div id="qwebr-insertion-location-2"></div>
+<p>We expect in our model that 50% of the participants will develop the outcome. We expect our intervention will lower this to 20% percentage points. How many participants would we need to be able to detect this difference?</p>
+<div id="qwebr-insertion-location-11"></div>
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>Now adapt the code to check how many participants would be needed to detect a difference between 50% and 40%.</p>
 </section>
-<section id="extracting-the-data-from-an-existing-study-to-make-a-sample-size-calculation" class="level2">
-<h2 class="anchored" data-anchor-id="extracting-the-data-from-an-existing-study-to-make-a-sample-size-calculation">Extracting the data from an existing study to make a sample size calculation</h2>
-<p>We can use information from previous studies to inform our sample size calculations.</p>
-<p>If a previous study has been undertaken with a similar outcome measure and in a similar population to our planned study, then we might expect that the variation in the measures between and within people will be similar.</p>
-<p>We might also get clues about the likely size of any effects</p>
-<p>However, we need to be careful when using published effect sizes, as these are likely to be biased by the <em>winners curse</em>.</p>
-<p>Because effects are more likely to be published if they happen to be statistically significant, the effects from published studies are typically too high. Replication studies have consistently shown that published effects, even when replicated, can be up to 85% too high.</p>
-<p>Here we’ll consider conducting a replication of an existing study, and what the sample size of a replication should be.</p>
-<div id="qwebr-insertion-location-3"></div>
-<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
-</section>
-<section id="effective-sample-size-with-clustered-data" class="level2">
-<h2 class="anchored" data-anchor-id="effective-sample-size-with-clustered-data">Effective sample size with clustered data</h2>
-<p>Consider an observational study in which retinal thickness is compared between patients with or without rheumatoid arthritis.</p>
+<section id="worked-example-effective-sample-size-with-clustered-data" class="level2">
+<h2 class="anchored" data-anchor-id="worked-example-effective-sample-size-with-clustered-data">Worked Example: Effective sample size with clustered data</h2>
+<p>Consider an observational study in which retinal nerve fibre layer thickness (RNFL) is compared between patients with or without rheumatoid arthritis.</p>
 <p>Patients are to be randomly sampled from their respective populations, and each patient has a measurement taken in their left and their right eye.</p>
 <p>How should we analyse this data, what are the implications if of using the wrong model, and what are the implications for power and sample size? How much extra information do we get from measuring the second eye in each participant?</p>
 <p>First we’ll set up the simulation study:</p>
-<div id="qwebr-insertion-location-4"></div>
+<div id="qwebr-insertion-location-12"></div>
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 <p>It is valuable to plot the data to check the extent of the correlation between the eyes</p>
-<div id="qwebr-insertion-location-5"></div>
+<div id="qwebr-insertion-location-13"></div>
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>Can we assume that eyes are independent observations in the analysis?</p>
+<div id="qwebr-insertion-location-14"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>We could treat eyes as technical replicates, and take the average for each participant before running the t-test.</p>
+<div id="qwebr-insertion-location-15"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>This is OK, we now have one measure per person, and each person was sampled independently.</p>
+<p>So did we get any benefit from using two eyes instead of one, even though our sample size was still the same?</p>
+<p>Yes, because of the repeated measurement our data for each person became less variable.</p>
+<p>Compare the standard deviations if we used the left eye only compared to the aggregated data:</p>
+<div id="qwebr-insertion-location-16"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>The relative increase in precision depends on how much of the overall variation is found within eyes vs between eyes. We set this above with the ICC (intraclass correlation coefficient). Here we set ICC=0.5.</p>
+<p>We can show that the effective sample size using two eyes is</p>
+<p><span class="math display">\[
+N\times\frac{2}{1+\text{ICC}}
+\]</span></p>
+<p>which in this case is <span class="math inline">\(1.33 \times N\)</span></p>
+<p>So by using both eyes in this case we effectively increase the sample size by 30%.</p>
+<p>A general formula for the effective sample size, for clusters of more than two (say mice within cages, is)</p>
+<p><span class="math display">\[
+N_{\text{Eff}} = N\times\frac{m}{1+(m-1)\times\text{ICC}}
+\]</span> Where <span class="math inline">\(N\)</span> is the number of units, and <span class="math inline">\(m\)</span> is the number of clusters.</p>
+<p>So suppose we allocated a treatment to mice, and they have a shared outcome such that the intra-class correlation is about 0.3. This might be typical for microbiome measures, stress responses, inflammatory responses etc. Then the effective sample size increases with the number of animals as follows:</p>
+<div id="qwebr-insertion-location-17"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>This adds an extra complication to a sample size calculation, but you make reasonable assumptions based on prior work regarding what the ICC might be. In any case, simply assuming that mice are independent could lead you to vastly over-estimate the power of your study.</p>
+<p>Clearly in terms of numbers, having fewer mice per cage is the most efficient, but optimising a sample size and a layout in this case (number of cages, number of mice per cage) depends also the relative cost of cages vs animals, and you will be limited by ethical and practical constraints.</p>
+<p>For a full discussion see:</p>
+</section>
+<section id="randomising-treatments-within-clusters" class="level2">
+<h2 class="anchored" data-anchor-id="randomising-treatments-within-clusters">Randomising treatments <em>within</em> clusters</h2>
+<p>A converse situation arises if we can randomise <em>eyes</em> independently to treatments. In this case the unit of experiment is the eye, but we get the added benefit that we can remove the between-person variance from the analysis, since every person contributes one treated and one control eye.</p>
+<div id="qwebr-insertion-location-18"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>If we plot the outcome with the individual participants identified, we should see that the effect of the treatment is more obvious, because the between-participant variation becomes irrelevant.</p>
+<div id="qwebr-insertion-location-19"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>So here, instead of losing power, because we can randomise <em>within</em> the clusters we gain power. If we had to treat the individual and not the eye we would be randomising the clusters themselves, which would cost us power.</p>
+<p>The effective sample size given N individuals, if we can randomise two treatments within an individual, is given by:</p>
+<p><span class="math display">\[
+N_\text{eff}=N\times\frac{2}{1-\text{ICC}}
+\]</span></p>
+<p>Where <span class="math inline">\(N\)</span> is the number of individuals. Now as the ICC goes up, the effective sample size also increases.</p>
+<p>A similar logic applies to cross-over vs parallel group human trials. With an ICC of 0.5, then a parallel group study of, say, 100 individuals per group (total 200 individuals), would only require 50 individuals in total (100 eyes) if we can compare both treatments within each person.</p>
+<p>Whether this is practically possible depends on the nature of the intervention and the experimental units themselves.</p>
 
 
 </section>
@@ -2716,6 +2907,38 @@ qwebrInstance.then(
   }
 );
 </script>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","openEffect":"zoom","loop":false,"selector":".lightbox","descPosition":"bottom"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 

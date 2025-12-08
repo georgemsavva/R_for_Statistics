@@ -10,29 +10,38 @@ filters:
 ---
 
 ```{webr-r}
-#| echo: false
+#| autorun: true
 #| message: false
 #| warning: false
 library(ggplot2)
 library(ggpubr)
 library(report)
 library(ggbeeswarm)
+library(patchwork)
+
 ```
 
 
-Welcome to this one-day course in experimental design and analysis.
+## Introduction
 
-On these pages you'll find links to the 
+These pages include slides and code to support the first day of our course in experimental design and analysis.
 
-Slides for sesion 1 are here: 
+Slides for session 1 are here: 
 
 * [Session 1 slides](gibasession1.pptx)
+
+The code in these windows can be run directly from your browser,
+or copied into your own R session.
+
+If you want to use your own R sesion, you'll need to have packages installed:
+
+`ggplot2`, `see`, `ggpubr`, `ggbeeswarm`, `patchwork` and `easystats`
 
 ## Worked example
 
 Here we simulate a simple experiment with two groups of mice and a single outcome measure.
 
-We set the 'true' average values of our outcome measure
+We set the 'true' average values of our outcome measure, simulate an experiment with our chosen design, and then attempt to estimate the difference between groups using our simulated data.
 
 Using simulations like this can help us to think through experiments, plan analyses and ultimately run sample size calculations.
 
@@ -59,6 +68,8 @@ richness = rnbinom(N1+N2, mu=mean[group],size=1)
 # Turn this into a dataset
 dat = data.frame(group,richness)
 
+# List the first few rows
+head(dat)
 ```
 
 ### Initial analysis
@@ -87,18 +98,30 @@ While this presentation of results (p-value and dynamite plot) is often used, it
 ggplot(dat, aes(x=group,y=richness)) +  
   ggbeeswarm::geom_beeswarm(pch=4) + 
   stat_summary(geom="errorbar" , width=.30, fun.data = "mean_se") +
-  stat_summary(geom="point" , width=.30, fun.data = "mean_se") + 
+  stat_summary(geom="point" , fun.data = "mean_se") + 
   stat_compare_means(comparisons = list(1:2), method="t.test") + 
   theme_bw()
 
+```
+
+```{webr-r}
 
 report_sample(dat , by="group")
 
 t.test(data=dat , richness ~ group) |> report::report_parameters()
 
-lm(data=dat , richness ~ group) |> parameters::parameters() |> plot()
-
 ```
+
+It's interesting to compare the linear model result with the t-test result.
+
+```{webr-r}
+model1 <- lm(data=dat , richness ~ group) 
+summary(model1)
+confint(model1)
+model1 |> parameters::parameters() |> plot()
+```
+
+
 
 ## Accuracy and precision
 
@@ -147,4 +170,102 @@ rbind(goodEstimates,biasedAndImprecise,impreciseEstimates,biasedEstimates) |>
 Our goal in experimental design is to answer your research questions with low bias *and* high precision, so that your estimates are consistently close to the truth!  On the whole bias is more problematic than imprecision, because the latter can be calculated, reported, and overcome using larger studies.  Bias is much more difficult to detect, and can become compounded by larger samples or repeated studies if the same biases are present each time.
 
 To deal with sources of bias and variance, we have to understand how they arise, and how to reduce or remove their effects on our estimates.
+
+
+## Analysis of a blocked randomised study
+
+### Introduction
+
+The code below simulates a parallel group randomised controlled trial conducted in men and women.
+
+There were 40 participants in total, 20 men and 20 women.
+
+There was a blocked randomisation, so that men and women were balanced across groups (10 each per treatment group)
+
+The blocking was performed because we know that men have typically higher responses than women.
+
+
+```{webr-r}
+
+# Define the groups
+treatment = c("Treat", "Control")
+sex = c("Male","Female")
+
+# Here we set up the dataset with 10 copies of each combination of treatment and sex
+dat <- expand.grid( treatment=treatment , sex=sex,rep=1:10)
+
+# True treatment effect = 1
+# True sex effect = 2
+# Normally distributed indidividual variation with sd=1
+
+set.seed(200) # Setting the seed fixes the response
+
+# Now generate the response (y) with the known treatment effect, sex effect and random variation
+dat <- transform(dat, y = 10 + (treatment=="Treat") + 2*(sex=="Male") + rnorm(nrow(dat)))
+
+# Check the first few rows
+head(dat)
+
+```
+
+Remember the experimental design equation for this study is:
+
+`Outcome = Treatment + Sex + Error`
+
+Below we show why it is important to respect this equation in our analysis phase as well as our design phase.
+
+Since we have a two group study with a continuous outcome, we might be tempted to apply a two-groups t-test to compare the responses:
+
+```{webr-r}
+# The first graph 
+graph1 = ggplot(dat) + 
+  aes(x=treatment, y=y) + 
+  geom_beeswarm(aes(shape=sex)) + 
+  theme_bw()+ 
+  stat_summary(geom="errorbar",width=.5,fun.data = "mean_se") + 
+  scale_y_continuous(limits=c(8,15)) + 
+  ggpubr::stat_compare_means(method="t.test",comparisons=list(1:2))  + 
+  labs(x="Treatment", y="Response",shape="Sex")
+```
+
+While there is some evidence of the difference between groups (that we know is there!), it is not statistically significant.  We have type-2 error in this case (false negative).  This is caused by the high variation within each treatment group overwhelming the signal from the treatment.
+
+But if we stratify the data by sex, we explain much of that variation.  The signal is much more obvious, and is statistically significant in both groups despite there being half the participants in each!
+
+```{webr-r}
+graph1 + (graph1 + facet_wrap(~sex) ) + plot_layout(guides="collect")
+```
+
+The linear model corresponding to the unpaired t-test is given below. Note the residual error in the output and the standard error for the effect of treatment.
+
+```{web-r}
+lm(data=dat , y ~ treatment) |> summary()
+```
+
+Next we'll try the model that corresponds to the design equation.  We have explained far more variance (smaller residual error), and so have a m.
+
+```{web-r}
+lm(data=dat , y ~ treatment + sex) |> summary()
+```
+
+Although this dataset was picked to illustrate the point, we can find the power of the study with each analytical approach by replicating the study many times, and finding what proportion of p-values is less than 0.05.
+
+```{webr-r}
+
+oneRep <- function(){
+  dat <- transform(dat, y = 10 + (treatment=="Treat") + 2*(sex=="Male") + rnorm(nrow(dat)))
+  model1_p <- lm(data=dat , y ~ treatment) |> summary() |> coef())["treatmentControl","Pr(>|t|)"]
+  model2_p <- lm(data=dat , y ~ treatment + sex) |> summary() |> coef())["treatmentControl","Pr(>|t|)"]
+  c(model1_p,model2_p)
+}
+
+replicate(1000,oneRep()) |> t() |> as.data.frame()|> lapply(\(x) mean(x<0.05))
+
+```
+
+Here, using the design equation to set up the analysis model leads to a much more powerful design, by explaining the variance associated with the identified factors.  It also means that the assumptions underlying the regression model, in particular normal random errors, more likely to be met.
+
+```{web-r}
+lm(data=dat , y ~ treatment + sex) |> report::report_model()
+```
 

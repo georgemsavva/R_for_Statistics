@@ -1,5 +1,5 @@
 ---
-title: "Session3"
+title: "Sample Size"
 format: html
 engine: knitr
 webr: 
@@ -11,6 +11,7 @@ filters:
 
 ```{webr-r}
 #| echo: false
+#| autorun: true
 #| message: false
 #| warning: false
 library(ggplot2)
@@ -20,13 +21,262 @@ library(ggbeeswarm)
 ```
 
 
-Slides for session 3 (sample size) are here: 
+Slides for the afternoon session on sample size are here: 
 
 * [Session 3 slides](gibasession3.pptx)
 
-## How big should our mouse study be
+## Exercise 1.  Interpretation of a clinical study
+
+Consider the following abstract reporting a clinical trial of reducing mortality by peripheral perfusion compared to lactate among patients in intensive care with septic shock.
+
+![Graphical Abstract](images/andromeda.png){.lightbox}
+ 
+a)	What was the mortality rate in the treatment arm?  In the control arm?
+a)	What was the estimate for treatment effect?
+a)	What was its confidence interval? (check our understand of 95% CI)
+a)	What conclusion did the authors/journal draw?  Why?
+a)	What conclusions do you draw from this trial?
+a)	If you or a loved one was in septic shock, which treatment would you prefer?
+a)	Would you allow yourself to be randomised to these treatments in a future trial?
+
+```{webr-r}
+# Use this space if you like but remember it isn't saved!
+```
+
+## Exercise 2.  How big should a study to estimate a proportion be?
+
+Consider a study to estimate the prevalence of detectable virus in the stoll samples of COVID patients.
+
+We can think about the sample size required in terms of the precision that the study needs to have
+
+Suppose we recruited 10 patients, and found two positive samples.  We can use `binom.test` in R to find the estimate and its 95% confidence interval.
+
+```{webr-r}
+binom.test(x = 2,n=10)
+```
+
+Adapt the code to answer the following questions (leave notes in the code box if you like but remember these won't be saved):
+
+a) What would be the confidence interval if we recruited 100 participants and found 20 positive samples?
+a) Suppose we expect the prevalence to be about 20%.  How many samples will we need to estimate the prevalence to within +-5 percentage points.
+a) What if the prevalence was only 10%?
+a) How many samples should we collect for this study?
+a) Based on this study, what do we need to think about when deciding on a sample size?
+
+## Exercise 3.  How big should a study to estimate a mean difference be?
 
 We are interested in the number of mice needed to test the effect of supplement on fecal alpha diversity.
+
+First we'll explore replications of a single study, to revise our understanding of hypothesis tests, think about the interpretation of p-values and meaning of statistical power.
+
+This first code block simulates a study, and generates a dataset.  Choose any number for the seed, this will ensure that we all get independent runs of the experiment!
+
+Look at the assumptions we need to make to simulate the dataset.
+
+```{webr-r}
+#| warning: false
+
+set.seed(1) # choose your own seed so that we each get a different instance of this study
+
+N=10  # number per group
+N1=N # sample size for group 1
+N2=N # sample size for group 2
+sd=10 # within-group standard deviation
+
+# true mean values in each group
+mean = c("Control"=50,
+         "Treated"=50+10)
+
+# Make group labels
+group = c( rep("Control",N1) , rep("Treated",N2) ) |> factor(levels=c("Control","Treated"))
+
+# Run the experiment diversity, assume it has a normal distribution with standard deviation
+richness = rnorm(N1+N2, mean=mean[group],sd=sd)
+
+# Turn this into a dataset
+dat = data.frame(group,richness)
+
+# List the first few rows
+head(dat)
+
+```
+
+Next we can make beeswarm graph with a t-test to compare means:
+
+```{webr-r}
+ggplot(dat, aes(x=group,y=richness)) +  
+  ggbeeswarm::geom_beeswarm(pch=4) + 
+  stat_summary(geom="errorbar" , width=.30, fun.data = "mean_se") +
+  stat_summary(geom="point" , fun.data = "mean_se") + 
+  stat_compare_means(comparisons = list(1:2), method="t.test") + 
+  theme_bw()
+
+```
+
+Calculate the mean and standard deviation by group, run a t-test.
+
+Lets stop here to make sure that we completely understand the t-test result.
+
+```{webr-r}
+report_sample(dat , by="group")
+
+cat("\n### t-test ### \n")
+
+t.test(data=dat, richness ~ group)
+
+cat("\n### t-test report ### \n\n")
+
+t.test(data=dat, richness ~ group) |> report()
+
+# This is very slightly different to the t-test, but close enough!
+lm(data=dat, richness ~ group) |> parameters::parameters() |> plot()
+
+
+```
+
+Lets pause here to answer the following questions:
+
+a) How precise was the your initial effect estimate with 10 mice per group?
+b) How does this change with increasing sample size?
+
+### Reproducibility of the study, implication for power
+
+To understand what the *sampling distribution* of our estimator is, and to better understand the likely reproducibility of this study, we can run a large number of simulations:
+
+```{webr-r}
+#| warning: false
+oneRep <- function(sampleSize=10,effect=10,sd=10){
+  
+  N=sampleSize  # number per group
+  N1=N # sample size for group 1
+  N2=N # sample size for group 2
+  
+  sd=sd
+  
+  # true mean values in each group
+  mean = c("Control"=50,
+           "Treated"=50+effect)
+  
+  # Make group labels
+  group = c( rep("Control",N1) , rep("Treated",N2) ) |> factor(levels=c("Control","Treated"))
+  
+  # Run the experiment diversity, assume it has a normal distribution with standard deviation
+  richness = rnorm(N1+N2, mean =mean[group],sd = sd)
+  
+  # Turn this into a dataset
+  dat = data.frame(group,richness)
+  
+  # List the first few rows
+  test=t.test(data=dat , richness ~ group)
+  
+  # Now return the p-value, the estimate (b), and the confidence interval
+  c("p"=test$p.value,
+    "b"=as.numeric(diff(test$estimate)),
+    "CI"=-rev(test$conf.int)
+    )
+}
+
+oneRep()
+```
+
+```{webr-r}
+replicate(5, oneRep() , simplify = TRUE) |> t() |> data.frame()
+```
+
+```{webr-r}
+Nsim=20
+reps <- replicate(Nsim, oneRep(10,10,10) , simplify = TRUE) |> t() |> data.frame()
+reps$ber=1:nrow(reps)
+
+# Make a histogram of the p-values
+hist(reps$p,breaks=20)
+
+# What proportion of results are 'significant'
+mean(reps$p<0.05)
+
+# Forest plot of the effects 
+ggplot(reps) + 
+  aes(x=ber,y=b,ymin=CI1,ymax=CI2,col=p<0.05) + 
+  geom_pointrange() + 
+  coord_flip() + 
+  geom_hline(yintercept=0) + 
+  scale_x_continuous(breaks=1:Nsim) + 
+  geom_hline(yintercept=10,linetype="dotted")
+
+```
+
+Questions for discussion:
+
+a) How reliable was the p-value across experiments?
+a) Did the experiments agree or disagree with respect to the efficacy of the treatment?
+a) How many mice would be ‘enough’ to reliably detect the effect that we introduced?
+a) How many mice would be enough to make a power of 80% ?
+a) How does this change if we change the size of the effect?
+a) How does this change if the mice become more variable?
+
+### Implications for 'running a study many times'
+
+As we've seen, p-values are not reliable.  It is expected that given the same study design, sometimes you'll get a significant difference and sometimes not.
+
+This is a consequence of the variability of the experimental units, and does not represent a failure of the system or changing conditions in 
+
+So there is little value in repeating a study (say) three times and hoping for agreement.
+
+If we had that resource then, it would be better to create one larger study, with blocks if necessary.
+
+The graph below shows how the precision would increase if we had pooled results from repeats instead of trying to interpret each individually.
+
+```{webr-r}
+# Simulate a new batch of simulations
+reps <- replicate(Nsim, oneRep(10,10,10) , simplify = TRUE) |> t() |> data.frame()
+
+# Calculate the 'cumulative' estimates of effect as we add studies
+reps<-within(reps, {
+  ber<-1:nrow(reps)
+  precision<-(abs(CI2-CI1)/4)^(-2)
+  cumprecision<-cumsum(precision)
+  cummean<-cumsum(b)/1:nrow(reps)
+  cumCI_upper<-cummean+2*cumprecision^(-0.5)
+  cumCI_lower<-cummean-2*cumprecision^(-0.5)
+})
+
+# Plot the cumulative results
+ggplot(reps) + 
+  aes(x=ber,y=cummean,ymin=cumCI_lower,ymax=cumCI_upper) + 
+  geom_pointrange() + 
+  coord_flip() + 
+  geom_hline(yintercept=0) + 
+  scale_x_continuous(breaks=1:Nsim) + 
+  geom_hline(yintercept=10,linetype="dotted") + 
+  ggtitle("'Meta-analysis' of replicated studies")
+
+```
+
+
+
+## Exercise 4 - What is statistical power?
+
+Check our understanding of the following terms
+
+a) What does it mean if an experiment has a power of, say, 80%?
+a) What is an ‘under-powered’ study?
+a) What would you learn from an underpowered study?
+a) How would you know if a study that you are reading was under-powered?
+
+## Exercise 5 – Logic of statistical inference
+
+Why do scientists ignore sample size issues?
+
+In my experience, we often have this paradigm for our statistical analyses:
+
+1)	Do experiment
+2)	Do analysis
+3)	If p>0.05 – we have proved there is no effect, 
+4)	if p<0.05 – we have proved there is an effect
+
+What’s wrong with this logic?  Can you correct it?
+
+## Exercise 6.  Using the pwr package to find sample size analytically
 
 We will use a simple parallel group study to investigate this.
 
@@ -44,15 +294,25 @@ Use the pwr function to answer the following questions:
 ```{r }
 
 # Reminder that the syntax for power is:
-# pwr(..)
+# pwr.t.test(n = NULL, d = NULL, sig.level = 0.05, power = NULL, 
+#    type = c("two.sample", "one.sample", "paired"),
+#    alternative = c("two.sided", "less", "greater"))
+#
+# You need to include all but one of: n,d,sig.level and power.
+#
+# eg:
+# 
+# library(pwr)
+#
+# pwr.t.test(n=NULL, d=0.5, power=0.8, sd=0.05)
 
 ```
 
-## Sample size for a proportion
+## Exercise 8. Sample size for comparing two proportions
 
 Suppose we are interested in comparing an event incidence rate between two independent groups.  
 
-We expect in our model that 50% of the participants will develop the outcome.  We expect our intervention will lower this by 10 percentage points.  How many participants would we need to be able to detect this difference?
+We expect in our model that 50% of the participants will develop the outcome.  We expect our intervention will lower this to 20% percentage points.  How many participants would we need to be able to detect this difference?
 
 ```{webr-r}
 
@@ -62,30 +322,12 @@ h = ES.h(0.5,0.4)
 pwr.2p.test(h , n=NULL, power=0.9)
 
 ```
-## Extracting the data from an existing study to make a sample size calculation
 
-We can use information from previous studies to inform our sample size calculations.
+Now adapt the code to check how many participants would be needed to detect a difference between 50% and 40%.
 
-If a previous study has been undertaken with a similar outcome measure and in a similar population to our planned study, then we might expect that the variation in the measures between and within people will be similar.
+## Worked Example: Effective sample size with clustered data
 
-We might also get clues about the likely size of any effects
-
-However, we need to be careful when using published effect sizes, as these are likely to be biased by the *winners curse*.
-
-Because effects are more likely to be published if they happen to be statistically significant, the effects from published studies are typically too high.  Replication studies have consistently shown that published effects, even when replicated, can be up to 85% too high.
-
-Here we'll consider conducting a replication of an existing study, and what the sample size of a replication should be. 
-
-
-```{webr-r}
-
-#eyedat <- 
-
-```
-
-## Effective sample size with clustered data
-
-Consider an observational study in which retinal thickness is compared between patients with or without rheumatoid arthritis.
+Consider an observational study in which retinal nerve fibre layer thickness (RNFL) is compared between patients with or without rheumatoid arthritis.
 
 Patients are to be randomly sampled from their respective populations, and each patient has a measurement taken in their left and their right eye.
 
@@ -103,22 +345,151 @@ effect=10 # True effect of RA on RNFL
 eyes = c("L","R")
 groups = c("Disease","Control")
 
+# Find the standard deviation between and within samples based on the overall SD and the ICC
 sd_between = sigma*sqrt(rho)
 sd_within = sigma*sqrt(1-rho)
 
-dat <- expand.grid(patient=1:(2*N), eye=eyes,group=groups)
+dat <- expand.grid(eye=eyes,patient=1:(2*N))
 dat$group <- rep(groups,each=2*N)
 
 patientEffects = rnorm(2*N,0,sd_between)
 
-dat <- transform(dat , y = mean + patientEffects[patient] + effect*(group=="Disease") + rnorm(nrow(dat),0,sd_within))
+dat <- transform(dat , rnfl = mean + patientEffects[patient] + effect*(group=="Disease") + rnorm(nrow(dat),0,sd_within))
 
 ```
 
 It is valuable to plot the data to check the extent of the correlation between the eyes
 
 ```{webr-r}
+ggplot(dat ) + aes(x=eye , y=rnfl) + 
+  geom_point() + 
+  geom_line(aes(group=patient)) + 
+  facet_wrap(~group)
+```
 
-ggplot(dat ) + aes(x=eye , y=y) + geom_point() + geom_line(aes(group=patient))
+Can we assume that eyes are independent observations in the analysis?
+
+```{webr-r}
+ggplot(dat ) + aes(x=group , y=rnfl) + 
+  ggbeeswarm::geom_beeswarm() + 
+  ggpubr::stat_compare_means(method="t.test",comparisons = list(1:2))
+  
+```
+
+We could treat eyes as technical replicates, and take the average for each participant before running the t-test.
+
+```{webr-r}
+aggregate(dat , rnfl ~ patient + group, mean) |>
+ggplot() + aes(x=group , y=rnfl) + 
+  ggbeeswarm::geom_beeswarm() + 
+  ggpubr::stat_compare_means(method="t.test",comparisons = list(1:2))
+```
+
+This is OK, we now have one measure per person, and each person was sampled independently.
+
+So did we get any benefit from using two eyes instead of one, even though our sample size was still the same?
+
+Yes, because of the repeated measurement our data for each person became less variable.
+
+Compare the standard deviations if we used the left eye only compared to the aggregated data:
+
+```{webr-r}
+dat |> subset(eye=="L") |> report::report_sample(by = "group",select = "rnfl")
+
+aggregate(dat , rnfl ~ patient + group, mean) |> report::report_sample(by = "group",select = "rnfl")
+```
+The relative increase in precision depends on how much of the overall variation is found within eyes vs between eyes.  We set this above with the ICC (intraclass correlation coefficient).  Here we set ICC=0.5.
+
+We can show that the effective sample size using two eyes is
+
+$$
+N\times\frac{2}{1+\text{ICC}}
+$$
+
+which in this case is $1.33 \times N$
+
+So by using both eyes in this case we effectively increase the sample size by 30%.
+
+A general formula for the effective sample size, for clusters of more than two (say mice within cages, is)
+
+$$
+N_{\text{Eff}} = N\times\frac{m}{1+(m-1)\times\text{ICC}}
+$$
+Where $N$ is the number of units, and $m$ is the number of clusters.
+
+So suppose we allocated a treatment to mice, and they have a shared outcome such that the intra-class correlation is about 0.3.  This might be typical for microbiome measures, stress responses, inflammatory responses etc.  Then the effective sample size increases with the number of animals as follows:
+
+```{webr-r}
+neff <- function(n,m,icc){
+  m / (1+(m-1)*icc)
+}
+
+dat <- expand.grid(m=1:5,icc=c(0.1,0.3,0.5))
+dat$neff <- neff(1,dat$m,dat$icc)
+
+ggplot(dat) + aes(x=m,y=neff,linetype=factor(icc)) + geom_point() + geom_line() + 
+  labs(x="Number of mice per cage",y="Effective sample size",linetype="ICC") +
+  ggtitle("Effective sample size per cluster when treatments allocated on a per-cluster basis")
+
 
 ```
+This adds an extra complication to a sample size calculation, but you make reasonable assumptions based on prior work regarding what the ICC might be.  In any case, simply assuming that mice are independent could lead you to vastly over-estimate the power of your study. 
+
+Clearly in terms of numbers, having fewer mice per cage is the most efficient, but optimising a sample size and a layout in this case (number of cages, number of mice per cage) depends also the relative cost of cages vs animals, and you will be limited by ethical and practical constraints.
+
+For a full discussion see:
+
+## Randomising treatments *within* clusters
+
+A converse situation arises if we can randomise *eyes* independently to treatments.  In this case the unit of experiment is the eye, but we get the added benefit that we can remove the between-person variance from the analysis, since every person contributes one treated and one control eye.
+
+
+```{webr-r}
+
+N=20      # Study size per group
+rho=0.5   # Intra-class correlation between left and right eye
+sigma=10  # Standard deviation of individual eyes
+mean=100  # Grand mean
+effect=10 # True effect of RA on RNFL
+eyes = c("L","R")
+groups = c("Disease","Control")
+
+# Find the standard deviation between and within samples based on the overall SD and the ICC
+sd_between = sigma*sqrt(rho)
+sd_within = sigma*sqrt(1-rho)
+
+dat <- expand.grid(eye=eyes,patient=1:N)
+
+### Now we have the group randomised *within* the individual
+dat$group <- replicate(N,sample(groups),simplify = FALSE) |> Reduce(f=c)
+
+patientEffects = rnorm(2*N,0,sd_between)
+
+dat <- transform(dat , rnfl = mean + patientEffects[patient] + effect*(group=="Disease") + rnorm(nrow(dat),0,sd_within))
+
+```
+
+If we plot the outcome with the individual participants identified, we should see that the effect of the treatment is more obvious, because the between-participant variation becomes irrelevant.
+
+```{webr-r}
+graph=ggplot(dat ) + aes(x=group , y=rnfl) + 
+  geom_point()
+
+library(patchwork)
+graph + (graph + geom_line(aes(group=patient)))
+```
+
+So here, instead of losing power, because we can randomise *within* the clusters we gain power.  If we had to treat the individual and not the eye we would be randomising the clusters themselves, which would cost us power.
+
+The effective sample size given N individuals, if we can randomise two treatments within an individual, is given by:
+
+$$
+N_\text{eff}=N\times\frac{2}{1-\text{ICC}}
+$$
+
+Where $N$ is the number of individuals.  Now as the ICC goes up, the effective sample size also increases.
+
+A similar logic applies to cross-over vs parallel group human trials.  With an ICC of 0.5, then a parallel group study of, say, 100 individuals per group (total 200 individuals), would only require 50 individuals in total (100 eyes) if we can compare both treatments within each person.
+
+Whether this is practically possible depends on the nature of the intervention and the experimental units themselves.
+

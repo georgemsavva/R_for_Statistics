@@ -58,13 +58,10 @@ website:
             href: webr.qmd
       - text: GIBA experimental design course
         menu: 
-          - text: Part 1
+          - text: Part 1/2
             href: GIBA-session1.qmd
           - text: Part 3
             href: GIBA-session3.qmd
-          - text: Part 4
-            href: GIBA-session4.qmd
-
 
     right:
       - text: "Contact me"

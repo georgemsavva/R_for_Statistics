@@ -366,7 +366,7 @@ globalThis.qwebrCustomizedWebROptions = {
 };
 
 // Store cell data
-globalThis.qwebrCellDetails = [{"code":"library(ggplot2)\nlibrary(ggpubr)\nlibrary(report)\nlibrary(ggbeeswarm)","options":{"echo":"false","fig-width":7,"editor-word-wrap":"true","context":"interactive","classes":"","editor-quick-suggestions":"false","read-only":"false","out-height":"","output":"true","editor-font-scale":"1","out-width":"700px","editor-max-height":"","label":"unnamed-chunk-1","message":"false","dpi":72,"results":"markup","fig-cap":"","autorun":"false","warning":"false","fig-height":5,"comment":""},"id":1},{"code":"set.seed(1)\n\nN1=5 # sample size for group 1\nN2=3 # sample size for group 2\n\n# true mean values in each group\nmean = c(\"Control\"=50,\n         \"Treated\"=50)\n\n# Make group labels\ngroup = c( rep(\"Control\",N1) , rep(\"Treated\",N2) ) |> factor(levels=c(\"Control\",\"Treated\"))\n\n# Simulate richness, assume it has a negative binomial distribution with size 1 and mean defined above\nrichness = rnbinom(N1+N2, mu=mean[group],size=1)\n\n# Turn this into a dataset\ndat = data.frame(group,richness)","options":{"fig-width":7,"editor-word-wrap":"true","context":"interactive","classes":"","editor-quick-suggestions":"false","read-only":"false","out-height":"","output":"true","editor-font-scale":"1","out-width":"700px","editor-max-height":"","label":"unnamed-chunk-2","message":"true","dpi":72,"results":"markup","fig-cap":"","autorun":"false","warning":"false","fig-height":5,"comment":""},"id":2},{"code":"ggplot(dat, aes(x=group,y=richness)) +  \n  stat_summary(geom=\"col\",col=\"black\",fill=\"red\",width=0.6, fun.data = \"mean_se\") + \n  stat_summary(geom=\"errorbar\" , width=.30, fun.data = \"mean_se\") + \n  stat_compare_means(comparisons = list(1:2), method=\"t.test\") + \n  \n  theme_bw()","options":{"fig-width":7,"editor-word-wrap":"true","context":"interactive","classes":"","editor-quick-suggestions":"false","read-only":"false","out-height":"","output":"true","editor-font-scale":"1","out-width":"700px","editor-max-height":"","label":"unnamed-chunk-3","message":"true","dpi":72,"results":"markup","fig-cap":"","autorun":"false","warning":"true","fig-height":5,"comment":""},"id":3},{"code":"ggplot(dat, aes(x=group,y=richness)) +  \n  ggbeeswarm::geom_beeswarm(pch=4) + \n  stat_summary(geom=\"errorbar\" , width=.30, fun.data = \"mean_se\") +\n  stat_summary(geom=\"point\" , width=.30, fun.data = \"mean_se\") + \n  stat_compare_means(comparisons = list(1:2), method=\"t.test\") + \n  theme_bw()\n\n\nreport_sample(dat , by=\"group\")\n\nt.test(data=dat , richness ~ group) |> report::report_parameters()\n\nlm(data=dat , richness ~ group) |> parameters::parameters() |> plot()","options":{"fig-width":7,"editor-word-wrap":"true","context":"interactive","classes":"","editor-quick-suggestions":"false","read-only":"false","out-height":"","output":"true","editor-font-scale":"1","out-width":"700px","editor-max-height":"","label":"unnamed-chunk-4","message":"true","dpi":72,"results":"markup","fig-cap":"","autorun":"false","warning":"true","fig-height":5,"comment":""},"id":4},{"code":"N=10\ntruth = 10\nbiasedEstimates = rnorm(N,truth+3,0.5)\nimpreciseEstimates = rnorm(N,truth,2)\nbiasedAndImprecise = rnorm(N,truth+3,2)\ngoodEstimates = rnorm(N,truth,0.5)\n\nrbind(goodEstimates,biasedAndImprecise,impreciseEstimates,biasedEstimates) |> \n  as.data.frame.table() |>\n  setNames(c(\"Type\",\"Var\",\"Estimate\")) |>\n  ggplot(aes(x=Type,y=Estimate)) + \n  geom_beeswarm() + \n  geom_hline(yintercept=truth,lty=\"dotted\") + \n  coord_flip() + \n  theme_bw() + \n  labs(y=\"Estimates\", x=NULL) + \n  scale_x_discrete(labels=c(\"biasedEstimates\"=\"Biased Estimates\",\n                            \"impreciseEstimates\"=\"Imprecise Estimates\",\n                            \"biasedAndImprecise\"=\"Biased and Imprecise\",\n                            \"goodEstimates\"=\"Precise and unbiased (good!)\")) + \n  annotate(geom=\"text\",label=\"True effect size\",x=0.5,y=truth)\n","options":{"fig-width":7,"editor-word-wrap":"true","context":"interactive","classes":"","editor-quick-suggestions":"false","read-only":"false","out-height":"","output":"true","editor-font-scale":"1","out-width":"700px","editor-max-height":"","label":"unnamed-chunk-5","message":"true","dpi":72,"results":"markup","fig-cap":"","autorun":"false","warning":"true","fig-height":5,"comment":""},"id":5}];
+globalThis.qwebrCellDetails = [{"code":"library(ggplot2)\nlibrary(ggpubr)\nlibrary(report)\nlibrary(ggbeeswarm)\nlibrary(patchwork)","options":{"output":"true","editor-word-wrap":"true","editor-font-scale":"1","label":"unnamed-chunk-1","fig-cap":"","classes":"","editor-quick-suggestions":"false","editor-max-height":"","out-height":"","dpi":72,"warning":"false","fig-height":5,"out-width":"700px","comment":"","message":"false","autorun":"true","context":"interactive","fig-width":7,"read-only":"false","results":"markup"},"id":1},{"code":"set.seed(1)\n\nN1=5 # sample size for group 1\nN2=3 # sample size for group 2\n\n# true mean values in each group\nmean = c(\"Control\"=50,\n         \"Treated\"=50)\n\n# Make group labels\ngroup = c( rep(\"Control\",N1) , rep(\"Treated\",N2) ) |> factor(levels=c(\"Control\",\"Treated\"))\n\n# Simulate richness, assume it has a negative binomial distribution with size 1 and mean defined above\nrichness = rnbinom(N1+N2, mu=mean[group],size=1)\n\n# Turn this into a dataset\ndat = data.frame(group,richness)\n\n# List the first few rows\nhead(dat)","options":{"output":"true","editor-word-wrap":"true","editor-font-scale":"1","label":"unnamed-chunk-2","fig-cap":"","classes":"","editor-quick-suggestions":"false","editor-max-height":"","out-height":"","dpi":72,"warning":"false","fig-height":5,"out-width":"700px","comment":"","message":"true","autorun":"false","context":"interactive","fig-width":7,"read-only":"false","results":"markup"},"id":2},{"code":"ggplot(dat, aes(x=group,y=richness)) +  \n  stat_summary(geom=\"col\",col=\"black\",fill=\"red\",width=0.6, fun.data = \"mean_se\") + \n  stat_summary(geom=\"errorbar\" , width=.30, fun.data = \"mean_se\") + \n  stat_compare_means(comparisons = list(1:2), method=\"t.test\") + \n  \n  theme_bw()","options":{"output":"true","editor-word-wrap":"true","editor-font-scale":"1","label":"unnamed-chunk-3","fig-cap":"","classes":"","editor-quick-suggestions":"false","editor-max-height":"","out-height":"","dpi":72,"warning":"true","fig-height":5,"out-width":"700px","comment":"","message":"true","autorun":"false","context":"interactive","fig-width":7,"read-only":"false","results":"markup"},"id":3},{"code":"ggplot(dat, aes(x=group,y=richness)) +  \n  ggbeeswarm::geom_beeswarm(pch=4) + \n  stat_summary(geom=\"errorbar\" , width=.30, fun.data = \"mean_se\") +\n  stat_summary(geom=\"point\" , fun.data = \"mean_se\") + \n  stat_compare_means(comparisons = list(1:2), method=\"t.test\") + \n  theme_bw()","options":{"output":"true","editor-word-wrap":"true","editor-font-scale":"1","label":"unnamed-chunk-4","fig-cap":"","classes":"","editor-quick-suggestions":"false","editor-max-height":"","out-height":"","dpi":72,"warning":"true","fig-height":5,"out-width":"700px","comment":"","message":"true","autorun":"false","context":"interactive","fig-width":7,"read-only":"false","results":"markup"},"id":4},{"code":"report_sample(dat , by=\"group\")\n\nt.test(data=dat , richness ~ group) |> report::report_parameters()","options":{"output":"true","editor-word-wrap":"true","editor-font-scale":"1","label":"unnamed-chunk-5","fig-cap":"","classes":"","editor-quick-suggestions":"false","editor-max-height":"","out-height":"","dpi":72,"warning":"true","fig-height":5,"out-width":"700px","comment":"","message":"true","autorun":"false","context":"interactive","fig-width":7,"read-only":"false","results":"markup"},"id":5},{"code":"model1 <- lm(data=dat , richness ~ group) \nsummary(model1)\nconfint(model1)\nmodel1 |> parameters::parameters() |> plot()","options":{"output":"true","editor-word-wrap":"true","editor-font-scale":"1","label":"unnamed-chunk-6","fig-cap":"","classes":"","editor-quick-suggestions":"false","editor-max-height":"","out-height":"","dpi":72,"warning":"true","fig-height":5,"out-width":"700px","comment":"","message":"true","autorun":"false","context":"interactive","fig-width":7,"read-only":"false","results":"markup"},"id":6},{"code":"N=10\ntruth = 10\nbiasedEstimates = rnorm(N,truth+3,0.5)\nimpreciseEstimates = rnorm(N,truth,2)\nbiasedAndImprecise = rnorm(N,truth+3,2)\ngoodEstimates = rnorm(N,truth,0.5)\n\nrbind(goodEstimates,biasedAndImprecise,impreciseEstimates,biasedEstimates) |> \n  as.data.frame.table() |>\n  setNames(c(\"Type\",\"Var\",\"Estimate\")) |>\n  ggplot(aes(x=Type,y=Estimate)) + \n  geom_beeswarm() + \n  geom_hline(yintercept=truth,lty=\"dotted\") + \n  coord_flip() + \n  theme_bw() + \n  labs(y=\"Estimates\", x=NULL) + \n  scale_x_discrete(labels=c(\"biasedEstimates\"=\"Biased Estimates\",\n                            \"impreciseEstimates\"=\"Imprecise Estimates\",\n                            \"biasedAndImprecise\"=\"Biased and Imprecise\",\n                            \"goodEstimates\"=\"Precise and unbiased (good!)\")) + \n  annotate(geom=\"text\",label=\"True effect size\",x=0.5,y=truth)\n","options":{"output":"true","editor-word-wrap":"true","editor-font-scale":"1","label":"unnamed-chunk-7","fig-cap":"","classes":"","editor-quick-suggestions":"false","editor-max-height":"","out-height":"","dpi":72,"warning":"true","fig-height":5,"out-width":"700px","comment":"","message":"true","autorun":"false","context":"interactive","fig-width":7,"read-only":"false","results":"markup"},"id":7},{"code":"# Define the groups\ntreatment = c(\"Treat\", \"Control\")\nsex = c(\"Male\",\"Female\")\n\n# Here we set up the dataset with 10 copies of each combination of treatment and sex\ndat <- expand.grid( treatment=treatment , sex=sex,rep=1:10)\n\n# True treatment effect = 1\n# True sex effect = 2\n# Normally distributed indidividual variation with sd=1\n\nset.seed(200) # Setting the seed fixes the response\n\n# Now generate the response (y) with the known treatment effect, sex effect and random variation\ndat <- transform(dat, y = 10 + (treatment==\"Treat\") + 2*(sex==\"Male\") + rnorm(nrow(dat)))\n\n# Check the first few rows\nhead(dat)","options":{"output":"true","editor-word-wrap":"true","editor-font-scale":"1","label":"unnamed-chunk-8","fig-cap":"","classes":"","editor-quick-suggestions":"false","editor-max-height":"","out-height":"","dpi":72,"warning":"true","fig-height":5,"out-width":"700px","comment":"","message":"true","autorun":"false","context":"interactive","fig-width":7,"read-only":"false","results":"markup"},"id":8},{"code":"# The first graph \ngraph1 = ggplot(dat) + \n  aes(x=treatment, y=y) + \n  geom_beeswarm(aes(shape=sex)) + \n  theme_bw()+ \n  stat_summary(geom=\"errorbar\",width=.5,fun.data = \"mean_se\") + \n  scale_y_continuous(limits=c(8,15)) + \n  ggpubr::stat_compare_means(method=\"t.test\",comparisons=list(1:2))  + \n  labs(x=\"Treatment\", y=\"Response\",shape=\"Sex\")","options":{"output":"true","editor-word-wrap":"true","editor-font-scale":"1","label":"unnamed-chunk-9","fig-cap":"","classes":"","editor-quick-suggestions":"false","editor-max-height":"","out-height":"","dpi":72,"warning":"true","fig-height":5,"out-width":"700px","comment":"","message":"true","autorun":"false","context":"interactive","fig-width":7,"read-only":"false","results":"markup"},"id":9},{"code":"graph1 + (graph1 + facet_wrap(~sex) ) + plot_layout(guides=\"collect\")","options":{"output":"true","editor-word-wrap":"true","editor-font-scale":"1","label":"unnamed-chunk-10","fig-cap":"","classes":"","editor-quick-suggestions":"false","editor-max-height":"","out-height":"","dpi":72,"warning":"true","fig-height":5,"out-width":"700px","comment":"","message":"true","autorun":"false","context":"interactive","fig-width":7,"read-only":"false","results":"markup"},"id":10},{"code":"oneRep <- function(){\n  dat <- transform(dat, y = 10 + (treatment==\"Treat\") + 2*(sex==\"Male\") + rnorm(nrow(dat)))\n  model1_p <- lm(data=dat , y ~ treatment) |> summary() |> coef())[\"treatmentControl\",\"Pr(>|t|)\"]\n  model2_p <- lm(data=dat , y ~ treatment + sex) |> summary() |> coef())[\"treatmentControl\",\"Pr(>|t|)\"]\n  c(model1_p,model2_p)\n}\n\nreplicate(1000,oneRep()) |> t() |> as.data.frame()|> lapply(\\(x) mean(x<0.05))","options":{"output":"true","editor-word-wrap":"true","editor-font-scale":"1","label":"unnamed-chunk-11","fig-cap":"","classes":"","editor-quick-suggestions":"false","editor-max-height":"","out-height":"","dpi":72,"warning":"true","fig-height":5,"out-width":"700px","comment":"","message":"true","autorun":"false","context":"interactive","fig-width":7,"read-only":"false","results":"markup"},"id":11}];
 
 </script>
 <script type="module">
@@ -1733,15 +1733,11 @@ globalThis.qwebrExecuteCode = async function (
     <ul class="dropdown-menu" aria-labelledby="nav-menu-giba-experimental-design-course">    
         <li>
     <a class="dropdown-item" href="./GIBA-session1.html">
- <span class="dropdown-text">Part 1</span></a>
+ <span class="dropdown-text">Part 1/2</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./GIBA-session3.html">
  <span class="dropdown-text">Part 3</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./GIBA-session4.html">
- <span class="dropdown-text">Part 4</span></a>
   </li>  
     </ul>
   </li>
@@ -1773,13 +1769,18 @@ globalThis.qwebrExecuteCode = async function (
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#worked-example" id="toc-worked-example" class="nav-link active" data-scroll-target="#worked-example">Worked example</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#worked-example" id="toc-worked-example" class="nav-link" data-scroll-target="#worked-example">Worked example</a>
   <ul class="collapse">
   <li><a href="#simulate-the-data" id="toc-simulate-the-data" class="nav-link" data-scroll-target="#simulate-the-data">Simulate the data</a></li>
   <li><a href="#initial-analysis" id="toc-initial-analysis" class="nav-link" data-scroll-target="#initial-analysis">Initial analysis</a></li>
   <li><a href="#a-better-graph-and-statistics" id="toc-a-better-graph-and-statistics" class="nav-link" data-scroll-target="#a-better-graph-and-statistics">A better graph and statistics</a></li>
   </ul></li>
   <li><a href="#accuracy-and-precision" id="toc-accuracy-and-precision" class="nav-link" data-scroll-target="#accuracy-and-precision">Accuracy and precision</a></li>
+  <li><a href="#analysis-of-a-blocked-randomised-study" id="toc-analysis-of-a-blocked-randomised-study" class="nav-link" data-scroll-target="#analysis-of-a-blocked-randomised-study">Analysis of a blocked randomised study</a>
+  <ul class="collapse">
+  <li><a href="#introduction-1" id="toc-introduction-1" class="nav-link" data-scroll-target="#introduction-1">Introduction</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -2091,16 +2092,21 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 
 <div id="qwebr-insertion-location-1"></div>
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
-<p>Welcome to this one-day course in experimental design and analysis.</p>
-<p>On these pages you’ll find links to the</p>
-<p>Slides for sesion 1 are here:</p>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>These pages include slides and code to support the first day of our course in experimental design and analysis.</p>
+<p>Slides for session 1 are here:</p>
 <ul>
 <li><a href="gibasession1.pptx">Session 1 slides</a></li>
 </ul>
+<p>The code in these windows can be run directly from your browser, or copied into your own R session.</p>
+<p>If you want to use your own R sesion, you’ll need to have packages installed:</p>
+<p><code>ggplot2</code>, <code>see</code>, <code>ggpubr</code>, <code>ggbeeswarm</code>, <code>patchwork</code> and <code>easystats</code></p>
+</section>
 <section id="worked-example" class="level2">
 <h2 class="anchored" data-anchor-id="worked-example">Worked example</h2>
 <p>Here we simulate a simple experiment with two groups of mice and a single outcome measure.</p>
-<p>We set the ‘true’ average values of our outcome measure</p>
+<p>We set the ‘true’ average values of our outcome measure, simulate an experiment with our chosen design, and then attempt to estimate the difference between groups using our simulated data.</p>
 <p>Using simulations like this can help us to think through experiments, plan analyses and ultimately run sample size calculations.</p>
 <section id="simulate-the-data" class="level3">
 <h3 class="anchored" data-anchor-id="simulate-the-data">Simulate the data</h3>
@@ -2119,6 +2125,11 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <p>While this presentation of results (p-value and dynamite plot) is often used, it is extremely limiting. It is more useful to present data point individually (perhaps with summary statistics) and then to make inferences about the estimated mean difference between groups:</p>
 <div id="qwebr-insertion-location-4"></div>
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<div id="qwebr-insertion-location-5"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>It’s interesting to compare the linear model result with the t-test result.</p>
+<div id="qwebr-insertion-location-6"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </section>
 </section>
 <section id="accuracy-and-precision" class="level2">
@@ -2130,12 +2141,43 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <p>Any bias in the study would cause the study estimate to be systematically wrong in either direction. There are many sources of bias. For example we know that healthier people tend to more willing to participate in research than the population (selection bias), or people who are treated with placebos might report better symptoms than those who are not (plaebo effect). These can lead to systematically wrong conclusions about populations or the efficacy of treatments.</p>
 <p>The precision of the study refers to how similar the estimates from repeated runs would be. A precise estimates have small standard errors and narrow confidence intervals. But it is possible to be very precisely wrong (if there is bias), or to miscalculate the precision of your study.</p>
 <p>Precision is largely determined by the level of variation between in your experimental units, your measurements, and by the sample size. Increasing sample size and reducing sources of variation will increase precision.</p>
-<div id="qwebr-insertion-location-5"></div>
+<div id="qwebr-insertion-location-7"></div>
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 <p>Our goal in experimental design is to answer your research questions with low bias <em>and</em> high precision, so that your estimates are consistently close to the truth! On the whole bias is more problematic than imprecision, because the latter can be calculated, reported, and overcome using larger studies. Bias is much more difficult to detect, and can become compounded by larger samples or repeated studies if the same biases are present each time.</p>
 <p>To deal with sources of bias and variance, we have to understand how they arise, and how to reduce or remove their effects on our estimates.</p>
+</section>
+<section id="analysis-of-a-blocked-randomised-study" class="level2">
+<h2 class="anchored" data-anchor-id="analysis-of-a-blocked-randomised-study">Analysis of a blocked randomised study</h2>
+<section id="introduction-1" class="level3">
+<h3 class="anchored" data-anchor-id="introduction-1">Introduction</h3>
+<p>The code below simulates a parallel group randomised controlled trial conducted in men and women.</p>
+<p>There were 40 participants in total, 20 men and 20 women.</p>
+<p>There was a blocked randomisation, so that men and women were balanced across groups (10 each per treatment group)</p>
+<p>The blocking was performed because we know that men have typically higher responses than women.</p>
+<div id="qwebr-insertion-location-8"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>Remember the experimental design equation for this study is:</p>
+<p><code>Outcome = Treatment + Sex + Error</code></p>
+<p>Below we show why it is important to respect this equation in our analysis phase as well as our design phase.</p>
+<p>Since we have a two group study with a continuous outcome, we might be tempted to apply a two-groups t-test to compare the responses:</p>
+<div id="qwebr-insertion-location-9"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>While there is some evidence of the difference between groups (that we know is there!), it is not statistically significant. We have type-2 error in this case (false negative). This is caused by the high variation within each treatment group overwhelming the signal from the treatment.</p>
+<p>But if we stratify the data by sex, we explain much of that variation. The signal is much more obvious, and is statistically significant in both groups despite there being half the participants in each!</p>
+<div id="qwebr-insertion-location-10"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>The linear model corresponding to the unpaired t-test is given below. Note the residual error in the output and the standard error for the effect of treatment.</p>
+<pre class="{web-r}"><code>lm(data=dat , y ~ treatment) |&gt; summary()</code></pre>
+<p>Next we’ll try the model that corresponds to the design equation. We have explained far more variance (smaller residual error), and so have a m.</p>
+<pre class="{web-r}"><code>lm(data=dat , y ~ treatment + sex) |&gt; summary()</code></pre>
+<p>Although this dataset was picked to illustrate the point, we can find the power of the study with each analytical approach by replicating the study many times, and finding what proportion of p-values is less than 0.05.</p>
+<div id="qwebr-insertion-location-11"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p>Here, using the design equation to set up the analysis model leads to a much more powerful design, by explaining the variance associated with the identified factors. It also means that the assumptions underlying the regression model, in particular normal random errors, more likely to be met.</p>
+<pre class="{web-r}"><code>lm(data=dat , y ~ treatment + sex) |&gt; report::report_model()</code></pre>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
