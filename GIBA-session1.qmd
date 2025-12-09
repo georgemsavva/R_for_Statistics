@@ -26,9 +26,8 @@ library(patchwork)
 
 These pages include slides and code to support the first day of our course in experimental design and analysis.
 
-Slides for session 1 are here: 
+A revision of the slides will be available soon: 
 
-* [Session 1 slides](gibasession1.pptx)
 
 The code in these windows can be run directly from your browser,
 or copied into your own R session.

@@ -158,7 +158,7 @@
     "href": "GIBA-session3.html",
     "title": "Sample Size",
     "section": "",
-    "text": "Slides for the afternoon session on sample size are here:"
+    "text": "A revision of the slides will be available soon."
   },
   {
     "objectID": "GIBA-session3.html#exercise-1.-interpretation-of-a-clinical-study",
@@ -200,7 +200,7 @@
     "href": "GIBA-session3.html#exercise-6.-using-the-pwr-package-to-find-sample-size-analytically",
     "title": "Sample Size",
     "section": "Exercise 6. Using the pwr package to find sample size analytically",
-    "text": "Exercise 6. Using the pwr package to find sample size analytically\nWe will use a simple parallel group study to investigate this.\nWe believe from prior work that the within-group standard deviation for mouse alpha diversity is 1.\nUse the pwr function to answer the following questions:\n\nSuppose we wanted our experiment to reliably detect an effect of 0.5 units, should it exist. How many mice would we need?\nIf we could only afford to use ten mice per group, what would be the smallest effect size that we could detect?\nWhat is the power to detect a difference of 0.5 units, given that we only have ten mice per group.\nRemember we might not get data from all ten mice that were included. If only 80% are expected to survive and give usable data, would would the power be?\nHow many mice would Mead’s resource equation suggest that we use?\nWhat would be the smallest detectable effect with this number?\n\n\n# Reminder that the syntax for power is:\n# pwr.t.test(n = NULL, d = NULL, sig.level = 0.05, power = NULL, \n#    type = c(\"two.sample\", \"one.sample\", \"paired\"),\n#    alternative = c(\"two.sided\", \"less\", \"greater\"))\n#\n# You need to include all but one of: n,d,sig.level and power.\n#\n# eg:\n# \n# library(pwr)\n#\n# pwr.t.test(n=NULL, d=0.5, power=0.8, sd=0.05)"
+    "text": "Exercise 6. Using the pwr package to find sample size analytically\nWe will use a simple parallel group study to investigate this.\nWe believe from prior work that the within-group standard deviation for mouse alpha diversity is 1.\nUse the pwr function to answer the following questions:\n\nSuppose we wanted our experiment to reliably detect an effect of 0.5 units, should it exist. How many mice would we need?\nIf we could only afford to use ten mice per group, what would be the smallest effect size that we could detect?\nWhat is the power to detect a difference of 0.5 units, given that we only have ten mice per group.\nRemember we might not get data from all ten mice that were included. If only 80% are expected to survive and give usable data, would would the power be?\nHow many mice would Mead’s resource equation suggest that we use?\nWhat would be the smallest detectable effect with this number?\n\n\nPlease enable JavaScript to experience the dynamic code cell content on this page."
   },
   {
     "objectID": "GIBA-session3.html#exercise-8.-sample-size-for-comparing-two-proportions",
@@ -634,7 +634,7 @@
     "href": "GIBA-session1.html#introduction",
     "title": "Session1",
     "section": "Introduction",
-    "text": "Introduction\nThese pages include slides and code to support the first day of our course in experimental design and analysis.\nSlides for session 1 are here:\n\nSession 1 slides\n\nThe code in these windows can be run directly from your browser, or copied into your own R session.\nIf you want to use your own R sesion, you’ll need to have packages installed:\nggplot2, see, ggpubr, ggbeeswarm, patchwork and easystats"
+    "text": "Introduction\nThese pages include slides and code to support the first day of our course in experimental design and analysis.\nA revision of the slides will be available soon:\nThe code in these windows can be run directly from your browser, or copied into your own R session.\nIf you want to use your own R sesion, you’ll need to have packages installed:\nggplot2, see, ggpubr, ggbeeswarm, patchwork and easystats"
   },
   {
     "objectID": "GIBA-session1.html#worked-example",

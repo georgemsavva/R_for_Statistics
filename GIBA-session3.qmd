@@ -21,9 +21,8 @@ library(ggbeeswarm)
 ```
 
 
-Slides for the afternoon session on sample size are here: 
+A revision of the slides will be available soon.
 
-* [Session 3 slides](gibasession3.pptx)
 
 ## Exercise 1.  Interpretation of a clinical study
 
@@ -291,7 +290,7 @@ Use the pwr function to answer the following questions:
  5. How many mice would Mead's resource equation suggest that we use?
  6. What would be the smallest detectable effect with this number?
 
-```{r }
+```{webr-r}
 
 # Reminder that the syntax for power is:
 # pwr.t.test(n = NULL, d = NULL, sig.level = 0.05, power = NULL, 
