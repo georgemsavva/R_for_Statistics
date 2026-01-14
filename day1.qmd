@@ -372,7 +372,7 @@ Start a new script to begin your analysis of the 'iris' dataset.
 We can use the `read.csv` function to load data from a csv file (later we'll see how to import Excel format data).  Type:
 
 ```{r }
-iris <- read.csv("iris.csv")
+iris <- read.csv("iris.csv", stringsAsFactors = TRUE)
 ```
 
 Check your 'environment' tab for a new object.  Click on the object name to see it in the Viewer, or click on the small blue button next to it to expand the view in the environment window.
@@ -386,6 +386,8 @@ Check your 'environment' tab for a new object.  Click on the object name to see 
 3. What kind of descriptive statistics might we calculate to learn about this dataset?
 
 4. What kind of analytic (inferential) questions might we ask of the data?
+
+5. What did `stringsAsFactors = TRUE` do in the `read.csv` command above?
 
 ## Explore the structure of the dataset using R
 
@@ -478,7 +480,7 @@ with(iris , cor(Sepal.Length , Sepal.Width))
 6. Is this correlation statistically significant?
 7. (Difficult) How many `viriginca` flowers are included in the dataset?  
 8. (Difficult) Can you tabulate the `species` variable?
-9. (Difficult) Can you make a histogram of species with red bars?
+9. (Difficult) Can you make a histogram of sepal length with red bars?
 
 ## Other packages for descriptive statistics (if you have time)
 
